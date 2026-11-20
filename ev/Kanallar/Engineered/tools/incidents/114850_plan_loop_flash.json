@@ -1,0 +1,125 @@
+{
+  "identity": "7067f7fb12c31edc0ad900f466ef4a925026af0f6b9979e3f29c7789ab62b042",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "9941db15942648a0b902dcacb9b35833",
+    "role": "flash",
+    "thread_id": 768,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T08:48:50.821005+00:00",
+    "cooldown_seconds": 2.5e-05,
+    "queue_seconds": 0.000942,
+    "started_at_utc": "2026-10-30T08:48:50.822025+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T08:48:59.260166+00:00",
+    "seconds": 8.435742,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-9lnkauKTHazTxN8P1ZDKIQ",
+  "usage": {
+    "prompt_tokens": 7564,
+    "completion_tokens": 186,
+    "total_tokens": 7750
+  },
+  "raw_response": "{\"cause\": \"The local animation service on port 8765 crashed or hung at 11:33:53 across all runs (likely triggered when the queue concurrency was set to 4 concurrent films instead of the 2-film hardware limit), causing ANIM shot generation to fail and leaving EP05 unable to satisfy its rigid 15% ANIM target in the stage 3 MILP mix plan.\", \"fix_now\": \"Restart the local animation service on 127.0.0.1:8765, reduce active pipeline concurrency back to 2 films, and resume EP05.\", \"prevent\": \"Hard-cap pipeline concurrency to 2 in the queue runner configuration on this machine, add an auto-restart watchdog/healthcheck for port 8765, and allow the MILP planner to reduce ANIM target percentage when animation providers fail.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "The local animation service on port 8765 crashed or hung at 11:33:53 across all runs (likely triggered when the queue concurrency was set to 4 concurrent films instead of the 2-film hardware limit), causing ANIM shot generation to fail and leaving EP05 unable to satisfy its rigid 15% ANIM target in the stage 3 MILP mix plan.",
+    "fix_now": "Restart the local animation service on 127.0.0.1:8765, reduce active pipeline concurrency back to 2 films, and resume EP05.",
+    "prevent": "Hard-cap pipeline concurrency to 2 in the queue runner configuration on this machine, add an auto-restart watchdog/healthcheck for port 8765, and allow the MILP planner to reduce ANIM target percentage when animation providers fail."
+  },
+  "seconds": 8.439962,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  },
+  "attempts": [
+    {
+      "identity": "7067f7fb12c31edc0ad900f466ef4a925026af0f6b9979e3f29c7789ab62b042",
+      "requested_model": "ag/gemini-3.8-flash-low",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "9941db15942648a0b902dcacb9b35833",
+        "role": "flash",
+        "thread_id": 768,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T08:48:50.821005+00:00",
+        "cooldown_seconds": 2.5e-05,
+        "queue_seconds": 0.000942,
+        "started_at_utc": "2026-10-30T08:48:50.822025+00:00",
+        "active_channels": 1,
+        "channel_limit": 15,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T08:48:59.260166+00:00",
+        "seconds": 8.435742,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gemini-3.8-flash-n",
+      "response_id": "chatcmpl-9lnkauKTHazTxN8P1ZDKIQ",
+      "usage": {
+        "prompt_tokens": 7564,
+        "completion_tokens": 186,
+        "total_tokens": 7750
+      },
+      "raw_response": "{\"cause\": \"The local animation service on port 8765 crashed or hung at 11:33:53 across all runs (likely triggered when the queue concurrency was set to 4 concurrent films instead of the 2-film hardware limit), causing ANIM shot generation to fail and leaving EP05 unable to satisfy its rigid 15% ANIM target in the stage 3 MILP mix plan.\", \"fix_now\": \"Restart the local animation service on 127.0.0.1:8765, reduce active pipeline concurrency back to 2 films, and resume EP05.\", \"prevent\": \"Hard-cap pipeline concurrency to 2 in the queue runner configuration on this machine, add an auto-restart watchdog/healthcheck for port 8765, and allow the MILP planner to reduce ANIM target percentage when animation providers fail.\"}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "The local animation service on port 8765 crashed or hung at 11:33:53 across all runs (likely triggered when the queue concurrency was set to 4 concurrent films instead of the 2-film hardware limit), causing ANIM shot generation to fail and leaving EP05 unable to satisfy its rigid 15% ANIM target in the stage 3 MILP mix plan.",
+        "fix_now": "Restart the local animation service on 127.0.0.1:8765, reduce active pipeline concurrency back to 2 films, and resume EP05.",
+        "prevent": "Hard-cap pipeline concurrency to 2 in the queue runner configuration on this machine, add an auto-restart watchdog/healthcheck for port 8765, and allow the MILP planner to reduce ANIM target percentage when animation providers fail."
+      },
+      "seconds": 8.439962,
+      "governor_after": {
+        "limit": 15,
+        "min_limit": 10,
+        "ceiling": 15,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 1080,
+          "quality": 90
+        },
+        "hedge_after_seconds": 45.0,
+        "hedge_enabled": true
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "9941db15942648a0b902dcacb9b35833",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\114850_plan_loop_flash.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

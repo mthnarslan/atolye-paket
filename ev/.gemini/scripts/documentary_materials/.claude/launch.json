@@ -1,0 +1,51 @@
+{
+ "version": "0.0.1",
+ "configurations": [
+  {
+   "name": "trend-prev",
+   "runtimeExecutable": "python",
+   "runtimeArgs": [
+    "-m",
+    "http.server",
+    "8732",
+    "-d",
+    "C:/Users/meteh/ortak-site/tools/_trendprev"
+   ],
+   "port": 8732
+  },
+  {
+   "name": "ortak-dev",
+   "runtimeExecutable": "cmd",
+   "runtimeArgs": [
+    "/c",
+    "cd /d C:/Users/meteh/ortak-site && npx.cmd wrangler pages dev public --port 8740 --binding SITE_KEYS=yerel-test"
+   ],
+   "port": 8740
+  },
+  {
+   "name": "bz-site",
+   "runtimeExecutable": "python",
+   "runtimeArgs": [
+    "-m",
+    "http.server",
+    "8736",
+    "-d",
+    "C:/Users/meteh/ortak-site/public"
+   ],
+   "port": 8736,
+   "autoPort": false
+  },
+  {
+   "name": "ortak-site",
+   "runtimeExecutable": "python",
+   "runtimeArgs": [
+    "-m",
+    "http.server",
+    "8771",
+    "-d",
+    "C:/Users/meteh/ortak-site/public"
+   ],
+   "port": 8771
+  }
+ ]
+}

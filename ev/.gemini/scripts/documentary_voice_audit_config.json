@@ -1,0 +1,36 @@
+{
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "version": "voice-audit-v1",
+  "benchmark": "C:\\Users\\meteh\\codex-repo-tests\\voice-step1-audit-20261015\\benchmark.json",
+  "selection": "Fastest completed trial with 6/6 diagnostic classifications. High failed with HTTP 504.",
+  "limits": "One run per effort; latency varies. Effort requested from gateway, upstream application not independently observable.",
+
+  "segment_audit": {
+    "enabled": true,
+    "target_segment_seconds": 150.0,
+    "min_segment_seconds": 60.0,
+    "max_segments": 6,
+    "parallel_segments": 6,
+    "per_segment_timeout_seconds": 90,
+    "single_request_above_seconds": 240.0
+  },
+
+  "degraded_pass": {
+    "enabled": true,
+    "min_verified_duration_ratio": 0.75,
+    "min_token_similarity": 0.85,
+    "note": "PASS_DEGRADED is issued only when infrastructure (not audible doubt) blocked segments. It never invents a PASS and always lists the unverified spans."
+  },
+
+  "integrity": {
+    "require_gemini_evidence_for_pass": true,
+    "required_pass_evidence": ["coverage", "voice_observations", "issues", "http", "api_seconds", "uploads"]
+  },
+
+  "loop_guard": {
+    "max_repair_rounds": 3,
+    "max_audit_attempts_per_run": 3,
+    "require_distinct_evidence_per_retry": true
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "identity": "83428691f133210f9615425f65f527bd334faa9b51ef73e8c5440c2fe8287d51",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "82515c9267ec467ea8f821d7bde25487",
+    "role": "codex",
+    "thread_id": 16480,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T08:48:36.100729+00:00",
+    "cooldown_seconds": 4.3e-05,
+    "queue_seconds": 0.007013,
+    "started_at_utc": "2026-10-30T08:48:36.110842+00:00",
+    "active_channels": 1,
+    "channel_limit": 12,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T08:48:50.741887+00:00",
+    "seconds": 14.628239,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gpt-6-sol",
+  "response_id": "gen-1793350115-YdDJZN1Yd6G2cVuT9Vzo",
+  "usage": {
+    "prompt_tokens": 4471,
+    "completion_tokens": 555,
+    "total_tokens": 5026,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 4468
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 320
+    }
+  },
+  "raw_response": "{\"cause\":\"The shared local G-Labs service on 127.0.0.1:8765 went down while several films were generating animation, causing animation failures across runs. EP05’s planner then found its remaining target mix infeasible; its source-expansion check saw 95 clean cuts versus 75 needed and skipped searching, although total cut count does not guarantee enough eligible cuts in each target category.\",\"fix_now\":\"Restore the G-Labs service on port 8765 and verify it responds, then resume EP05 at stage 3 so failed animation work can be retried. Re-run the mix plan after checking category-specific eligible-cut counts; if a category is still short, expand/review sources for that category rather than relying on the total clean-cut count.\",\"prevent\":\"Limit concurrent generation jobs to what the 16 GB RAM/4 GB GPU machine and G-Labs service can sustain; add service health checks and backoff before animation retries. Make mix planning diagnose per-category shortages and trigger targeted source expansion or an explicit target relaxation when a category is infeasible, instead of skipping expansion based only on total video capacity.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "The shared local G-Labs service on 127.0.0.1:8765 went down while several films were generating animation, causing animation failures across runs. EP05’s planner then found its remaining target mix infeasible; its source-expansion check saw 95 clean cuts versus 75 needed and skipped searching, although total cut count does not guarantee enough eligible cuts in each target category.",
+    "fix_now": "Restore the G-Labs service on port 8765 and verify it responds, then resume EP05 at stage 3 so failed animation work can be retried. Re-run the mix plan after checking category-specific eligible-cut counts; if a category is still short, expand/review sources for that category rather than relying on the total clean-cut count.",
+    "prevent": "Limit concurrent generation jobs to what the 16 GB RAM/4 GB GPU machine and G-Labs service can sustain; add service health checks and backoff before animation retries. Make mix planning diagnose per-category shortages and trigger targeted source expansion or an explicit target relaxation when a category is infeasible, instead of skipping expansion based only on total video capacity."
+  },
+  "seconds": 14.73119,
+  "governor_after": {
+    "limit": 12,
+    "min_limit": 4,
+    "ceiling": 12,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 540,
+      "quality": 75
+    },
+    "hedge_after_seconds": 8.0,
+    "hedge_enabled": false
+  }
+}

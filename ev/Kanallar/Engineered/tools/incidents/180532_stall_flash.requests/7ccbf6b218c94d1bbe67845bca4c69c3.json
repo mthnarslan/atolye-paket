@@ -1,0 +1,58 @@
+{
+  "identity": "4b93b3566dd13e030068fa5a0a8ecbd01b1cd4d92d40f317eb873d5aadbecca7",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "7ccbf6b218c94d1bbe67845bca4c69c3",
+    "role": "flash",
+    "thread_id": 25024,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T15:05:32.618313+00:00",
+    "cooldown_seconds": 3.1e-05,
+    "queue_seconds": 0.003702,
+    "started_at_utc": "2026-10-30T15:05:32.625434+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T15:05:41.797794+00:00",
+    "seconds": 9.169971,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-control",
+  "response_id": "chatcmpl-QLLkaoHZCfGD7M8P4tvo2Q0",
+  "usage": {
+    "prompt_tokens": 4838,
+    "completion_tokens": 162,
+    "total_tokens": 5000
+  },
+  "raw_response": "{\"cause\":\"EP10 is not stalled; it completed review and passed delivery checks at 17:52:01, but the subsequent delivery export/packaging process either hung silently or completed without appending an exit record to batch.log while 4+ other concurrent episodes oversaturated the machine.\",\"fix_now\":\"Check Windows task list for running EP10 processes; if absent or hung, terminate it and run the delivery stage manually for EP10: python run_episode.py --episode EP10_Hurricane_Katrina_2005 --stage delivery.\",\"prevent\":\"Enforce a strict global semaphore or queue limiter restricting concurrent pipeline runs to 2 on this host, and wrap the post-delivery export stage in an explicit timeout and exit log event.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "EP10 is not stalled; it completed review and passed delivery checks at 17:52:01, but the subsequent delivery export/packaging process either hung silently or completed without appending an exit record to batch.log while 4+ other concurrent episodes oversaturated the machine.",
+    "fix_now": "Check Windows task list for running EP10 processes; if absent or hung, terminate it and run the delivery stage manually for EP10: python run_episode.py --episode EP10_Hurricane_Katrina_2005 --stage delivery.",
+    "prevent": "Enforce a strict global semaphore or queue limiter restricting concurrent pipeline runs to 2 on this host, and wrap the post-delivery export stage in an explicit timeout and exit log event."
+  },
+  "seconds": 9.180672,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  }
+}

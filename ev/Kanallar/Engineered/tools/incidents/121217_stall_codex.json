@@ -1,0 +1,139 @@
+{
+  "identity": "f49057db942ffd36260bd0893f6c717d3acbc1721b4e104d8224b83d61ee3e56",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "9e597e4ef89848ce8fcc50c74df1ecdb",
+    "role": "codex",
+    "thread_id": 14388,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T09:12:17.871815+00:00",
+    "cooldown_seconds": 4e-05,
+    "queue_seconds": 0.0013,
+    "started_at_utc": "2026-10-30T09:12:17.887540+00:00",
+    "active_channels": 1,
+    "channel_limit": 12,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T09:12:27.623399+00:00",
+    "seconds": 9.734195,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gpt-6-sol",
+  "response_id": "gen-1793351537-T71AGMmJrg5MYYXNGh0P",
+  "usage": {
+    "prompt_tokens": 2821,
+    "completion_tokens": 428,
+    "total_tokens": 3249,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2818
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 266
+    }
+  },
+  "raw_response": "{\"cause\":\"EP05 is stuck in stage 3’s materials/MILP replanning: the requested media mix remains infeasible even after semantic bans are dropped. The planner keeps the targets and skips source expansion because it sees enough total clean cuts; this is not evidence of a RAM/GPU stall.\",\"fix_now\":\"Stop EP05, edit its stage-3 mix plan to permit category shortfalls or lower the constrained 3D/MOTION/ANIM targets, then rerun materials from stage 3 and continue. Do not just retry the unchanged plan.\",\"prevent\":\"Make infeasible mix targets relaxable in the MILP fallback, and trigger source/category expansion based on per-category capacity—not only total clean cuts. Log solver status and unmet category constraints before retrying.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "EP05 is stuck in stage 3’s materials/MILP replanning: the requested media mix remains infeasible even after semantic bans are dropped. The planner keeps the targets and skips source expansion because it sees enough total clean cuts; this is not evidence of a RAM/GPU stall.",
+    "fix_now": "Stop EP05, edit its stage-3 mix plan to permit category shortfalls or lower the constrained 3D/MOTION/ANIM targets, then rerun materials from stage 3 and continue. Do not just retry the unchanged plan.",
+    "prevent": "Make infeasible mix targets relaxable in the MILP fallback, and trigger source/category expansion based on per-category capacity—not only total clean cuts. Log solver status and unmet category constraints before retrying."
+  },
+  "seconds": 9.752154,
+  "governor_after": {
+    "limit": 12,
+    "min_limit": 4,
+    "ceiling": 12,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 540,
+      "quality": 75
+    },
+    "hedge_after_seconds": 8.0,
+    "hedge_enabled": false
+  },
+  "attempts": [
+    {
+      "identity": "f49057db942ffd36260bd0893f6c717d3acbc1721b4e104d8224b83d61ee3e56",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "9e597e4ef89848ce8fcc50c74df1ecdb",
+        "role": "codex",
+        "thread_id": 14388,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T09:12:17.871815+00:00",
+        "cooldown_seconds": 4e-05,
+        "queue_seconds": 0.0013,
+        "started_at_utc": "2026-10-30T09:12:17.887540+00:00",
+        "active_channels": 1,
+        "channel_limit": 12,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T09:12:27.623399+00:00",
+        "seconds": 9.734195,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gpt-6-sol",
+      "response_id": "gen-1793351537-T71AGMmJrg5MYYXNGh0P",
+      "usage": {
+        "prompt_tokens": 2821,
+        "completion_tokens": 428,
+        "total_tokens": 3249,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 2818
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 266
+        }
+      },
+      "raw_response": "{\"cause\":\"EP05 is stuck in stage 3’s materials/MILP replanning: the requested media mix remains infeasible even after semantic bans are dropped. The planner keeps the targets and skips source expansion because it sees enough total clean cuts; this is not evidence of a RAM/GPU stall.\",\"fix_now\":\"Stop EP05, edit its stage-3 mix plan to permit category shortfalls or lower the constrained 3D/MOTION/ANIM targets, then rerun materials from stage 3 and continue. Do not just retry the unchanged plan.\",\"prevent\":\"Make infeasible mix targets relaxable in the MILP fallback, and trigger source/category expansion based on per-category capacity—not only total clean cuts. Log solver status and unmet category constraints before retrying.\"}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "EP05 is stuck in stage 3’s materials/MILP replanning: the requested media mix remains infeasible even after semantic bans are dropped. The planner keeps the targets and skips source expansion because it sees enough total clean cuts; this is not evidence of a RAM/GPU stall.",
+        "fix_now": "Stop EP05, edit its stage-3 mix plan to permit category shortfalls or lower the constrained 3D/MOTION/ANIM targets, then rerun materials from stage 3 and continue. Do not just retry the unchanged plan.",
+        "prevent": "Make infeasible mix targets relaxable in the MILP fallback, and trigger source/category expansion based on per-category capacity—not only total clean cuts. Log solver status and unmet category constraints before retrying."
+      },
+      "seconds": 9.752154,
+      "governor_after": {
+        "limit": 12,
+        "min_limit": 4,
+        "ceiling": 12,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 540,
+          "quality": 75
+        },
+        "hedge_after_seconds": 8.0,
+        "hedge_enabled": false
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "9e597e4ef89848ce8fcc50c74df1ecdb",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\121217_stall_codex.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

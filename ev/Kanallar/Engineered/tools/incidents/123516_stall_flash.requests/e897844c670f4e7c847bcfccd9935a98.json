@@ -1,0 +1,58 @@
+{
+  "identity": "caaf9380478924589f3da6a172dc66752343627ec7351fae2a3b52889aa7c29b",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "e897844c670f4e7c847bcfccd9935a98",
+    "role": "flash",
+    "thread_id": 33524,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T09:35:16.684391+00:00",
+    "cooldown_seconds": 1.9e-05,
+    "queue_seconds": 0.000927,
+    "started_at_utc": "2026-10-30T09:35:16.687392+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T09:35:24.468377+00:00",
+    "seconds": 7.77932,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-2GTkapy1DIWo28oP5JigiQ8",
+  "usage": {
+    "prompt_tokens": 4433,
+    "completion_tokens": 170,
+    "total_tokens": 4603
+  },
+  "raw_response": "{\"cause\":\"EP05 failed and stalled in stage 3 because the MILP screen-time replan became infeasible even after dropping semantic bans (in automatic_mix_replan_last_resort), causing the process to fail all 3 retries without viable material allocations, while queue concurrency was set to 4 instead of 2 on limited system resources.\",\"fix_now\":\"Kill any hanging EP05 process, relax the rigid preserved screen-time targets for EP05 (or allow shortfall relaxation on VIDEO/ANIM targets), and restart EP05 stage 3 with queue concurrency capped to 2.\",\"prevent\":\"Update the batch queue configuration to enforce max concurrency of 2 films, and update the MILP solver fallback logic to relax or soften preserved target percentages when last-resort replanning fails.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "EP05 failed and stalled in stage 3 because the MILP screen-time replan became infeasible even after dropping semantic bans (in automatic_mix_replan_last_resort), causing the process to fail all 3 retries without viable material allocations, while queue concurrency was set to 4 instead of 2 on limited system resources.",
+    "fix_now": "Kill any hanging EP05 process, relax the rigid preserved screen-time targets for EP05 (or allow shortfall relaxation on VIDEO/ANIM targets), and restart EP05 stage 3 with queue concurrency capped to 2.",
+    "prevent": "Update the batch queue configuration to enforce max concurrency of 2 films, and update the MILP solver fallback logic to relax or soften preserved target percentages when last-resort replanning fails."
+  },
+  "seconds": 7.784577,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  }
+}

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>__TITLE__</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #ffffff;
+      }
+      #root {
+        --bg: #ffffff;
+        --banner: #841d1d;
+        --banner-ink: #ffffff;
+        --ink: #111111;
+        --stamp: #e0262c;
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: "Montserrat", sans-serif;
+        color: var(--ink);
+      }
+      #card-banner-row {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 48px;
+        display: flex;
+        justify-content: center;
+      }
+      #card-banner {
+        background: var(--banner);
+        color: var(--banner-ink);
+        border-radius: 12px;
+        padding: 16px 44px 18px;
+        font-weight: 900;
+        font-size: 44px;
+        line-height: 1.1;
+        letter-spacing: 0.01em;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        white-space: nowrap;
+      }
+      /* subject: ken-burns wrapper > pop wrapper > picture */
+      #card-kb {
+        position: absolute;
+      }
+      #card-pop {
+        width: 100%;
+        height: 100%;
+        transform-origin: 50% 60%;
+      }
+      #card-subject {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      /* a real cutout sits on the white with a soft shadow */
+      #card-subject.cutout {
+        filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.22)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.14));
+      }
+      /* a photo whose background could not be removed is a tilted print */
+      #card-subject.photo {
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+        rotate: -1.5deg;
+        box-shadow: 0 24px 40px rgba(0, 0, 0, 0.22), 0 4px 8px rgba(0, 0, 0, 0.14);
+      }
+      #card-note {
+        position: absolute;
+        font-weight: 900;
+        line-height: 1.18;
+        white-space: nowrap;
+      }
+      .card-line {
+        display: block;
+      }
+      .card-w {
+        display: inline-block;
+      }
+      .card-hl {
+        position: relative;
+        padding: 0 12px;
+      }
+      .card-hlbox {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 4px;
+        bottom: 2px;
+        background: var(--ink);
+        border-radius: 4px;
+        transform-origin: left center;
+      }
+      .card-hltxt {
+        position: relative;
+        display: inline-block;
+        color: #ffffff;
+      }
+      #card-arrow {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: visible;
+      }
+      #card-arrow path {
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      #card-stamp {
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: var(--stamp);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+        visibility: hidden;
+      }
+      .card-xbar {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 84px;
+        height: 20px;
+        margin: -10px 0 0 -42px;
+        border-radius: 6px;
+        background: #ffffff;
+      }
+      #card-xbar-a {
+        rotate: 45deg;
+      }
+      #card-xbar-b {
+        rotate: -45deg;
+      }
+      #card-badge {
+        position: absolute;
+        left: 80px;
+        bottom: 64px;
+        border: 3px solid var(--ink);
+        border-radius: 10px;
+        background: var(--bg);
+        padding: 10px 22px 12px;
+        font-weight: 700;
+        font-size: 34px;
+        line-height: 1.1;
+        white-space: nowrap;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__DURATION__" data-fps="25" data-width="1920" data-height="1080">
+      <div id="card-kb">
+        <div id="card-pop">
+          <img id="card-subject" class="__MODE__" src="__SRC__" alt="" />
+        </div>
+      </div>
+      <svg id="card-arrow" viewBox="0 0 1920 1080">
+        <path id="card-arrow-body" d="" />
+        <path id="card-arrow-head" d="" />
+      </svg>
+      <div id="card-stamp"><div class="card-xbar" id="card-xbar-a"></div><div class="card-xbar" id="card-xbar-b"></div></div>
+      <div id="card-note"></div>
+      <div id="card-badge"></div>
+      <div id="card-banner-row"><div id="card-banner"></div></div>
+    </div>
+    <script>
+      (function () {
+        // Every position and every time is computed by cards.py; times are
+        // shot-local seconds taken from the narration's word timestamps.
+        var C = __CONFIG__;
+        var tl = gsap.timeline({ paused: true });
+        var px = function (v) { return v + "px"; };
+
+        var kb = document.getElementById("card-kb");
+        kb.style.left = px(C.subject.left); kb.style.top = px(C.subject.top);
+        kb.style.width = px(C.subject.width); kb.style.height = px(C.subject.height);
+        // the push is pinned on the detail the arrow points at
+        kb.style.transformOrigin = px(C.subject.origin[0]) + " " + px(C.subject.origin[1]);
+
+        document.getElementById("card-banner").textContent = C.banner;
+        // banner slides down and settles
+        tl.fromTo("#card-banner", { y: -170 }, { y: 0, duration: 0.42, ease: "back.out(1.4)" }, C.t.banner);
+
+        // subject pops in with a slight overshoot, then a slow 1.00 -> 1.05 push
+        tl.fromTo("#card-pop", { autoAlpha: 0, scale: 0.9 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, C.t.subject);
+        tl.fromTo("#card-kb", { scale: 1 }, { scale: 1.05, duration: C.t.still - C.t.subject, ease: "none" }, C.t.subject);
+
+        if (C.badge) {
+          var badge = document.getElementById("card-badge");
+          badge.textContent = C.badge.text;
+          tl.fromTo(badge, { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.35, ease: "power3.out" }, C.badge.at);
+        }
+
+        if (C.note) {
+          var note = document.getElementById("card-note");
+          note.style.left = px(C.note.left); note.style.top = px(C.note.top); note.style.fontSize = px(C.note.size);
+          var counter = null;
+          C.note.lines.forEach(function (line) {
+            var row = document.createElement("span");
+            row.className = "card-line";
+            line.forEach(function (index, k) {
+              if (k) row.appendChild(document.createTextNode(" "));
+              var w = document.createElement("span");
+              w.className = "card-w";
+              var text = C.note.words[index];
+              if (index === C.note.highlight) {
+                w.className += " card-hl";
+                var box = document.createElement("span"); box.className = "card-hlbox";
+                var ink = document.createElement("span"); ink.className = "card-hltxt"; ink.textContent = text;
+                w.appendChild(box); w.appendChild(ink);
+                if (index === C.note.count_index) counter = ink;
+              } else {
+                w.textContent = text;
+                if (index === C.note.count_index) counter = w;
+              }
+              row.appendChild(w);
+            });
+            note.appendChild(row);
+          });
+          // word by word in reading order; the key word's black box sweeps in
+          // and the white word pops onto it
+          var t = C.note.at;
+          gsap.utils.toArray("#card-note .card-w").forEach(function (w) {
+            if (w.classList.contains("card-hl")) {
+              tl.fromTo(w.querySelector(".card-hlbox"), { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power3.out" }, t);
+              tl.fromTo(w.querySelector(".card-hltxt"), { autoAlpha: 0, scale: 0.8 }, { autoAlpha: 1, scale: 1, duration: 0.24, ease: "back.out(2.4)" }, t + 0.12);
+              t += 0.26;
+            } else {
+              tl.fromTo(w, { autoAlpha: 0, y: 26, scale: 0.85 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.28, ease: "back.out(2)" }, t);
+              t += 0.11;
+            }
+          });
+          // the count-up is a list of zero-length sets, so a seek to any
+          // frame shows the same number (callbacks are not run on seek)
+          if (counter && C.note.count) {
+            C.note.count.forEach(function (step) { tl.set(counter, { textContent: step[1] }, step[0]); });
+          }
+
+          // arrowhead from the path's end tangent (deterministic, computed once)
+          var body = document.getElementById("card-arrow-body");
+          body.setAttribute("d", C.arrow.d);
+          var len = body.getTotalLength();
+          var tip = body.getPointAtLength(len);
+          var back = body.getPointAtLength(len - 14);
+          var ang = Math.atan2(tip.y - back.y, tip.x - back.x);
+          var hl = 26, spread = 0.52;
+          var head = document.getElementById("card-arrow-head");
+          head.setAttribute("d", "M " + (tip.x - hl * Math.cos(ang - spread)).toFixed(1) + " " + (tip.y - hl * Math.sin(ang - spread)).toFixed(1) +
+            " L " + tip.x.toFixed(1) + " " + tip.y.toFixed(1) +
+            " L " + (tip.x - hl * Math.cos(ang + spread)).toFixed(1) + " " + (tip.y - hl * Math.sin(ang + spread)).toFixed(1));
+          var headLen = head.getTotalLength();
+          // gap longer than the dash and offset past the start, so no round-cap dot shows before the draw
+          tl.fromTo(body, { strokeDasharray: len + " " + (len + 40), strokeDashoffset: len + 20 }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" }, C.arrow.at);
+          tl.fromTo(head, { strokeDasharray: headLen + " " + (headLen + 40), strokeDashoffset: headLen + 20 }, { strokeDashoffset: 0, duration: 0.14, ease: "power2.out" }, C.arrow.at + 0.48);
+        }
+
+        if (C.stamp) {
+          var stamp = document.getElementById("card-stamp");
+          stamp.style.left = px(C.stamp.left); stamp.style.top = px(C.stamp.top);
+          // red X slams on, the picture takes the hit
+          tl.fromTo(stamp, { autoAlpha: 0, scale: 2.4, rotation: -30 }, { autoAlpha: 1, scale: 1, rotation: -8, duration: 0.3, ease: "back.out(2.6)" }, C.stamp.at);
+          tl.fromTo("#card-pop", { x: 0, y: 0 }, { keyframes: [{ x: -7, y: 4 }, { x: 6, y: -3 }, { x: -3, y: 2 }, { x: 0, y: 0 }], duration: 0.2, ease: "none", immediateRender: false }, C.stamp.at + 0.2);
+        }
+
+        // nothing moves after C.t.still: the last ~1.5 s hold
+        tl.set({}, {}, C.t.duration);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["main"] = tl;
+        tl.seek(0);
+      })();
+    </script>
+  </body>
+</html>

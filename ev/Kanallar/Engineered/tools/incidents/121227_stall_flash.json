@@ -1,0 +1,125 @@
+{
+  "identity": "baea15f8dd089489319d65b73f392185e7e2d4fdfabd33dfc3079ea2299da916",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "e7e331042e13411a8f29e56c1f38f928",
+    "role": "flash",
+    "thread_id": 8348,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T09:12:27.642669+00:00",
+    "cooldown_seconds": 2.8e-05,
+    "queue_seconds": 0.001804,
+    "started_at_utc": "2026-10-30T09:12:27.645570+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T09:12:35.435008+00:00",
+    "seconds": 7.786179,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-f1_kapnVAaj1kdUP2IvV2AI",
+  "usage": {
+    "prompt_tokens": 5509,
+    "completion_tokens": 171,
+    "total_tokens": 5680
+  },
+  "raw_response": "{\"cause\":\"Overconcurrency (queue started with max 4 concurrent films on a 16 GB RAM / 4 GB GPU host) caused the local animation service on port 8765 to crash/refuse connections, leaving EP05 unable to generate required ANIM cuts, repeatedly failing stage 3 MILP mix replanning, and hanging or dying without progress.\",\"fix_now\":\"Restart the local animation service (127.0.0.1:8765), lower the queue concurrency to 2, and restart EP05 from stage 3.\",\"prevent\":\"Enforce a hard max concurrency limit of 2 concurrent runs in the batch queue configuration on 16 GB machines, and add health checks with automatic process restarts and backoff timeouts for the port 8765 service.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "Overconcurrency (queue started with max 4 concurrent films on a 16 GB RAM / 4 GB GPU host) caused the local animation service on port 8765 to crash/refuse connections, leaving EP05 unable to generate required ANIM cuts, repeatedly failing stage 3 MILP mix replanning, and hanging or dying without progress.",
+    "fix_now": "Restart the local animation service (127.0.0.1:8765), lower the queue concurrency to 2, and restart EP05 from stage 3.",
+    "prevent": "Enforce a hard max concurrency limit of 2 concurrent runs in the batch queue configuration on 16 GB machines, and add health checks with automatic process restarts and backoff timeouts for the port 8765 service."
+  },
+  "seconds": 7.792995,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  },
+  "attempts": [
+    {
+      "identity": "baea15f8dd089489319d65b73f392185e7e2d4fdfabd33dfc3079ea2299da916",
+      "requested_model": "ag/gemini-3.8-flash-low",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "e7e331042e13411a8f29e56c1f38f928",
+        "role": "flash",
+        "thread_id": 8348,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T09:12:27.642669+00:00",
+        "cooldown_seconds": 2.8e-05,
+        "queue_seconds": 0.001804,
+        "started_at_utc": "2026-10-30T09:12:27.645570+00:00",
+        "active_channels": 1,
+        "channel_limit": 15,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T09:12:35.435008+00:00",
+        "seconds": 7.786179,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gemini-3.8-flash-n",
+      "response_id": "chatcmpl-f1_kapnVAaj1kdUP2IvV2AI",
+      "usage": {
+        "prompt_tokens": 5509,
+        "completion_tokens": 171,
+        "total_tokens": 5680
+      },
+      "raw_response": "{\"cause\":\"Overconcurrency (queue started with max 4 concurrent films on a 16 GB RAM / 4 GB GPU host) caused the local animation service on port 8765 to crash/refuse connections, leaving EP05 unable to generate required ANIM cuts, repeatedly failing stage 3 MILP mix replanning, and hanging or dying without progress.\",\"fix_now\":\"Restart the local animation service (127.0.0.1:8765), lower the queue concurrency to 2, and restart EP05 from stage 3.\",\"prevent\":\"Enforce a hard max concurrency limit of 2 concurrent runs in the batch queue configuration on 16 GB machines, and add health checks with automatic process restarts and backoff timeouts for the port 8765 service.\"}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "Overconcurrency (queue started with max 4 concurrent films on a 16 GB RAM / 4 GB GPU host) caused the local animation service on port 8765 to crash/refuse connections, leaving EP05 unable to generate required ANIM cuts, repeatedly failing stage 3 MILP mix replanning, and hanging or dying without progress.",
+        "fix_now": "Restart the local animation service (127.0.0.1:8765), lower the queue concurrency to 2, and restart EP05 from stage 3.",
+        "prevent": "Enforce a hard max concurrency limit of 2 concurrent runs in the batch queue configuration on 16 GB machines, and add health checks with automatic process restarts and backoff timeouts for the port 8765 service."
+      },
+      "seconds": 7.792995,
+      "governor_after": {
+        "limit": 15,
+        "min_limit": 10,
+        "ceiling": 15,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 1080,
+          "quality": 90
+        },
+        "hedge_after_seconds": 45.0,
+        "hedge_enabled": true
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "e7e331042e13411a8f29e56c1f38f928",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\121227_stall_flash.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

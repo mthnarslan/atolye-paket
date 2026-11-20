@@ -1,0 +1,65 @@
+{
+  "identity": "d7296c82eaf17cd3883b486351645d8bdf3b9e4327d39d4daf92d1b6c20146c5",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "22c67209d0a54ba48f4b4543e6de2ac1",
+    "role": "codex",
+    "thread_id": 16860,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T14:52:54.705413+00:00",
+    "cooldown_seconds": 6.5e-05,
+    "queue_seconds": 0.000951,
+    "started_at_utc": "2026-10-30T14:52:54.709090+00:00",
+    "active_channels": 1,
+    "channel_limit": 12,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T14:53:15.634228+00:00",
+    "seconds": 20.924484,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gpt-6-sol",
+  "response_id": "gen-1793371973-a1ggHoQe051LbSpDYJ4I",
+  "usage": {
+    "prompt_tokens": 2239,
+    "completion_tokens": 601,
+    "total_tokens": 2840,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2236
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 394
+    }
+  },
+  "raw_response": "{\"cause\":\"EP03 was processing per-shot work with four projects running concurrently on a constrained PC. Its last event (17:52:48) shows active shot/worker activity, not evidence of a specific failing stage; a worker may now be blocked or resource-starved. The logged animation 403s are for other episodes and do not explain EP03.\",\"fix_now\":\"Check whether EP03’s process is still alive and inspect its current worker log and CPU/RAM/GPU use. If it is hung, pause the other renders, stop only the stuck EP03 process, then resume EP03 from stage 3 using its existing state—do not start a duplicate run.\",\"prevent\":\"Limit concurrent render jobs to what the 16 GB RAM/4 GB GPU machine can sustain (start with one or two), and add per-shot timeouts, worker heartbeats, and a single-run lock per project. On timeout, log the blocked worker/shot and safely resume rather than silently waiting.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "EP03 was processing per-shot work with four projects running concurrently on a constrained PC. Its last event (17:52:48) shows active shot/worker activity, not evidence of a specific failing stage; a worker may now be blocked or resource-starved. The logged animation 403s are for other episodes and do not explain EP03.",
+    "fix_now": "Check whether EP03’s process is still alive and inspect its current worker log and CPU/RAM/GPU use. If it is hung, pause the other renders, stop only the stuck EP03 process, then resume EP03 from stage 3 using its existing state—do not start a duplicate run.",
+    "prevent": "Limit concurrent render jobs to what the 16 GB RAM/4 GB GPU machine can sustain (start with one or two), and add per-shot timeouts, worker heartbeats, and a single-run lock per project. On timeout, log the blocked worker/shot and safely resume rather than silently waiting."
+  },
+  "seconds": 20.929779,
+  "governor_after": {
+    "limit": 12,
+    "min_limit": 4,
+    "ceiling": 12,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 540,
+      "quality": 75
+    },
+    "hedge_after_seconds": 8.0,
+    "hedge_enabled": false
+  }
+}

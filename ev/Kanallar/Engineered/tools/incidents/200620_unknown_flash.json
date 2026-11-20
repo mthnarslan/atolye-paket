@@ -1,0 +1,123 @@
+{
+  "identity": "52eefd1aa9c7f8e152378a05950016c180da72f6053c9ad08989ab43c0d60f27",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "26ec62adf62c4534bb1729735983dfef",
+    "role": "flash",
+    "thread_id": 32944,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T17:06:20.112754+00:00",
+    "cooldown_seconds": 2.9e-05,
+    "queue_seconds": 0.000873,
+    "started_at_utc": "2026-10-30T17:06:20.115977+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T17:06:26.889725+00:00",
+    "seconds": 6.773016,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-js7kavS-A6XlnsEPjraMqA4",
+  "usage": {
+    "prompt_tokens": 2290,
+    "completion_tokens": 72,
+    "total_tokens": 2362
+  },
+  "raw_response": "{\n  \"cause\": \"Stage 3 failed due to a duplicate active production job on the target output and an interrupted remote connection (WinError 10054).\",\n  \"fix_now\": \"Wait for the active production job cancellation to complete, or terminate the existing running task, then re-run the pipeline.\"\n}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "Stage 3 failed due to a duplicate active production job on the target output and an interrupted remote connection (WinError 10054).",
+    "fix_now": "Wait for the active production job cancellation to complete, or terminate the existing running task, then re-run the pipeline."
+  },
+  "seconds": 6.777652,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  },
+  "attempts": [
+    {
+      "identity": "52eefd1aa9c7f8e152378a05950016c180da72f6053c9ad08989ab43c0d60f27",
+      "requested_model": "ag/gemini-3.8-flash-low",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "26ec62adf62c4534bb1729735983dfef",
+        "role": "flash",
+        "thread_id": 32944,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T17:06:20.112754+00:00",
+        "cooldown_seconds": 2.9e-05,
+        "queue_seconds": 0.000873,
+        "started_at_utc": "2026-10-30T17:06:20.115977+00:00",
+        "active_channels": 1,
+        "channel_limit": 15,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T17:06:26.889725+00:00",
+        "seconds": 6.773016,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gemini-3.8-flash-n",
+      "response_id": "chatcmpl-js7kavS-A6XlnsEPjraMqA4",
+      "usage": {
+        "prompt_tokens": 2290,
+        "completion_tokens": 72,
+        "total_tokens": 2362
+      },
+      "raw_response": "{\n  \"cause\": \"Stage 3 failed due to a duplicate active production job on the target output and an interrupted remote connection (WinError 10054).\",\n  \"fix_now\": \"Wait for the active production job cancellation to complete, or terminate the existing running task, then re-run the pipeline.\"\n}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "Stage 3 failed due to a duplicate active production job on the target output and an interrupted remote connection (WinError 10054).",
+        "fix_now": "Wait for the active production job cancellation to complete, or terminate the existing running task, then re-run the pipeline."
+      },
+      "seconds": 6.777652,
+      "governor_after": {
+        "limit": 15,
+        "min_limit": 10,
+        "ceiling": 15,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 1080,
+          "quality": 90
+        },
+        "hedge_after_seconds": 45.0,
+        "hedge_enabled": true
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "26ec62adf62c4534bb1729735983dfef",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\200620_unknown_flash.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

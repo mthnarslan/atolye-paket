@@ -1,0 +1,283 @@
+[
+  {
+    "topic_keywords": [
+      "Hyatt",
+      "Regency",
+      "walkway collapse"
+    ],
+    "assets": [
+      {
+        "id": "fig_5_7_hanger_rod_pullthrough_9UE",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-quality-20261013\\corrected_primary_assets\\fig_5_7_hanger_rod_pullthrough_9UE.png",
+        "sha256": "96e92ff78f5745bd88bd20c4a72d714b22cdb5045cb209ac258b6c07f2758339",
+        "description": "Figure 5.7 Hanger rod pull-through at location 9UE.",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 95,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_REPORT_CONTAINS_THIRD_PARTY_IMAGES"
+      },
+      {
+        "id": "fig_5_8_box_beam_end_9UE",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-quality-20261013\\corrected_primary_assets\\fig_5_8_box_beam_end_9UE.png",
+        "sha256": "9bbf2a7d6912839b359ab862afd06d66f389044e324d7251e5d4c49ffd628dbb",
+        "description": "Figure 5.8 End view of box beam at location 9UE.",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 95,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_REPORT_CONTAINS_THIRD_PARTY_IMAGES"
+      },
+      {
+        "id": "fig_5_10_washer_imprint_slipstick_9UE",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-quality-20261013\\corrected_primary_assets\\fig_5_10_washer_imprint_slipstick_9UE.png",
+        "sha256": "3ee120be6525a03d9aebef7a0d8835754bd0693ce2446650fbddd42946be589b",
+        "description": "Figure 5.10 Deformation at underside, outer hole, location 9UE due to pull-through of washer/nut assembly.",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 97,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_REPORT_CONTAINS_THIRD_PARTY_IMAGES"
+      },
+      {
+        "id": "fig_5_13_washer_hanger_rod_9UW",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-quality-20261013\\corrected_primary_assets\\fig_5_13_washer_hanger_rod_9UW.png",
+        "sha256": "704adeb261ebe5b54a404c20279555c6a8b0436f803eef6fbc02d42f6076ab15",
+        "description": "Figure 5.13 Washer at bottom end of fourth floor to ceiling hanger rod 9UW.",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 99,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_REPORT_CONTAINS_THIRD_PARTY_IMAGES"
+      },
+      {
+        "id": "fig_3_11_hanger_rod_assembly_elevation",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-quality-20261013\\corrected_primary_assets\\fig_3_11_hanger_rod_assembly_elevation.png",
+        "sha256": "829b78e959afb03153c05ed810fee9549bcfaaf2c93ee02ffac2b82ffbf71b59",
+        "description": "Figure 3.11 Elevation of typical box beam-hanger rod assembly, upper elevation.",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 46,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_REPORT_CONTAINS_THIRD_PARTY_IMAGES"
+      },
+      {
+        "id": "fig_3_11_roof_connection_detail_A",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-quality-20261013\\corrected_primary_assets\\fig_3_11_roof_connection_detail_A.png",
+        "sha256": "5b95e47271367add16170a21b537b95abacf336964a0b7854a8f8303f966f283",
+        "description": "Figure 3.11 Detail A, roof connection detail; not the failed box-beam connection.",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 46,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_REPORT_CONTAINS_THIRD_PARTY_IMAGES"
+      },
+      {
+        "id": "hotel_plan",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-ab-120s-20261013\\assets\\hotel_plan.png",
+        "sha256": "cc2f09626f76c080c4c397769141763113b6eb069341c14ef89571d44cf9b507",
+        "description": "Fig 3.1: tower, atrium and function block plan",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 36,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_PRIVATE_COMPARISON_ONLY"
+      },
+      {
+        "id": "walkway_perspective",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-ab-120s-20261013\\assets\\walkway_perspective.png",
+        "sha256": "a2c73cd3a09ef0a9c9e6cff55c4df42c0473f6509902e35b7a86c08bbb1f6815",
+        "description": "Fig 3.4: walkway arrangement viewed from north",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 39,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_PRIVATE_COMPARISON_ONLY"
+      },
+      {
+        "id": "walkway_section",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-ab-120s-20261013\\assets\\walkway_section.png",
+        "sha256": "0a39454b4e808a95e2017ccf948e7d0f109cc312d0b62b708f22c6e563f4f064",
+        "description": "Fig 3.9: transverse walkway deck section",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 44,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_PRIVATE_COMPARISON_ONLY"
+      },
+      {
+        "id": "aftermath",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-ab-120s-20261013\\assets\\aftermath.png",
+        "sha256": "8a531a8e6b96ba34f75e7513bc34c669a948128596819663128b6aa6b2636eb4",
+        "description": "Fig 4.3: aftermath; photo courtesy Kansas City Police Department",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 60,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_PRIVATE_COMPARISON_ONLY"
+      },
+      {
+        "id": "connection_comparison",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-ab-120s-20261013\\assets\\connection_comparison.png",
+        "sha256": "bd6819688ff44f0b9388522bcbe034748f2a6c3de8954403891d906c00497700",
+        "description": "Fig 10.2: as-built left; original detail right",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 269,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_PRIVATE_COMPARISON_ONLY"
+      },
+      {
+        "id": "as_built_detail",
+        "kind": "2D",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\hyatt-ab-120s-20261013\\assets\\as_built_detail.png",
+        "sha256": "ba284092390f352ee2a99761c724fae7ef593e8418ceb659be1d541d1b7d3f86",
+        "description": "Fig 10.2: interrupted rods, as built",
+        "source_url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "page": 269,
+        "source_document_sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "rights": "REVIEW_REQUIRED_PRIVATE_COMPARISON_ONLY"
+      },
+      {
+        "id": "web_actual_1979_roof",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\roof_sources\\actual_1979_roof.jpg",
+        "sha256": "cf58bc11fe2c0ec3ea0b2c56691934be6cb3f0be525c6219507d4882e26636fa",
+        "source_url": "https://flatlandkc.org/news-issues/new-perspectives-emerge-on-hyatt-regency-skywalks-collapse/",
+        "source_image_url": "https://flatlandkc.org/wp-content/uploads/2023/05/Skywalks-1979-Collapse-2a.jpg",
+        "source_caption": "October 1979 collapse of a portion of the Hyatt Regency atrium roof. Courtesy Missouri Valley Special Collections, Kansas City Public Library.",
+        "required_context_label": "Hyatt Regency roof collapse, October 1979 archive",
+        "rights": "Private review only; publication rights not cleared",
+        "category": "PHOTO",
+        "description": "Archival color photograph showing structural steel beams, corrugated metal decking, and debris from the October 1979 Hyatt Regency atrium roof collapse, with an investigator wearing a hard hat taking notes in the foreground.",
+        "keywords": [
+          "Hyatt Regency",
+          "roof collapse",
+          "structural failure",
+          "steel beam",
+          "debris",
+          "investigation",
+          "1979",
+          "construction"
+        ],
+        "usable": true,
+        "problems": [],
+        "sample_contact": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\roof_sources\\inventory\\web_actual_1979_roof\\contact.jpg",
+        "classification_receipt": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\roof_sources\\inventory\\web_actual_1979_roof\\flash.json",
+        "classification_sampling": "five actual video frames; not full-motion authentication"
+      },
+      {
+        "id": "web_pm_3",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\pm_3.jpg",
+        "sha256": "60d3a300e734bf67a9eef378df8f749906909c0c70f8981f91636e2467bce13a",
+        "source_url": "https://www.popularmechanics.com/science/a37180943/hyatt-regency-collapse/",
+        "source_image_url": "https://hips.hearstapps.com/hmg-prod/images/gettyimages-1192329012.jpg",
+        "source_caption": "Bettmann // Getty Images Firefighters rescue people from under a collapsed walkway.",
+        "rights": "Private review only; republication permission not cleared",
+        "category": "PHOTO",
+        "description": "Black-and-white documentary photograph showing emergency responders and firefighters extricating an injured victim on a backboard amid the debris and collapsed walkway structures at the Hyatt Regency Kansas City.",
+        "keywords": [
+          "Hyatt Regency walkway collapse",
+          "search and rescue",
+          "firefighters",
+          "emergency medical response",
+          "stretcher",
+          "disaster debris",
+          "archival photograph"
+        ],
+        "usable": true,
+        "problems": [],
+        "sample_contact": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\inventory\\web_pm_3\\contact.jpg",
+        "classification_receipt": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\inventory\\web_pm_3\\flash.json",
+        "classification_sampling": "five actual video frames; not full-motion authentication"
+      },
+      {
+        "id": "web_kcstar_scene",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\kcstar_scene.jpg",
+        "sha256": "00a03410eb38257b53d712932ecd02e891c0e05608e14742b2d7dffd56a60aac",
+        "source_url": "https://www.yahoo.com/news/44-years-ago-moment-humanity-100000698.html",
+        "source_image_url": "https://s.yimg.com/os/en/kansas_city_star_mcclatchy_articles_677/8df6213518504d13dc96a8eaea167868",
+        "source_caption": "",
+        "rights": "Private review only; republication permission not cleared",
+        "category": "PHOTO",
+        "description": "Archival color photograph documenting the aftermath and search-and-rescue operations inside the Hyatt Regency atrium following the 1981 walkway collapse in Kansas City, showing collapsed bridge spans, emergency personnel, and heavy lifting equipment.",
+        "keywords": [
+          "Hyatt Regency walkway collapse",
+          "Kansas City",
+          "atrium lobby",
+          "structural collapse",
+          "search and rescue",
+          "debris",
+          "first responders",
+          "archival photograph"
+        ],
+        "usable": true,
+        "problems": [],
+        "sample_contact": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\inventory\\web_kcstar_scene\\contact.jpg",
+        "classification_receipt": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\inventory\\web_kcstar_scene\\flash.json",
+        "classification_sampling": "five actual video frames; not full-motion authentication"
+      },
+      {
+        "id": "web_lexipol_rescue",
+        "kind": "PHOTO",
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\lexipol_rescue.jpg",
+        "sha256": "e42ca459df479a68298a3fd594ad3920567519391f3255e68d68b89e6f945009",
+        "source_url": "https://www.ems1.com/historical/kansas-city-hyatt-skywalk-collapse-recalled-44-years-later",
+        "source_image_url": "https://k1-prod-lexipol.s3.us-east-2.amazonaws.com/brightspot/f7/89/f1c4c336477b9b37a15708c5e884/20250717-amx-us-news-44-years-ago-moment-humanity-3-kc.jpg",
+        "source_caption": "",
+        "rights": "Private review only; republication permission not cleared",
+        "category": "PHOTO",
+        "description": "Historical black-and-white photograph showing two injured victims lying on stretchers on pavement holding hands while being attended to by emergency personnel following the 1981 Kansas City Hyatt Regency walkway collapse.",
+        "keywords": [
+          "Hyatt Regency walkway collapse",
+          "Kansas City",
+          "1981",
+          "disaster response",
+          "stretchers",
+          "emergency medical services",
+          "victims",
+          "rescue operation",
+          "archival photograph"
+        ],
+        "usable": true,
+        "problems": [],
+        "sample_contact": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\inventory\\web_lexipol_rescue\\contact.jpg",
+        "classification_receipt": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\repair_inventory\\rescue_sources\\inventory\\web_lexipol_rescue\\flash.json",
+        "classification_sampling": "five actual video frames; not full-motion authentication"
+      }
+    ],
+    "documents": [
+      {
+        "path": "C:\\Users\\meteh\\Documents\\Codex\\flash-material-full-run-20261016\\source_nbs.pdf",
+        "sha256": "5f75a7b2c28883e3f989afc9bd89f0aa8d2c04dbf1ddc10f851978b45cae0fc3",
+        "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience143.pdf",
+        "candidate_pages": [
+          59,
+          60,
+          61,
+          62,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          102,
+          104,
+          106,
+          108,
+          110,
+          151
+        ]
+      }
+    ],
+    "video_urls": [
+      "https://www.youtube.com/watch?v=gKojuChxNt8",
+      "https://www.youtube.com/watch?v=ntdSXrp5XQY",
+      "https://www.youtube.com/watch?v=RA4Dr2X7dyg",
+      "https://www.youtube.com/watch?v=SZqtDDLMTPg"
+    ]
+  }
+]

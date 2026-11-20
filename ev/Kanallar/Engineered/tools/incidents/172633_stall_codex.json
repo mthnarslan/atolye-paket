@@ -1,0 +1,139 @@
+{
+  "identity": "0342d126d8e65da84147cf7ad1f08d89c349f81ea4448a099b0db2ae28896e28",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "7409b2f787eb4dfbb3103dba6d391247",
+    "role": "codex",
+    "thread_id": 33108,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T14:26:33.081472+00:00",
+    "cooldown_seconds": 2.2e-05,
+    "queue_seconds": 0.000673,
+    "started_at_utc": "2026-10-30T14:26:33.084230+00:00",
+    "active_channels": 1,
+    "channel_limit": 12,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T14:26:49.521513+00:00",
+    "seconds": 16.436423,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gpt-6-sol",
+  "response_id": "gen-1793370392-2p4yVNlZ7VgFkaU1Al6k",
+  "usage": {
+    "prompt_tokens": 3455,
+    "completion_tokens": 534,
+    "total_tokens": 3989,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 3452
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 345
+    }
+  },
+  "raw_response": "{\"cause\":\"EP09 is stalled in stage 3 with animation workers still in flight: 23 started versus 18 finished. The logs show timed-out image-generation requests and failures to reach the shared local API on 127.0.0.1:8765. Concurrent runs likely overloaded or lost that service; this does not look like a MILP stall.\",\"fix_now\":\"Check whether the animation service on port 8765 is running and inspect the five unfinished workers. Restart the service if it is down, stop orphaned EP09 workers, then resume EP09 at stage 3 using the existing shot outputs so completed shots are not regenerated.\",\"prevent\":\"Run only one GPU-heavy animation/render workload at a time on this PC; cap worker concurrency across both films. Add service health checks, bounded polling/timeouts and recovery for abandoned workers, and prevent simultaneous stage-3 runs for the same project.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "EP09 is stalled in stage 3 with animation workers still in flight: 23 started versus 18 finished. The logs show timed-out image-generation requests and failures to reach the shared local API on 127.0.0.1:8765. Concurrent runs likely overloaded or lost that service; this does not look like a MILP stall.",
+    "fix_now": "Check whether the animation service on port 8765 is running and inspect the five unfinished workers. Restart the service if it is down, stop orphaned EP09 workers, then resume EP09 at stage 3 using the existing shot outputs so completed shots are not regenerated.",
+    "prevent": "Run only one GPU-heavy animation/render workload at a time on this PC; cap worker concurrency across both films. Add service health checks, bounded polling/timeouts and recovery for abandoned workers, and prevent simultaneous stage-3 runs for the same project."
+  },
+  "seconds": 16.440042,
+  "governor_after": {
+    "limit": 12,
+    "min_limit": 4,
+    "ceiling": 12,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 540,
+      "quality": 75
+    },
+    "hedge_after_seconds": 8.0,
+    "hedge_enabled": false
+  },
+  "attempts": [
+    {
+      "identity": "0342d126d8e65da84147cf7ad1f08d89c349f81ea4448a099b0db2ae28896e28",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "7409b2f787eb4dfbb3103dba6d391247",
+        "role": "codex",
+        "thread_id": 33108,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T14:26:33.081472+00:00",
+        "cooldown_seconds": 2.2e-05,
+        "queue_seconds": 0.000673,
+        "started_at_utc": "2026-10-30T14:26:33.084230+00:00",
+        "active_channels": 1,
+        "channel_limit": 12,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T14:26:49.521513+00:00",
+        "seconds": 16.436423,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gpt-6-sol",
+      "response_id": "gen-1793370392-2p4yVNlZ7VgFkaU1Al6k",
+      "usage": {
+        "prompt_tokens": 3455,
+        "completion_tokens": 534,
+        "total_tokens": 3989,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 3452
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 345
+        }
+      },
+      "raw_response": "{\"cause\":\"EP09 is stalled in stage 3 with animation workers still in flight: 23 started versus 18 finished. The logs show timed-out image-generation requests and failures to reach the shared local API on 127.0.0.1:8765. Concurrent runs likely overloaded or lost that service; this does not look like a MILP stall.\",\"fix_now\":\"Check whether the animation service on port 8765 is running and inspect the five unfinished workers. Restart the service if it is down, stop orphaned EP09 workers, then resume EP09 at stage 3 using the existing shot outputs so completed shots are not regenerated.\",\"prevent\":\"Run only one GPU-heavy animation/render workload at a time on this PC; cap worker concurrency across both films. Add service health checks, bounded polling/timeouts and recovery for abandoned workers, and prevent simultaneous stage-3 runs for the same project.\"}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "EP09 is stalled in stage 3 with animation workers still in flight: 23 started versus 18 finished. The logs show timed-out image-generation requests and failures to reach the shared local API on 127.0.0.1:8765. Concurrent runs likely overloaded or lost that service; this does not look like a MILP stall.",
+        "fix_now": "Check whether the animation service on port 8765 is running and inspect the five unfinished workers. Restart the service if it is down, stop orphaned EP09 workers, then resume EP09 at stage 3 using the existing shot outputs so completed shots are not regenerated.",
+        "prevent": "Run only one GPU-heavy animation/render workload at a time on this PC; cap worker concurrency across both films. Add service health checks, bounded polling/timeouts and recovery for abandoned workers, and prevent simultaneous stage-3 runs for the same project."
+      },
+      "seconds": 16.440042,
+      "governor_after": {
+        "limit": 12,
+        "min_limit": 4,
+        "ceiling": 12,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 540,
+          "quality": 75
+        },
+        "hedge_after_seconds": 8.0,
+        "hedge_enabled": false
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "7409b2f787eb4dfbb3103dba6d391247",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\172633_stall_codex.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

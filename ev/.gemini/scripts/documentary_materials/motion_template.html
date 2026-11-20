@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>__TITLE__</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #040a1c; }
+      /* One film palette, two polarities (motion.py alternates them). */
+      #root.dark {
+        --bg-a: #15306a; --bg-b: #081634; --bg-c: #040a1c;
+        --ink: #ffffff; --muted: #93c5fd; --accent: #60a5fa; --accent-2: #7dd3fc;
+        --card: #0e1c3c; --card-line: rgba(96, 165, 250, 0.38); --card-ink: #ffffff;
+        --tag-bg: #60a5fa; --tag-ink: #04122e; --grid: rgba(59, 130, 246, 0.13);
+        --metric: #0e1c3c; --metric-line: rgba(125, 211, 252, 0.55); --pill: #047857;
+        --shadow: rgba(0, 0, 0, 0.55); --particle: #7dd3fc; --flash: #dbeafe; --vignette: rgba(0, 0, 0, 0.55);
+      }
+      #root.light {
+        --bg-a: #ffffff; --bg-b: #eef1f5; --bg-c: #e1e7ef;
+        --ink: #0f172a; --muted: #64748b; --accent: #2563eb; --accent-2: #60a5fa;
+        --card: #ffffff; --card-line: #e2e8f0; --card-ink: #0f172a;
+        --tag-bg: #0f172a; --tag-ink: #ffffff; --grid: rgba(15, 23, 42, 0.06);
+        --metric: #0f172a; --metric-line: rgba(37, 99, 235, 0.6); --pill: #047857;
+        --shadow: rgba(15, 23, 42, 0.22); --particle: #94a3b8; --flash: #ffffff; --vignette: rgba(15, 23, 42, 0.12);
+      }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: radial-gradient(ellipse 62% 58% at 50% 48%, var(--bg-a) 0%, var(--bg-b) 58%, var(--bg-c) 100%);
+        font-family: "Montserrat", "Inter", Arial, sans-serif; color: var(--ink);
+        perspective: 1600px;
+      }
+      svg.full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+      #grid line { stroke: var(--grid); stroke-width: 1; }
+      #grid circle { fill: var(--grid); }
+      #glow { position: absolute; left: 560px; top: 240px; width: 800px; height: 600px; border-radius: 50%;
+        background: radial-gradient(closest-side, var(--accent) 0%, transparent 100%); opacity: 0.16; }
+      #cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 50%; }
+      #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 50% 55%; transform-style: preserve-3d; }
+      #particles div { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--particle); }
+      #flash { position: absolute; inset: 0; background: var(--flash); opacity: 0; }
+      #vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 58%, var(--vignette) 100%); }
+      .hide { visibility: hidden; }
+
+      #title { position: absolute; left: 150px; top: 108px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.08;
+        white-space: nowrap; visibility: hidden; }
+      #title .bar { display: block; width: 120px; height: 8px; border-radius: 4px; background: var(--accent); margin-bottom: 22px;
+        transform-origin: 0 50%; }
+
+      /* kinetic */
+      .ring { fill: none; stroke: var(--accent); }
+      .word { position: absolute; left: 0; right: 0; text-align: center; font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+        white-space: nowrap; visibility: hidden; }
+      .echo { color: var(--accent); -webkit-text-stroke: 2px var(--accent-2); }
+      #num { position: absolute; left: 0; right: 0; text-align: center; font-weight: 900; letter-spacing: -0.03em; line-height: 1;
+        font-variant-numeric: tabular-nums; white-space: nowrap; visibility: hidden; }
+      #root.dark #num { text-shadow: 0 0 60px rgba(96, 165, 250, 0.45); }
+      #caption { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; letter-spacing: 0.3em;
+        text-transform: uppercase; color: var(--muted); white-space: nowrap; visibility: hidden; }
+      #caption span { display: inline-block; }
+
+      /* cards (timeline, process) */
+      .slot { position: absolute; }
+      .card { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 28px; background: var(--card);
+        box-shadow: 0 30px 60px -20px var(--shadow), 0 0 0 1px var(--card-line); padding: 36px 40px; color: var(--card-ink);
+        visibility: hidden; }
+      .tag { display: inline-block; font-family: Consolas, "Courier New", monospace; font-size: 22px; font-weight: 700;
+        color: var(--tag-ink); background: var(--tag-bg); border-radius: 10px; padding: 6px 12px; }
+      .date { margin-top: 22px; font-weight: 900; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1;
+        letter-spacing: -0.02em; white-space: nowrap; }
+      .label { margin-top: 18px; font-weight: 800; line-height: 1.12; letter-spacing: -0.01em; white-space: nowrap; }
+      .stepnum { font-weight: 900; font-size: 84px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+      .ring-glow { position: absolute; inset: -4px; border-radius: 31px; border: 4px solid var(--accent); opacity: 0; }
+      .track { stroke: var(--card-line); stroke-width: 4; fill: none; stroke-linecap: round; }
+      .trail { stroke: var(--accent); stroke-width: 5; fill: none; stroke-linecap: round; }
+      .node-dot { fill: var(--accent); }
+      .pulse-dot { position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-2);
+        box-shadow: 0 0 24px var(--accent); opacity: 0; }
+
+      /* stat */
+      #metric { position: absolute; top: 230px; width: 640px; height: 620px; border-radius: 32px; background: var(--metric);
+        color: #ffffff; padding: 48px 48px; box-shadow: 0 40px 80px -24px var(--shadow), 0 0 0 2px var(--metric-line);
+        visibility: hidden; }
+      #metric .n { font-weight: 900; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+      #bars { position: absolute; left: 48px; right: 48px; bottom: 64px; height: 190px; display: flex; align-items: flex-end; gap: 14px; }
+      #bars div { flex: 1; background: linear-gradient(#7dd3fc, #2563eb); border-radius: 8px 8px 3px 3px; transform-origin: 50% 100%; }
+      #pillwrap { margin-top: 26px; }
+      .pill { display: inline-block; background: var(--pill); color: #ffffff; font-weight: 800; border-radius: 999px; padding: 9px 20px;
+        white-space: nowrap; visibility: hidden; }
+      #headline { position: absolute; left: 150px; font-weight: 900; line-height: 1.06; letter-spacing: -0.02em; white-space: nowrap; }
+      #headline div { visibility: hidden; }
+      #hbar { position: absolute; left: 150px; width: 160px; height: 10px; border-radius: 5px; background: var(--accent); transform-origin: 0 50%; }
+
+      /* route */
+      .place { position: absolute; width: 440px; margin-left: -220px; text-align: center; visibility: hidden; }
+      .place .name { font-weight: 800; line-height: 1.1; letter-spacing: -0.01em; white-space: nowrap; }
+      .place .when { font-weight: 700; font-size: 30px; color: var(--accent); font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+      .node-ring { fill: none; stroke: var(--accent); stroke-width: 3; }
+      .route-track { stroke: var(--card-line); stroke-width: 3; fill: none; stroke-dasharray: 2 14; stroke-linecap: round; }
+      #routepill { position: absolute; }
+      .arrowhead { fill: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="dark" data-composition-id="main" data-start="0" data-duration="__DURATION__" data-fps="25" data-width="1920" data-height="1080">
+      <svg id="grid" class="full" viewBox="0 0 1920 1080"></svg>
+      <div id="glow"></div>
+      <div id="cam">
+        <div id="stage">
+          <svg id="fx" class="full" viewBox="0 0 1920 1080"></svg>
+          <div id="layer"></div>
+        </div>
+        <div id="title"><span class="bar"></span><span id="title-text"></span></div>
+      </div>
+      <div id="particles"></div>
+      <div id="flash"></div>
+      <div id="vignette"></div>
+    </div>
+    <script>
+      (function () {
+        // Every text, size and time comes from motion.py; times are
+        // shot-local seconds taken from the narration's word timestamps.
+        // Seek-safe: no callbacks, no DOM reads inside tweens, transforms
+        // and opacity only, SVG transforms with svgOrigin.
+        var C = __CONFIG__;
+        var tl = gsap.timeline({ paused: true });
+        var NS = "http://www.w3.org/2000/svg";
+        var D = C.duration, IDLE = C.idle;
+        var root = document.getElementById("root");
+        root.className = C.polarity === "light" ? "light" : "dark";
+        var fx = document.getElementById("fx"), layer = document.getElementById("layer");
+        var px = function (v) { return v + "px"; };
+        var IR = { immediateRender: false };
+        function mk(tag, cls, parent, text) {
+          var e = document.createElement(tag);
+          if (cls) e.className = cls;
+          if (text != null) e.textContent = text;
+          (parent || layer).appendChild(e);
+          return e;
+        }
+        function sv(tag, attrs, parent) {
+          var e = document.createElementNS(NS, tag);
+          for (var k in attrs) e.setAttribute(k, attrs[k]);
+          (parent || fx).appendChild(e);
+          return e;
+        }
+        function from(target, a, b, at) { b.immediateRender = false; tl.fromTo(target, a, b, at); }
+        // a path draws on: dash longer than the path, offset past its start
+        function draw(path, at, dur, ease) {
+          var L = path.getTotalLength();
+          gsap.set(path, { strokeDasharray: L + " " + (L + 40), strokeDashoffset: L + 20 });
+          tl.to(path, { strokeDashoffset: 0, duration: dur, ease: ease || "power2.inOut" }, at);
+        }
+        function bez(p0, p1, p2, p3, t) {
+          var u = 1 - t;
+          return [u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0],
+                  u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1]];
+        }
+        // deterministic pseudo-random for the background particles
+        var seed = 7;
+        function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+        // ---------------------------------------------------- background
+        var grid = document.getElementById("grid");
+        if (C.layout === "route") {
+          for (var gx = 0; gx <= 24; gx++) for (var gy = 0; gy <= 13; gy++)
+            sv("circle", { cx: 40 + gx * 80, cy: 20 + gy * 80, r: 2.2 }, grid);
+        } else {
+          for (var i = 0; i <= 24; i++) sv("line", { x1: 80 * i, x2: 80 * i, y1: 0, y2: 1080 }, grid);
+          for (var j = 0; j <= 14; j++) sv("line", { x1: 0, x2: 1920, y1: 80 * j, y2: 80 * j }, grid);
+        }
+        from("#grid", { opacity: 0.35 }, { opacity: 1, duration: 1.0, ease: "power1.out" }, 0);
+        // depth: a slow glow and a few drifting particles for the whole shot
+        from("#glow", { x: -80, y: 20, scale: 0.9 }, { x: 80, y: -30, scale: 1.08, duration: D, ease: "sine.inOut" }, 0);
+        var parts = document.getElementById("particles");
+        for (var p = 0; p < 16; p++) {
+          var d = mk("div", null, parts);
+          d.style.left = px(Math.round(60 + rnd() * 1800)); d.style.top = px(Math.round(60 + rnd() * 960));
+          var o = 0.12 + rnd() * 0.25, s = 0.6 + rnd() * 1.2;
+          gsap.set(d, { opacity: o, scale: s });
+          from(d, { y: 0 }, { y: -(30 + rnd() * 60), x: (rnd() - 0.5) * 40, duration: D, ease: "none" }, 0);
+        }
+        // the camera never stands still
+        from("#cam", { scale: 1 }, { scale: 1.045, duration: D, ease: "none" }, 0);
+
+        function showTitle() {
+          if (!C.title) return;
+          var t = document.getElementById("title");
+          document.getElementById("title-text").textContent = C.title.text;
+          t.style.fontSize = px(C.title.size);
+          gsap.set("#title .bar", { scaleX: 0 });
+          from(t, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, C.title.at);
+          from("#title .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, C.title.at + 0.1);
+        }
+        // a soft vertical float from the idle time to the end
+        // (never before notBefore, when the target's own entrance is done)
+        function idleFloat(target, dy, notBefore) {
+          var at = Math.max(IDLE - 0.6, notBefore || 0);
+          from(target, { y: 0 }, { y: dy, duration: Math.max(0.5, D - at), ease: "sine.inOut" }, at);
+        }
+
+        // ---------------------------------------------------- kinetic
+        function kinetic() {
+          var rings = [sv("circle", { "class": "ring", cx: 960, cy: 540, r: 180, "stroke-width": 2 }),
+                       sv("circle", { "class": "ring", cx: 960, cy: 540, r: 300, "stroke-width": 1.5, "stroke-dasharray": "6 14" }),
+                       sv("circle", { "class": "ring", cx: 960, cy: 540, r: 430, "stroke-width": 1 })];
+          var pulse = sv("circle", { "class": "ring", cx: 960, cy: 540, r: 120, "stroke-width": 6, opacity: 0 });
+          var orb = sv("g", {});
+          sv("circle", { cx: 1390, cy: 540, r: 9, fill: "var(--accent-2)" }, orb);
+          sv("circle", { cx: 1390, cy: 540, r: 26, fill: "var(--accent)", opacity: 0.35 }, orb);
+          var peak = [0.9, 0.6, 0.35];
+          rings.forEach(function (r, k) {
+            gsap.set(r, { svgOrigin: "960 540", scale: 0, opacity: 0 });
+            tl.to(r, { scale: 1, opacity: peak[k], duration: 0.8 + 0.1 * k, ease: "expo.out" }, 0.05 + 0.12 * k);
+          });
+          tl.to(rings[1], { rotation: 90, svgOrigin: "960 540", duration: D, ease: "none" }, 0);
+          gsap.set(orb, { svgOrigin: "960 540", opacity: 0 });
+          tl.to(orb, { opacity: 1, duration: 0.3 }, 0.3).to(orb, { rotation: 300 + 60 * D, svgOrigin: "960 540", duration: D - 0.3, ease: "none" }, 0.3);
+          gsap.set(pulse, { svgOrigin: "960 540" });
+          function ripple(at) {
+            tl.fromTo(pulse, { scale: 0.3, opacity: 0.9 }, { scale: 3.2, opacity: 0, duration: 0.8, ease: "power2.out", immediateRender: false }, at);
+          }
+          var N = C.number, words = C.items, last = words.length - 1;
+          var wordEls = words.map(function (w, k) {
+            var top = 540 - w.size * 0.52;
+            var echo = mk("div", "word echo", null, w.text), main = mk("div", "word", null, w.text);
+            // the words take turns in one place: overlap and the entrance overshoot are by design
+            [echo, main].forEach(function (e) {
+              e.style.fontSize = px(w.size); e.style.top = px(top);
+              e.setAttribute("data-layout-allow-overlap", ""); e.setAttribute("data-layout-allow-overflow", "");
+            });
+            var out = k < last ? words[k + 1].at : (N ? N.at : null);
+            from(main, { autoAlpha: 0, scale: 1.25, scaleX: 1.45 }, { autoAlpha: 1, scale: 1, scaleX: 1, duration: 0.35, ease: "power4.out" }, w.at);
+            from(echo, { autoAlpha: 0.6, scale: 1 }, { autoAlpha: 0, scale: 1.35, duration: 0.6, ease: "power2.out" }, w.at + 0.08);
+            if (out != null) tl.to(main, { autoAlpha: 0, duration: 0.06 }, out - 0.04);
+            ripple(w.at);
+            return main;
+          });
+          // the words push the camera in a little; the number resets it
+          from("#stage", { scale: 1, rotation: 0 }, { scale: 1.06, rotation: -1.2, duration: Math.max(0.5, (N ? N.at : IDLE) - words[0].at), ease: "none" }, words[0].at);
+          var capTop;
+          if (N) {
+            var num = mk("div", null, null, N.steps[0][1]); num.id = "num";
+            num.setAttribute("data-layout-allow-overlap", "");
+            num.style.fontSize = px(N.size); num.style.top = px(470 - N.size * 0.5);
+            tl.to(rings[0], { scale: 7, opacity: 0, duration: 0.3, ease: "expo.in" }, N.at - 0.3);
+            from("#flash", { opacity: 0 }, { opacity: 0.5, duration: 0.08, ease: "none" }, N.at - 0.02);
+            tl.to("#flash", { opacity: 0, duration: 0.3, ease: "power2.out" }, N.at + 0.06);
+            tl.set("#stage", { scale: 1, rotation: 0 }, N.at);
+            tl.to([rings[1], rings[2]], { opacity: 0.18, duration: 0.3 }, N.at);
+            from(num, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, N.at);
+            N.steps.forEach(function (st) { tl.set(num, { textContent: st[1] }, st[0]); });
+            capTop = 470 + N.size * 0.55 + 20;
+            // a signal travels along a wire under the figure
+            var wire = sv("path", { d: "M 160 880 C 560 880, 640 810, 960 820 S 1400 880, 1760 860", fill: "none", stroke: "var(--accent)", "stroke-width": 3, opacity: 0.6 });
+            var pts = [];
+            for (var k = 0; k <= 160; k++) {
+              var x = 160 + k * 10, env = Math.sin(Math.PI * k / 160);
+              pts.push((k ? "L " : "M ") + x + " " + (848 + Math.sin(k * 0.55) * 30 * env * (0.6 + 0.4 * Math.sin(k * 0.13))).toFixed(1));
+            }
+            var signal = sv("path", { d: pts.join(" "), fill: "none", stroke: "var(--accent-2)", "stroke-width": 5, "stroke-linecap": "round" });
+            var span = Math.max(0.6, IDLE - N.at - 0.2);
+            draw(wire, N.at + 0.1, Math.min(0.9, span));
+            draw(signal, N.at + 0.3, Math.max(0.6, D - N.at - 0.4), "power1.inOut");
+            idleFloat(num, -8, N.at + 0.45);
+          } else {
+            // no figure: the last word stays and is underlined
+            var w = words[last], y = 540 + w.size * 0.55;
+            var under = sv("path", { d: "M 660 " + y + " C 820 " + (y + 14) + ", 1100 " + (y + 8) + ", 1260 " + (y - 4), fill: "none", stroke: "var(--accent)", "stroke-width": 8, "stroke-linecap": "round" });
+            draw(under, Math.min(w.at + 0.45, IDLE - 0.5), 0.5);
+            capTop = y + 40;
+            idleFloat(wordEls[last], -8, w.at + 0.4);
+          }
+          if (C.title) {
+            var cap = mk("div"); cap.id = "caption"; cap.style.top = px(capTop); cap.style.fontSize = px(Math.min(46, C.title.size));
+            C.title.text.split("").forEach(function (ch) { mk("span", null, cap, ch === " " ? " " : ch); });
+            var cat = N ? Math.min(N.at + 0.5, IDLE - 0.4) : Math.min(words[last].at + 0.6, IDLE - 0.4);
+            gsap.set("#caption span", { opacity: 0 });
+            tl.set(cap, { autoAlpha: 1 }, cat);
+            from("#caption span", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, stagger: 0.025, ease: "power2.out" }, cat);
+          }
+        }
+
+        // ---------------------------------------------------- cards in a row (timeline, process)
+        function row(kind) {
+          showTitle();
+          var n = C.items.length, gap = 60, w = (1620 - gap * (n - 1)) / n, h = kind === "timeline" ? 330 : 300;
+          var top = C.title ? 390 : 340, lineY = top + h + 70;
+          from("#stage", { rotationX: 10, scale: 0.95, y: 40 }, { rotationX: 0, scale: 1, y: 0, duration: 1.1, ease: "power3.out" }, 0);
+          tl.to("#stage", { x: -30, duration: D, ease: "none" }, 0);
+          var centers = C.items.map(function (_, k) { return 150 + k * (w + gap) + w / 2; });
+          // the track under the cards, drawn segment by segment as items arrive
+          var trackBase = sv("path", { "class": "track", d: "M " + centers[0] + " " + lineY + " L " + centers[n - 1] + " " + lineY });
+          gsap.set(trackBase, { opacity: 0 });
+          from(trackBase, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.1);
+          var dot = mk("div", "pulse-dot");
+          var cards = [];
+          C.items.forEach(function (it, k) {
+            var slot = mk("div", "slot"); slot.style.left = px(150 + k * (w + gap)); slot.style.top = px(top);
+            slot.style.width = px(w); slot.style.height = px(h);
+            var card = mk("div", "card", slot);
+            if (kind === "timeline") {
+              mk("span", "tag", card, it.index);
+              var date = mk("div", "date", card, it.sub); date.style.fontSize = px(it.sub_size || 64);
+            } else {
+              mk("div", "stepnum", card, it.index);
+            }
+            var label = mk("div", "label", card); label.style.fontSize = px(it.size);
+            it.lines.forEach(function (ln) { mk("div", null, label, ln); });
+            var glow = mk("div", "ring-glow", card);
+            var node = sv("circle", { "class": "node-dot", cx: centers[k], cy: lineY, r: 9 });
+            gsap.set(node, { svgOrigin: centers[k] + " " + lineY, scale: 0 });
+            from(card, { autoAlpha: 0, y: 60, rotationX: 18 }, { autoAlpha: 1, y: 0, rotationX: 0, duration: 0.6, ease: "power3.out" }, it.at);
+            gsap.set(card.querySelector(kind === "timeline" ? ".tag" : ".stepnum"), kind === "timeline" ? { scale: 0 } : { scale: 0.4, autoAlpha: 0 });
+            if (kind === "timeline") from(card.querySelector(".tag"), { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2.2)" }, it.at + 0.15);
+            else from(card.querySelector(".stepnum"), { scale: 0.4, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(2)" }, it.at + 0.1);
+            tl.to(node, { scale: 1, duration: 0.3, ease: "back.out(3)" }, it.at);
+            from(glow, { opacity: 0 }, { opacity: 1, duration: 0.15 }, it.at + 0.05);
+            if (kind === "timeline" || k < n - 1) tl.to(glow, { opacity: 0, duration: 0.45 }, kind === "timeline" ? it.at + 0.4 : C.items[k + 1].at);
+            if (k) {
+              // the connector over the gap and the trail along the track
+              var x0 = 150 + k * (w + gap) - gap, x1 = x0 + gap, cy = top + h / 2;
+              var arc = sv("path", { "class": "trail", d: "M " + x0 + " " + cy + " C " + (x0 + 15) + " " + (cy - 55) + ", " + (x1 - 15) + " " + (cy - 55) + ", " + x1 + " " + cy });
+              draw(arc, it.at - 0.3, 0.35);
+              var trail = sv("path", { "class": "trail", d: "M " + centers[k - 1] + " " + lineY + " L " + centers[k] + " " + lineY });
+              draw(trail, it.at - 0.45, 0.45, "power1.inOut");
+              from(dot, { x: centers[k - 1], y: lineY }, { x: centers[k], y: lineY, duration: 0.45, ease: "power1.inOut" }, it.at - 0.45);
+            }
+            cards.push(slot);
+          });
+          gsap.set(dot, { x: centers[0], y: lineY });
+          from(dot, { opacity: 0 }, { opacity: 1, duration: 0.15 }, C.items[0].at);
+          // process: the reached step stays lifted
+          if (kind === "process") C.items.forEach(function (it, k) {
+            tl.to(cards[k], { scale: 1.04, duration: 0.3, ease: "power2.out" }, it.at + 0.1);
+            if (k < n - 1) tl.to(cards[k], { scale: 1, duration: 0.3, ease: "power2.inOut" }, C.items[k + 1].at);
+          });
+          // idle: the cards float out of phase, the pulse breathes
+          cards.forEach(function (c, k) {
+            var card = c.querySelector(".card");
+            from(card, { y: 0 }, { y: k % 2 ? 7 : -7, duration: Math.max(0.6, D - IDLE + 0.6), ease: "sine.inOut" }, Math.max(C.items[k].at + 0.65, IDLE - 0.6));
+          });
+          from(dot, { scale: 1 }, { scale: 1.5, duration: 0.5, yoyo: true, repeat: Math.max(1, Math.floor((D - IDLE) / 0.5)), ease: "sine.inOut" }, IDLE);
+        }
+
+        // ---------------------------------------------------- stat
+        function stat() {
+          var N = C.number, hasHead = !!C.title;
+          var card = mk("div"); card.id = "metric";
+          card.style.left = px(hasHead ? 1130 : 640);
+          var n = mk("div", "n", card, N.steps[0][1]); n.style.fontSize = px(N.size);
+          var pillwrap = mk("div", null, card); pillwrap.id = "pillwrap";
+          var pill = null;
+          if (C.pill) { pill = mk("span", "pill", pillwrap, C.pill.text); pill.style.fontSize = px(C.pill.size); }
+          var bars = mk("div", null, card); bars.id = "bars";
+          var heights = [0.12, 0.22, 0.38, 0.55, 0.78, 1];
+          if (C.trend === "down") heights = heights.slice().reverse();
+          var barEls = heights.map(function (hgt) { var b = mk("div", null, bars); b.style.height = px(Math.round(hgt * 190)); return b; });
+          if (hasHead) {
+            var head = mk("div"); head.id = "headline";
+            var lines = C.title.lines || [C.title.text];
+            head.style.fontSize = px(C.title.size);
+            var headTop = 540 - lines.length * C.title.size * 0.55;
+            head.style.top = px(headTop);
+            var lineEls = lines.map(function (ln) { return mk("div", null, head, ln); });
+            var bar = mk("div"); bar.id = "hbar"; bar.style.top = px(headTop - 40);
+            gsap.set(bar, { scaleX: 0 });
+            tl.to(bar, { scaleX: 1, duration: 0.5, ease: "power3.out" }, C.title.at);
+            lineEls.forEach(function (e, k) {
+              from(e, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, C.title.at + 0.12 * k);
+            });
+            idleFloat(head, -6, C.title.at + 0.7);
+          }
+          // the card lands just before its figure is spoken, so no empty "0" waits on screen
+          var land = Math.max(0.2, N.at - 0.6);
+          from("#stage", { scale: 0.96 }, { scale: 1, duration: 1.2, ease: "power2.out" }, 0);
+          from(card, { autoAlpha: 0, x: 120, scale: 0.9, rotationY: -14 }, { autoAlpha: 1, x: 0, scale: 1, rotationY: 0, duration: 0.8, ease: "back.out(1.4)" }, land);
+          N.steps.forEach(function (st) { tl.set(n, { textContent: st[1] }, st[0]); });
+          barEls.forEach(function (b, k) {
+            gsap.set(b, { scaleY: 0 });
+            tl.to(b, { scaleY: 1, duration: 0.5, ease: "power3.out" }, N.at + 0.08 * k);
+          });
+          if (pill) from(pill, { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2.4)" }, C.pill.at);
+          tl.to("#stage", { x: -24, duration: D, ease: "none" }, 0);
+          idleFloat(card, -10, land + 0.85);
+          // the bars breathe a little after they land
+          barEls.forEach(function (b, k) {
+            from(b, { scaleY: 1 }, { scaleY: 0.94 + 0.04 * (k % 2), duration: 0.6, yoyo: true, repeat: Math.max(1, Math.floor((D - IDLE) / 0.6)), ease: "sine.inOut" }, Math.max(IDLE, N.at + 0.95));
+          });
+        }
+
+        // ---------------------------------------------------- route
+        function route() {
+          showTitle();
+          var n = C.items.length, x0 = 300, x1 = 1620, base = C.title ? 600 : 560;
+          var nodes = C.items.map(function (_, k) {
+            return [x0 + k * (x1 - x0) / (n - 1), base + (k % 2 ? -120 : 60) * (n > 2 ? 1 : 0.5)];
+          });
+          from("#stage", { scale: 0.94, y: 30 }, { scale: 1, y: 0, duration: 1.2, ease: "power3.out" }, 0);
+          tl.to("#stage", { x: -26, duration: D, ease: "none" }, 0);
+          var dot = sv("circle", { r: 11, fill: "var(--accent-2)", cx: 0, cy: 0, opacity: 0 });
+          gsap.set(dot, { x: nodes[0][0], y: nodes[0][1] });
+          var mids = [];
+          C.items.forEach(function (it, k) {
+            var p = nodes[k];
+            if (k) {
+              var a = nodes[k - 1], lift = Math.min(a[1], p[1]) - 150;
+              var c1 = [a[0] + (p[0] - a[0]) * 0.3, lift], c2 = [a[0] + (p[0] - a[0]) * 0.7, lift];
+              var d = "M " + a[0] + " " + a[1] + " C " + c1[0] + " " + c1[1] + ", " + c2[0] + " " + c2[1] + ", " + p[0] + " " + p[1];
+              var trackPath = sv("path", { "class": "route-track", d: d });
+              gsap.set(trackPath, { opacity: 0 });
+              from(trackPath, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.2);
+              var trail = sv("path", { "class": "trail", d: d });
+              var t0 = it.at - 0.55;
+              draw(trail, t0, 0.55, "power1.inOut");
+              // the pulse rides the curve: points computed here, not in a callback
+              var frames = [];
+              for (var q = 1; q <= 12; q++) { var pt = bez(a, c1, c2, p, q / 12); frames.push({ x: pt[0], y: pt[1], duration: 0.55 / 12 }); }
+              tl.to(dot, { keyframes: frames, ease: "none" }, t0);
+              mids.push(bez(a, c1, c2, p, 0.5));
+            }
+            var ring = sv("circle", { "class": "node-ring", cx: p[0], cy: p[1], r: 34 });
+            var core = sv("circle", { "class": "node-dot", cx: p[0], cy: p[1], r: 16 });
+            gsap.set([ring, core], { svgOrigin: p[0] + " " + p[1], scale: 0 });
+            tl.to(core, { scale: 1, duration: 0.35, ease: "back.out(3)" }, it.at);
+            tl.to(ring, { scale: 1, duration: 0.5, ease: "expo.out" }, it.at + 0.05);
+            from(ring, { opacity: 1 }, { scale: 1.5, opacity: 0.25, duration: 0.6, yoyo: true, repeat: Math.max(1, Math.floor((D - it.at - 0.6) / 0.6)), ease: "sine.inOut" }, it.at + 0.55);
+            var place = mk("div", "place");
+            var below = !(k % 2) || n === 2;
+            place.style.left = px(p[0]);
+            if (it.sub) mk("div", "when", place, it.sub);
+            var name = mk("div", "name", place); name.style.fontSize = px(it.size);
+            it.lines.forEach(function (ln) { mk("div", null, name, ln); });
+            var tall = it.lines.length * it.size * 1.1 + (it.sub ? 42 : 0);
+            place.style.top = px(below ? p[1] + 56 : p[1] - 56 - tall);
+            from(place, { autoAlpha: 0, y: below ? 24 : -24 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, it.at + 0.05);
+          });
+          from(dot, { opacity: 0 }, { opacity: 1, duration: 0.15 }, C.items[1].at - 0.6);
+          if (C.pill && mids.length) {
+            var m = mids[Math.floor((mids.length - 1) / 2)];
+            var wrap = mk("div"); wrap.id = "routepill"; wrap.style.left = px(m[0]); wrap.style.top = px(m[1] - 70);
+            var pill = mk("span", "pill", wrap, C.pill.text); pill.style.fontSize = px(C.pill.size);
+            gsap.set(wrap, { xPercent: -50 });
+            from(pill, { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2.4)" }, C.pill.at);
+          }
+        }
+
+        if (C.layout === "kinetic") kinetic();
+        else if (C.layout === "timeline") row("timeline");
+        else if (C.layout === "process") row("process");
+        else if (C.layout === "stat") stat();
+        else route();
+
+        tl.set({}, {}, D);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["main"] = tl;
+        tl.seek(0);
+      })();
+    </script>
+  </body>
+</html>

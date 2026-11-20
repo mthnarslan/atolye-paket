@@ -1,0 +1,58 @@
+{
+  "identity": "4e89976ad57597c3db39661cfca311526e09934ca3fe05fcc3528501dd251624",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "b879e6eae90c4855b70e5e60efb47306",
+    "role": "flash",
+    "thread_id": 29772,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T14:53:15.663936+00:00",
+    "cooldown_seconds": 3.3e-05,
+    "queue_seconds": 0.003245,
+    "started_at_utc": "2026-10-30T14:53:15.670803+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T14:53:25.476313+00:00",
+    "seconds": 9.804132,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-YK_kaprvKsyM28oPut70sA8",
+  "usage": {
+    "prompt_tokens": 4820,
+    "completion_tokens": 130,
+    "total_tokens": 4950
+  },
+  "raw_response": "{\"cause\":\"System resource exhaustion and process stalls caused by concurrently running 6+ documentary jobs on a machine constrained to 16 GB RAM and 4 GB GPU, violating the two-film concurrency limit.\",\"fix_now\":\"Kill extraneous running pipeline processes (EP02, EP05, EP06, EP08, EP09, EP10) leaving only EP03 (or EP03 plus one other), then resume EP03 from stage 3.\",\"prevent\":\"Enforce a strict global concurrency semaphore or job queue lock limited to 2 active film processes simultaneously in the batch orchestration script.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "System resource exhaustion and process stalls caused by concurrently running 6+ documentary jobs on a machine constrained to 16 GB RAM and 4 GB GPU, violating the two-film concurrency limit.",
+    "fix_now": "Kill extraneous running pipeline processes (EP02, EP05, EP06, EP08, EP09, EP10) leaving only EP03 (or EP03 plus one other), then resume EP03 from stage 3.",
+    "prevent": "Enforce a strict global concurrency semaphore or job queue lock limited to 2 active film processes simultaneously in the batch orchestration script."
+  },
+  "seconds": 9.812163,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "identity": "3b5b737655f5b0beebce500ce7557e36d4f6c5001f45484415b63b3a1c521148",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "82d68aa22cc445af80a47c627e860c09",
+    "role": "codex",
+    "thread_id": 14076,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T09:35:01.730928+00:00",
+    "cooldown_seconds": 4e-05,
+    "queue_seconds": 0.001475,
+    "started_at_utc": "2026-10-30T09:35:01.735963+00:00",
+    "active_channels": 1,
+    "channel_limit": 12,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T09:35:16.662098+00:00",
+    "seconds": 14.925632,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gpt-6-sol",
+  "response_id": "gen-1793352900-7BK8WcSk6oNgytD9hCSy",
+  "usage": {
+    "prompt_tokens": 1956,
+    "completion_tokens": 415,
+    "total_tokens": 2371,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 1953
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 224
+    }
+  },
+  "raw_response": "{\"cause\":\"Stage 3’s MILP screen-time plan is infeasible: bounded semantic bans prevent the requested asset mix, and the fallback still preserves the targets. Retries rerun the same failing plan; expansion is skipped because it checks total clean cuts (95) rather than whether the needed asset types are available. The 13-minute-old event indicates EP05 is no longer making progress.\",\"fix_now\":\"Stop any still-running EP05 workers, then resume at stage 3 with the mix constraints relaxed for the infeasible categories (or use a feasible revised mix). Trigger targeted source search for the missing categories; do not repeat the unchanged retry.\",\"prevent\":\"Make feasibility checks and source expansion category-aware. On infeasibility, relax targets or semantic bans in a defined order, log the resulting plan, and avoid retrying an unchanged infeasible plan. Add a no-progress watchdog that terminates and reports stalled workers.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "Stage 3’s MILP screen-time plan is infeasible: bounded semantic bans prevent the requested asset mix, and the fallback still preserves the targets. Retries rerun the same failing plan; expansion is skipped because it checks total clean cuts (95) rather than whether the needed asset types are available. The 13-minute-old event indicates EP05 is no longer making progress.",
+    "fix_now": "Stop any still-running EP05 workers, then resume at stage 3 with the mix constraints relaxed for the infeasible categories (or use a feasible revised mix). Trigger targeted source search for the missing categories; do not repeat the unchanged retry.",
+    "prevent": "Make feasibility checks and source expansion category-aware. On infeasibility, relax targets or semantic bans in a defined order, log the resulting plan, and avoid retrying an unchanged infeasible plan. Add a no-progress watchdog that terminates and reports stalled workers."
+  },
+  "seconds": 14.932445,
+  "governor_after": {
+    "limit": 12,
+    "min_limit": 4,
+    "ceiling": 12,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 540,
+      "quality": 75
+    },
+    "hedge_after_seconds": 8.0,
+    "hedge_enabled": false
+  },
+  "attempts": [
+    {
+      "identity": "3b5b737655f5b0beebce500ce7557e36d4f6c5001f45484415b63b3a1c521148",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "82d68aa22cc445af80a47c627e860c09",
+        "role": "codex",
+        "thread_id": 14076,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T09:35:01.730928+00:00",
+        "cooldown_seconds": 4e-05,
+        "queue_seconds": 0.001475,
+        "started_at_utc": "2026-10-30T09:35:01.735963+00:00",
+        "active_channels": 1,
+        "channel_limit": 12,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T09:35:16.662098+00:00",
+        "seconds": 14.925632,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gpt-6-sol",
+      "response_id": "gen-1793352900-7BK8WcSk6oNgytD9hCSy",
+      "usage": {
+        "prompt_tokens": 1956,
+        "completion_tokens": 415,
+        "total_tokens": 2371,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 1953
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 224
+        }
+      },
+      "raw_response": "{\"cause\":\"Stage 3’s MILP screen-time plan is infeasible: bounded semantic bans prevent the requested asset mix, and the fallback still preserves the targets. Retries rerun the same failing plan; expansion is skipped because it checks total clean cuts (95) rather than whether the needed asset types are available. The 13-minute-old event indicates EP05 is no longer making progress.\",\"fix_now\":\"Stop any still-running EP05 workers, then resume at stage 3 with the mix constraints relaxed for the infeasible categories (or use a feasible revised mix). Trigger targeted source search for the missing categories; do not repeat the unchanged retry.\",\"prevent\":\"Make feasibility checks and source expansion category-aware. On infeasibility, relax targets or semantic bans in a defined order, log the resulting plan, and avoid retrying an unchanged infeasible plan. Add a no-progress watchdog that terminates and reports stalled workers.\"}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "Stage 3’s MILP screen-time plan is infeasible: bounded semantic bans prevent the requested asset mix, and the fallback still preserves the targets. Retries rerun the same failing plan; expansion is skipped because it checks total clean cuts (95) rather than whether the needed asset types are available. The 13-minute-old event indicates EP05 is no longer making progress.",
+        "fix_now": "Stop any still-running EP05 workers, then resume at stage 3 with the mix constraints relaxed for the infeasible categories (or use a feasible revised mix). Trigger targeted source search for the missing categories; do not repeat the unchanged retry.",
+        "prevent": "Make feasibility checks and source expansion category-aware. On infeasibility, relax targets or semantic bans in a defined order, log the resulting plan, and avoid retrying an unchanged infeasible plan. Add a no-progress watchdog that terminates and reports stalled workers."
+      },
+      "seconds": 14.932445,
+      "governor_after": {
+        "limit": 12,
+        "min_limit": 4,
+        "ceiling": 12,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 540,
+          "quality": 75
+        },
+        "hedge_after_seconds": 8.0,
+        "hedge_enabled": false
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "82d68aa22cc445af80a47c627e860c09",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\123501_stall_codex.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

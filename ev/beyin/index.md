@@ -1,0 +1,566 @@
+# Beyin indeksi
+
+Her satir: [[sayfa]] — tek satir aciklama. Once burayi oku, sadece gereken sayfayi ac.
+Guncelleme: 2026-11-20 · araclar/ekle.py otomatik yazar, elle duzenleme.
+
+## Ben (kullanici, tercihler)
+
+- [[ajan-paralel-4-hiz]] — Kullanici: Claude limiti azken isi codex GPT/Flash ajanlarina ver, tek ajan degil 4 paralel; Flash yasak degil, verimli kullan; uzun bekletme
+- [[argor-uygunluk-suzgeci]] — Kullanici 11-20: Ar.Gor taramasinda yalniz Makine bolumu kadrosu + YL sarti termodinamik ABD'yi kapsayan + ALES 76/dil 70,25 tutan ilanlar gelsin
+- [[claude-alt-ajan-bolusumu]] — Kullanici onayi 16 Kas: GPT'nin isleri Claude'a gecince Haiku low (mekanik/olcum) + Sonnet low (varyant secimi/yorum) bolusumu
+- [[flash-model-secimi]] — 9router Flash: medium kullanma; is low ile cozuluyorsa low, kalite duserse high
+- [[gece-hedef-yetki-1118]] — Kullanici 11-18 gece: belgesel tam film A/B icin ~2500 gemweb istegi onayli; sormadan calis, hedef <30 dk (gonul <20), kalite asla dusmez
+- [[gemweb-model-tercihi]] — Kullanici: gemweb'de flash-lite istemiyor; hydrogen (ve argon) kullan, testleri hydrogen + high effort ile yap
+- [[glabs-10-proxy]] — G-Labs: 10 auth proxy ACTIVE ise esZamanli 10 istek serbest (kullanici 2026-11-06); proxy yoksa 3
+- [[glabs-15-paralel]] — G-Labs: kullanici 2026-11-17 kapasiteyi artirdi, esZamanli 15 istege kadar serbest (eski 10/3 kurali yerine)
+- [[hiz-deneyleri-sormadan]] — Kullanici: hiz icin bulunan her fikri sormadan, paralel alt ajanlarla, kaliteyi bozmadan dene; sonucu beyine yaz
+- [[kesit-4sn-siniri]] — Kullanici kurali: belgeselde hicbir kesit 4 sn'yi gecemez (plan + son kurgu bosluk uzatmasi dahil)
+- [[referans-kanal-aktif]] — Referans kanal aktif olmalı (son 6 hafta ≥0,5 video/hafta); illa 3 referans gerekmez
+- [[user-language-and-style]] — User communicates in Turkish, casual register ("reis", "kral"); reply in Turkish with a casual-but-direct tone.
+- [[value-over-variety]] — User's goal for all channels: YouTube's AI spots shared templates; videos must add real value, not just vary effects
+- [[vds-gpt-bitis-1124]] — VDS OceanAPI GPT ~2026-11-24'te bitiyor; sonrasi isci gorevleri Haiku/Sonnet alt ajanlarinda
+- [[voice-permissions]] — Voices the user sends for cloning come with the owner's permission; don't ask again
+- [[youtube-footage-cleared]] — Kullanici: belgeselde YouTube kliplerinin telifini resmi yoldan halletti; telif riski diye klip degistirmeyi onerme
+- [[youtube-oncelik-bbc-arsiv-yok]] — Kullanici: belgeselde kesitleri YouTube videolarindan al (hepsi bizim), logolari temizle; BBC archive.org kutuphanesine (yavas, ~1 MB/s) dayanma
+
+## Dersler / kurallar (cozulmus sorunlar)
+
+- [[9router-0-5-116-bozuk-1112]] — 9router 0.5.116 Node 22.19+ ister (undici 8); VDS'te Node 20 ile 500 'reading bind'. Cozum: /opt/node22 + pm2 interpreter; 11-12 prod 0.5.116 Node 22.23.5 ile calisiyor
+- [[9router-2k-hayalet-token-1112]] — 9router istemciye dönen usage'a +2000 ekler (5330.js), upstream ve usageHistory gerçeği yazar; makbuz token sayılarından istek başına 2000 düş
+- [[9router-cx-model-secimi-1110]] — 9router cx/* GPT capraz test: gorev isci icin cx/gpt-6.1-sol, reasoning_effort none (72/72 dogru, ~2.7 sn)
+- [[9router-reboot-pm2-dump]] — VDS yeniden başlayınca pm2 eski dump'tan kalkar, ecosystem env değişikliği kaybolur; env değiştirdikten sonra mutlaka pm2 save
+- [[9router-sqlite-ioerr-1107]] — 9router 'disk I/O error' koku: surucu sql.js (WASM, bellekte) + buyuyen usageHistory; 11-09 kalici cozum better-sqlite3 + budama + bekci
+- [[9router-youtube-mime-1112]] — 9router YouTube URL'sini image/jpeg yolluyordu (19 sn video 22.765 token); 8623.js yamasıyla video/mp4 → 3.694 (gerçek ~1.7k). 9router güncellemesinde yeniden uygula
+- [[a1-blender-1108]] — Oracle A1 (ARM) Blender: resmi arm64 build yok; apt 3.0.1'de Cycles SIYAH (ham 0), Eevee xvfb+llvmpipe ile calisir 1080p ~62 sn/kare
+- [[a1-fetch-1106]] — a1 proxy indirme ev hattindan yavas
+- [[acilis-kasma-bbc-sync-1113]] — PC acilista kasiyordu: BBC_Library_Sync gorevi her logonda archive.org 1080p indirip SigLIP2 GPU taramasi yapiyordu; 13 Kas devre disi
+- [[agir-denoise-ses-bozar-1117]] — Ekran kaydi sesinde agir noisereduce(0.95)+agate konusmayi metalik/kesik yapti; hafif afftdn dogal
+- [[ajan-butce-1119]] — "Claude limit rule (user, 19 Nov via GAIATRACE): no Opus subagents; Haiku first; every agent gets ~25 tool turns and a report of ≤40 lines"
+- [[allocation-repair-timeout-1107]] — Asama 3 gun sonu surunmesi: repair_allocation API zaman asiminda break ediyordu (8/8 blocked = timeout); pkg_1107 Flash tekrar + GPT timeout=FAIL gibi not
+- [[almanca-ki-nis-kapak-okuma-1119]] — German KI niche (31 channels, 25 hits/41 flops, tutorials excluded): same style both hits and flops within a channel, topic/promise decides; feed dark+red+face monoculture, 0 bright backgrounds
+- [[almanca-metin-ded-gpu-1119]] — Almanca YZ metin dedektoru GPU denemesi: Binoculars/Fast-DetectGPT Qwen2.5-1.5B 4bit ve mDeBERTa(COLING) hepsi AUROC<0.8 -> kapi yok, silindi
+- [[almanca-tts-dfarena-1119]] — 4 GB'ta ucretsiz Almanca TTS DF Arena'yi gecemiyor: Qwen3 0.6B en iyi p13 t1.1 ort 0.45 (39 pencere, 0'i insan p90 altinda); Chatterbox ~1, Seed-VC 0.999 (kotulestirir)
+- [[almanca-tts-faster-qwen-p13-1120]] — Almanca TTS: faster-qwen3-tts 0.6B + p13 ref + paragraf basi 3 alim secimi -> tam 7 dk metinde DF Arena ort 0,023, 42/42 pencere <0,5, WER 0,05
+- [[alt-ajan-model-secimi-1119]] — 11-19 alt ajan model ölçümü: 53 ajan, 46 sonnet / 5 opus / 2 fable / 0 haiku; Haiku hiç seçilmiyor çünkü varsayılan CLAUDE_CODE_SUBAGENT_MODEL=sonnet ve Agent çağrısında model yazılmıyor
+- [[alt-ajan-paralellik-1119]] — Alt ajan ölçümü 7 gün/14 oturum: ana oturum araç çağrılarının %74'ü kendi sıralı Read/Grep/Bash, Agent %1,6; kural GPT işçisine yönlendirdiği için paralel Claude ajanı frenleniyordu; GPT bitince SISTEM.md kuralı paralel Haiku/Sonnet'e çevrildi
+- [[anim-race-1107]] — ANIM yarisi prod'da (20ff5f2): tur basina 2 G-Labs adayi; 10 yuvada 6 zor cekim 372->270 sn, gecen 2/6->4/6, video sayisi ayni. A/B'de DOCUMENTARY_GLABS_SLOTS=10 ver (varsayilan 3, kopru 10 kullanir)
+- [[anlatici-kisilik-olcu-1113]] — Anlatim metninde 1. tekil yogunlugu ve fikir ifadesi say; kosan sakayi her bolumde hatirlatmak zorlama
+- [[antigravity-ban-codex-1109]] — 9router 35 antigravity hesap: 9 Kas sonu 8 aktif saglam (5 eski + yok, ham + joh 429); 25 TOS/404 kapali
+- [[antigravity-hesap-kontrol-1110]] — 11-10 Antigravity hesap taramasi: 35 hesaptan 25 kapali hala TOS 403; metehankahraman077 + soumithkumarkothir saglam cikti, acildi (aktif 10, calisan 6, 4 haftalik kota 429)
+- [[antigravity-hesap-kontrol-1111]] — 11-14: 15 saglam (4 aktif + 11 kapali 200), 20 TOS 403; kota retrieveUserQuotaSummary ile
+- [[antigravity-kota-token-1109]] — Antigravity/9router kotasi istek degil token (work done: girdi+cikti+gizli dusunme); 9 Kas tokenlarin %89'u codex Flash-high ajanlari (/v1/responses, ort 104k/istek)
+- [[antigravity-scratch-silme]] — Antigravity brain/*/scratch kullanici dosyasi tasiyabilir; temizlikte silmeden once tasi
+- [[antitez-metin-ses-1119]] — Anti-tez: LLM zorla secim hakemi guvenlik kaniti degil (senaryolu-vs-konusma); OmniVoice CC-BY-NC; YouTube YZ-slop siniflandiricisi var
+- [[arastirma-araclari-islemeyenler-1119]] — ddgs zayif, GitHub API 60/saat, HN/SO anlamsiz, gemweb'te embedding yok
+- [[arastirma-denetimi-1117]] — Son 31 gun web arastirma denetimi: kaynak/tarih kaniti zayif, ayni konu tekrar arastiriliyor, ozce sinir sonucu kesiyor
+- [[arastirma-yontemleri-1117]] — Forumlarda/makalelerde AI arastirma dogrulugu yontemleri: ham metin + birebir alinti, link/alinti denetleyici betik, ucgenleme (>=2 bagimsiz kok), karsi-kanit turu, bulamamaya izin, engelli site yollari; olcum: cok arac cagrisi dogrulugu dusurur
+- [[argor-tarama-gemweb-1119]] — Ar.Gor taramasi flash_oku 9router kapaninca 503 verdi; gemweb.sor_json'a gecti, kamuilantakip+AkademikTR ile capraz kontrol temiz
+- [[arm-hyperframes-chrome]] — Oracle ARM64'te hyperframes browser ensure calismaz; Playwright chromium headless shell kullan
+- [[asker-ornek-sifirdan-1111]] — Referans videodan ornek: kesit alma, sifirdan uret; sahne 3-7 sn, kesim yalniz cumle sinirinda; SFX animasyon anahtar karesine
+- [[askeri-rakip-materyal-1113]] — Askeri explainer rakipleri (7 hit): materyali cumle turu secer; dakikada 3-6 materyal turu, cekim 3-6 sn; bizim asker7-9 1-2 turdu
+- [[avenox-anlatim-olcum-1118]] — Avenox (TR AI kanali) anlatim olcumu: 180 kel/dk, kanit->soru->yol haritasi kancasi, ortada abone cagrisi yok, yumusak pano gecisleri
+- [[avenox-bosluk-sarma-1118]] — Anlatim boslugu KESME yerine SAR: goruntu 0.08 sn'de hizli gecer, ses sifir; sicrama yok
+- [[avenox-ham-ses-kisik-1117]] — Kullanicinin ekran kaydi sesi cok kisik (~-43 dB); normalize etmeden SFX eklenince konusma duyulmuyor
+- [[avenox-imza-fikirleri-1118]] — Avenox videosu 'iki kanalin cakmasi' gibiydi: kendi imza = Ors vurusu gecis + borsa bandi + AL/SAT kart + mum ilerleme + Ors notu
+- [[avenox-mkv-seek-gri-kare-1118]] — cv2 ile ham.mkv'de CAP_PROP_POS_FRAMES seek gri/bos kare verdi; hep ileri grab()+read, geri gidiste onbellek/yeniden ac
+- [[avenox-renk-font-sistemi-1118]] — Avenox demo 'cakma/tatsiz' duruyordu: tek zemin+tek vurgu+tek font ailesi ile duzeldi; demo sesi yalniz son bolumdeydi
+- [[avenox-stil-claude-paleti-1118]] — Avenox v3 'cakma/basit' bulundu: krem-kahve+turuncu palet Claude/Anthropic'e cok yakin; Styk toplulukta hazir sahne yok, sadece rig+efekt
+- [[avenox-tempo-bosluk-olcum-1118]] — Avenox anlatimi 'bolük pörçük/havada' sebebi eee degil bosluk: 60 sn'de 114 kelime, 1 eee, 12 bosluk=15 sn (en uzun 4 sn yazma aninda)
+- [[avenox-zemin-bant-1118]] — Avenox: komur (24,20,18) zemin 'cok siyah' bulundu; sicak kahve (58,49,42)+96px izgara+kor isigi ve alt akan bant begeni icin denendi
+- [[background-watchdog-agent]] — During long production runs, start a background Sonnet watchdog subagent from the start that catches stalls/slowness and fixes them early
+- [[bash-uzun-komut-8kb-1118]] — Bash araci: 7,5 KB ustu komut Windows'ta kesilip 'unexpected EOF' veriyor; kanca uzun_komut.py durduruyor, dosyayi Write ile yaz
+- [[baslik-dil-boslugu-1118]] — Baslik/konu bulma: Ingilizcede kanitli, hedef dilde bos konu; FREMDFORM = The Dark Scenario'nun Almanca kopyasi
+- [[baslik-filtre-lang-hatasi-1119]] — fremd1118 baslik2/filtre.py lang=='de' de-DE/de-CH kanallarini atiyor; rows.json 33 yerine 23 kanal
+- [[baslik-hakem-dogrulama-1119]] — LLM başlık hakemi temiz testte %73; kural %55, MiniLM+ridge %65, e5-large %58 — yerel model hakem olmaz
+- [[bbc-kesim-bant-1108]] — Asama 3 library_windows 5 filmde 30-40 dk/film: darbogaz archive.org baglanti basi ~1 MB/s, NVENC degil (encoder %0)
+- [[bedava-model-ajan-yetersiz-1120]] — Bedava modeller (mistral-large, command-a-plus) gercek Sonnet/Haiku ajan gorevlerini yapamiyor: 8 gorevde 5/16 ve 6/16
+- [[bekci-bash-c-wsl-1113]] — bekci.py -- bash -c WSL'e gider; Git Bash'ten 'cmd /c' de bozulur (/c -> C:/ dönüşümü): npx.cmd / python / curl.exe doğrudan ver
+- [[bekci-npx-cmd-1119]] — bekci.py -- npx ... Windows'ta WinError 2 verir: npx.cmd yaz; yalniz tur sonunda log basan iste --stall-min'i tur suresinden uzun tut
+- [[bekci-pipe-render-olumu-1113]] — bekci.py ... | tail ile başlatılan render, bekçi RAM uyarısıyla çıkınca pipe kapanıp ölüyor; uzun render'ı Start-Process + log dosyasıyla başlat, bekçiyi --pid/--log ile bağla
+- [[bekci-yonlendirme-iptal-1118]] — bekci altinda komut ciktisini dosyaya yonlendirme: bekci 'sessiz' sanip cikar, hyperframes parent_exited ile %99'da iptal olur
+- [[bekcisiz-is-1111]] — Bekcisiz arka plan isi bosa zaman yer: ZeroPulse ep04 taramasi 23 dk sessiz takildi, kullanici fark etti; her uzun is basladigi anda bekci.py ile
+- [[belgesel-hiz-fikir-suzgec-1119]] — Belgesel <30dk fikirleri karşı-tez süzgeci: A1 112dk tabanı gemweb düzeltmesinden önce, önce yeniden ölç; çoğu fikir REDDET/ŞARTLI
+- [[belgesel-s1-9router-kirik-1118]] — Belgesel S1 ses hakemi+factcheck 9router'a gidiyordu (503): ses denetimi UNVERIFIED -> film S3'e gecmez; gemweb yamasi testbench/doc_gemweb_s1_1118
+- [[benzerlik-ag-izleri-1119]] — Kanal agi riski: 3 kanal ayni anlatici sesi; aciklama kalibi (linksiz+3 hashtag+pinned) kucuk insan kanallarinda da var ama bizde birebir; 'Next time' kapanisi tum kanallarda
+- [[benzerlik-olcu-karari-1118]] — Benzerlik testleri: 3 arastirma (resmi/vaka/teknik) sonrasi 8 test 'yalniz bilgi', G8 atildi; yeni kanallar zincir4.py
+- [[benzerlik-olculer-ayirmiyor-1119]] — Benzerlik: kanal ici 50 olcunun hicbiri Holm sonrasi ayirmiyor; ama kanallar ARASI ag olcusu 'aciklama yapisi' AUC 0.95 ve 'ses yuksekligi farki' 0.81 Holm sonrasi tutuyor
+- [[blender-3d-video-1113]] — Blender 5.3 portable ile video icin 3D sahne: EEVEE ~2 sn/kare, hacim duman, x-ray, HyperFrames'e iz JSON
+- [[blender-render-hiz-1113]] — Blender EEVEE video hizi: golge en pahali, motion blur 3x, hacim toz kareli bozulur; STEP=2+minterpolate, 720p, 2 serit
+- [[blender-yol-haritasi-1113]] — Blender 3D yol haritasi: EEVEE golgesiz 720p ~0,25 sn/kare; AgX emisyon sarisini kreme soldurur -> Standard; bloom ffmpeg gblur+screen
+- [[borsaci-hamster-maskot-1118]] — Avenox maskotu: kullanici YouTuber+borsaci karisimi + sahneye ozel SABIT resim istedi (limon gibi); hamster carki secildi; gri zeminde kesim acik dolgulari siler -> magenta zemin
+- [[casefile-dersleri]] — Case File (cf.py) dersleri: contact sheet tile, gorsel klip kontrolu (clip_check), ilk render hatalari (plan onbellegi, MEMORYSTATUSEX, fade d=.35, kesik belge satiri)
+- [[cf-pages-d1-binding-gecici]] — wrangler pages deploy 'binding DB of type d1 failed to generate' geçici: 45 sn arayla yeniden dene
+- [[channel-pick-consistency]] — Model-channel picks must show steady recent views, upward trend and frequent uploads, not one outlier hit over a low median
+- [[channel-pick-examples-and-youth]] — "Every channel pick needs 2 good example channels in the production language; prefer young \"opportunity\" channels with recent hits"
+- [[chatterbox-lane-saglikli-1106]] — Chatterbox Jeff hatti saglik olcumu: 32 tok/s, tasma yok; kalan hiz kisiti token dongusu (GPU %37, launch-bound)
+- [[chatterbox-ml-vram-1116]] — Chatterbox ML 4 GB GPU'da: her generate'te audio_prompt_path = VRAM tasmasi 20-50x yavas; G-Labs captcha Chrome GPU'yu paylasinca 3x yavas; cozum prepare_conditionals bir kez + empty_cache + Kaggle T4x2
+- [[chatterbox-notr-nefes-1118]] — Chatterbox ML: duyguya gore yuksek exaggeration/dusuk cfg nefesi oldurur; hepsi notr (.5/.5) ES_1 TTS 20->5, abart 90; sonradan nefes yapistirmak ise yaramaz
+- [[chatterbox-ref-secimi-1119]] — Chatterbox ML: referans sesi degistirmek kisaltma yeniden yazimindan cok etkili (PT 96->74, KO 88->75); Gemini ses hakemi ayni dosyaya 5 ile 96 arasi veriyor
+- [[chatterbox-stop-sopro-kills-other-film]] — Köprü 1. aşama bitince stop_sopro Chatterbox'ı öldürüyordu, başka film sesteyken bile; artık başka filmin voice_progress'i aktifse kapatmıyor
+- [[chatterbox-temperature-silence]] — Chatterbox Turbo, belgesel istemcisinin 0.35 sicakligiyla cumle basina 25-46 sn sessizlik uretir; servis kendi 0.8/0.95 ayarini kullanir
+- [[chatterbox-token-siniri-1116]] — Chatterbox ML generate max_new_tokens=1000 sabit: dejenere satir dakikalarca surer; satir uzunluguna gore sinir + 2x sure kontrolu yamasi
+- [[chatterbox-venv-silinmis-1117]] — Prod Chatterbox venv (voiceclone_1031/engines/chatterbox/.venv, Jeff :7864) 11-17'de silinmis bulundu; yeniden kurulum tarifi
+- [[chatterbox-vram-spill-siglip]] — Chatterbox yavasligi = VRAM tasmasi; :8099/reload + Chatterbox restart 4.9->34.8 tok/s
+- [[checker-thread-oom-deadlock-1106]] — Arka plan kontrol thread'i istisnada olurse queue.join sonsuza bekler; RAM darliginda whisper mkl_malloc OOM verir
+- [[chunk-rerun-wipe-1106]] — Parca render yeniden kosusunda build_chunk klasoru silip bitmis out.mp4'leri yok ediyordu (crater 19/24 parca kayip)
+- [[clean-overlay-bellek-sizinti-1109]] — clean_overlay --jobs toplu mod is basina bellek biriktirir: EP03 81 is, 07:44'te ~5 GB -> 08:26'da 15,3 GB private; commit 599 MB'a dustu
+- [[clean-overlay-jobs-1108]] — clean_overlay --jobs toplu mod: modeller bir kez, kutu basina kirpim, ProPainter surec ici; NaN siyah kutu duzeltildi
+- [[clip-check-batch-1106]] — Clip-check batching (4 clips/request, JPEG, hedge) coded in cf_common.check_rows but A/B inconclusive: gateway degraded
+- [[codex-exec-stdin-takilma-1110]] — codex exec arka planda stdin acik kalinca 'Reading additional input from stdin...' deyip sonsuza dek bekler
+- [[codex-isci-sandbox-provider-1110]] — codex exec isci: varsayilan sandbox read-only oldu (hicbir sey okuyamaz/yazamaz, 30 sn'de FAIL); ninerouter provider tanimi config'te yok
+- [[commander-subagent-models]] — User wants an Opus 5.5 medium main session and cheaper subagents (Sonnet by default, Haiku for trivial sweeps) to save usage limits
+- [[commit-limit-kopru-1109]] — WinError 1455 / brotli allocate hatasi = Windows commit limiti; bos kopru 11,5 GB private tutuyordu, restart 1,9->12,7 GB
+- [[commons-429-standart-genislik-1118]] — Wikimedia Commons 429: orijinal/unscaled indirme yerine standart thumb genisligi (960/1280/1920) iste, sirali + bekleme
+- [[commons-cdl-429-eski-veri-1113]] — cdl.py: 6 kez 429 alınca önceki dosyanın 'data'sını yeni ada yazıyordu (aynı md5); data=None + hata ile düzeltildi
+- [[competitor-channel-criteria]] — Competitor/model channels we suggest must be faceless, monetized (verified), English; how to check monetization
+- [[cover-perspectives]] — "Thumbnails: user likes BOTH v7 (rival-pattern / real-frame) and v8 (captcha oddness) styles; keep 3 perspectives per video, never collapse to one flow"
+- [[cumle-kor-pencere-1109]] — Asama 3 cozulmeyen cekim koku: recovery dogru videoyu bulur ama pencereyi cumleye bakmadan secer (PINPOINT kapali, recovery.py:204 sentences vermez, bilinen video yeniden aranmaz). Cozum: storyboard+cumle Flash pinpoint (testbench sentence_finder.py)
+- [[cycles-ornek-psnr-1113]] — Cycles+OIDN: SAMP16 SAMP48'e gore PSNR 42,5 dB (gozle farksiz); kare suresi ~yarim. Blender acilis+sahne ~80 sn yerel
+- [[darbogaz-paketi-1107]] — Stage3 500 restart dongusu -> cagri ici medium merdiveni + ret hafizasi; EP03 5 deneme/9000+ sn takili -> tek deneme 1964 sn
+- [[deneme-kisa-ses]] — "In tests, voice only a short sample (~30 s), not the whole script; remove downloads that turned out useless"
+- [[dil-boslugu-curutme-1118]] — EN hit + DE bos = firsat yontemi curutme turunda zayifladi: 5 konudan 3u curudu
+- [[dil-kontrol-tasarimi-1120]] — Dil kuralı pozitif kontrolü 'bilinen kanalın dili kazanmalı' diye kurulursa yanlış: kanal o dilde tutar ama başka dilin pazarı yine büyük olabilir; kontrol 'uygun' katmanında yapılmalı
+- [[dil-secim-kural-1120]] — Kanal dil seçimi: ses/üretim puan değil ayrı kapı; az rakip tek başına fırsat değil; yerli sorgu, ham değer, pozitif kontrol (FREMDFORM de/Helix en/Atlas es)
+- [[dis-fikirler-stage3-1107]] — Argon+Flash+web: asil hata hakemden once render ve tek tek yargilama; GPT'nin dondurdugu render EP03 105/EP02 45
+- [[disk-temizligi]] — Disk dolunca once bunlar
+- [[dogal-ses-indirme-1108]] — Son kurgu dogal ses: YouTube aralik indirmesi bayta bagli; pencere (32 sn) indirmek cekim basi (4 sn) indirmekten yavas (305 vs 188 sn, 19 cekim)
+- [[donma-klip-yeniden-kesim-1110]] — Teslim edilmis filmde donan klibi degistirme: kaynak pencereleri silinmis olur; yt_cache, yoksa sources._download_windows ile yeniden indir, TAM n kare kes
+- [[drive-buyuk-yukleme-rclone-1116]] — Drive'a GB'lik dosya yükleme: rclone remote 'gdrive' hazir (tools_dl/rclone_dl); --drive-root-folder-id ile klasore copy
+- [[dub-av1-oynatma-1108]] — Dublaj MP4 Windows Media Player'da acilmadi: YouTube kaynagi AV1, mix -c:v copy ile tasidi; h264_nvenc'e cevir
+- [[dub-ceviri-hiz-1108]] — Dublaj cevirisi hiz testi: Sonnet 5 paralel ajan 24 ada 43 sn, hece uyumu 22/24; GPT (oceanapi) 503/502 dalgali, dolgu uyduruyor
+- [[dub-hatti-1112]] — Dublaj hatti testbench/dub_1112'de yeniden kuruldu: refC sesi ~8,5 hece/sn konusur, tum videoya tek tempo (0,9-0,97) ile oturtulur; site Dublajlar sekmesi /v/dublaj.json
+- [[dub-hiz-adim-1113]] — OmniVoice dublaj hizi: isinmis modelde batch kazanc vermiyor; num_step 16->12 %20 hizli, kalite ayni
+- [[dub-ingilizce-ref-aksan-1108]] — Dublaj, konusmacinin kendi Ingilizce sesinden klon: ~%15 ada Ingilizce aksanla okunur; o klonla uretilmis temiz Turkce adayi ref yapinca 50->8; hizli Ingilizce ref icin konusmaci basi sabit OmniVoice speed
+- [[dub-tek-gecis-1115]] — Dublaj tek geçiş: çeviriyi doğrudan slot hedef hecesine (slot x 6,4 x 0,92) yazdır, refit aşaması gereksiz; 10 dk video ~11 dk
+- [[dub-translator-claude]] — For video dubbing translations (EN→TR), Claude in the main session translates; 3.8 Flash lost the 2026-11-03 comparison
+- [[dublaj-pro-fark-1113]] — Dublaj kotu cikiyordu: arka plan muzigi yoktu, 15 sn ada + hizli erkek ses + kelime kelime ceviri. Duzeltme: demucs bed + cumle basinda baslat + ~5.5 hece/sn serbest gunluk ceviri + tasarlanmis kadin ses
+- [[dynamic-rules-not-video-specific]] — Kullanıcı: kurallar tek bir videoya özel sabit kod olmasın, dinamik ve genel yazılsın; kod şişmesin.
+- [[edit-reference-taste]] — Edit/technique references - no Indian/South Asian-style channels; current top-tier channels only; analyse whole videos, not 3 fixed slices
+- [[emptyworkingset-ctypes-1115]] — model_memory._trim_working_set hic calismiyordu: ctypes GetCurrentProcess() handle'i 32-bit int donup EmptyWorkingSet hata 6 veriyor; restype/argtypes HANDLE sart
+- [[epidemic-sound-indirme-1110]] — Epidemic Sound: lisansli WAV toplu indirme yolu (uygulama tarayicisi, oturum acik) + SFX miks kurali
+- [[epidemic-url-5dk-1110]] — Epidemic indirme URL'leri ~5 dk'da 401: toplu ve paralel (8 curl) indir, URL JSON'unu Write araciyla yaz (bash heredoc URL'de 'unexpected EOF')
+- [[explain-with-animated-page]] — User prefers proposals/analyses explained as an animated local web page instead of long chat text
+- [[factcheck-flash-dusunme-1107]] — Asama 1 factcheck sesi 288 sn bekletiyordu: Flash-low gizli dusunme + requests timeout okuma basina (damlatan sayfa 200 sn); reasoning_effort=minimal + 12 sn toplam fetch butcesi -> mini 283->36 sn, EP03 87 iddia 354 sn zaman asimsiz
+- [[faster-whisper-dongu-1119]] — faster-whisper small (vad) bir Ispanyolca videoda 60+ dk generate_with_fallback dongusunde kaldi; temperature=0.0 + condition_on_previous_text=False ile ayni video 11 dk'da bitti
+- [[fikir-import-edilmez-1119]] — fikir.py modul seviyesinde argparse+main kosuyor: import edilemez
+- [[film-profil-yeri-1108]] — Belgesel profil (wildlife) film klasorundeki film_settings.json'dan OKUNMAZ; CodexOutputs/<film>/film_settings.json ya da drive.py 4. arg
+- [[fix-systemic-errors-proactively]] — When a background job hits a systemic error (e.g. 9router 503), find and fix it immediately — never wait for the user to notice
+- [[flash-ban-dalgasi-1115]] — 15 Kas 14:42'den itibaren 15 antigravity hesabının 10'u TOS 403 ile banlandı; 5 aktif kaldı (4 çalışır, 1 kota 429). Flash kapasitesi yine dar
+- [[flash-kapasite-1113]] — 13 Kas: 9router'da yalnız 4 antigravity hesabı aktif, 2'si 14 Kas ~08 UTC'ye kadar kota bloğunda; flash-low 'Say OK' 8–50 sn. Ağır paralel test açma, film tek tek; SearXNG için Docker başlat
+- [[flash-kullanim-dokumu-1109]] — Flash istek dokumu 7-9 Kas: en buyuk israf codex iscilerinin Flash-high'da kosmasi (~350M token/gun, kapatildi); asama 3 cekim basina 3 Flash (grid+secim+precheck), onarim+autoresume tekrarlari %43
+- [[flash-uzun-liste-zamanasimi-1115]] — 9router Flash: 40+ başlıklı sınıflama isteği 150 sn'de bile dönmüyor; 15'lik parça ~10 sn
+- [[flash-yavas-429-hesap-1111]] — 9router Flash kuyruk gecikmesi (16-20 sn) 429 haftalik kota hesaplarindan: 9router onlari deneyip bekliyor; aktiften cikarinca max 20->5 sn
+- [[flash-yavas-hesap-1106]] — Flash zaman aşımı: bazı antigravity hesapları Google tarafında 'yavaş şerit' (aynı proxy'de 2,5 sn vs 15-80 sn); ölç, yavaşları kapat
+- [[forn-ai-maskot-olcum-1118]] — Forn AI (TR AI kanali, 3.2k abone) maskot olcumu: mavi nazar boncugu tepegoz, kadrajin %60-100'u, 7 seferde 4-12 sn, ~1 sn'de poz degisimi, icerigi elinde tutar
+- [[fremdform-kaynak-species-1119]] — FREMDFORM RPGdGfAbKrs hiti Dark Scenario degil Species Gw_hnD7m00M uyarlamasi (cumle hizalamasi)
+- [[fullrun-overlap-1106]] — fullrun: ses tek tek (Chatterbox seri), 4. asama V3 sf plan/prep/build ile paralel; QA paketi yine kapilar
+- [[gaia-finish-dersleri-1108]] — Son kurgu (gaia_finish): ProPainter --boxes bazen kutuyu SIYAH dondurur (rc=0) -> black_hole kontrolu + --force lama; kaynak YouTube seslerinin 13/19'unda anlatici var -> sadece konusma araligini sustur, sessiz bosluga konusmasiz cekimin ortam sesi
+- [[gaia-finish-restart-1109]] — gaia_finish yeniden baslatma zinciri bellek tutar; temizlenemeyen klip otomatik ret; watchdog eski anahtar
+- [[gaia-zip-teslim-1109]] — GaiaTrace teslim ZIP'i: testbench/pantanal_1108/tools/gaia_zip.py, delivery.py 6 klasor duzeni, klipler son filmden segment
+- [[gecis-eski-kare-bos-1117]] — Ekran kaydinda gecis (yirtma/kayma) eski karesi kesimden hemen onceki kareden alininca bos siyah sayfa cikabilir; kontrol karesinde gor, gerekirse birkac yuz ms onceki kareyi dondur
+- [[gemini-503-sfxqa-1118]] — sfx_qa: Gemini API 503 high demand (3.5/3.6/3.8 flash hepsi) -> 'JSON donmedi' hatasi; 12 deneme artan beklemeli tekrar eklendi, bolumleri sirayla dinlet
+- [[gemini-gorsel-limit-yerel-yazi-1118]] — Gemini web görsel limiti dolunca kapak v2: v1 yazısını LaMa ile sil + PIL ile yeni yazı (saniyeler)
+- [[gemini-ses-birlestirme-1115]] — Gemini'ye çok klipli ses verirken farklı örnekleme hızlarını concat demuxer ile birleştirme: ses perde kaymış duyulur, cinsiyet yanlış çıkar
+- [[gemini-ses-hakem-istem-1117]] — gemweb hydrogen ses hakemi: istemde 'efekt eklendi' deme, efektsiz dosyada 8/10 efekt uydurur; yonlendirmesiz istem + 3x ortanca
+- [[gemini-video-envanter-1118]] — Referans videoyu taklitte eksik kalmasin: 5 sn arali 5x5 zaman damgali kare izgarasi -> gemweb envanter + bizim izgarayla fark listesi (~1 dk, 5 istek)
+- [[gemweb-10-hesap-1116]] — gemweb :8790 10 hesap (u0-u4 + p0-p4, kullanicinin TR SOCKS5 proxy'si): 10 paralel 10/10 dogru, 19 sn
+- [[gemweb-1095-hesap-hiz-siniri-1119]] — gemweb 1095 = hesap basina min-aralik kisitlamasi (degisen alt kume; proxy/model degil). Asil darbogaz kuyruktu: sunucu FIFO + hesap basina ogrenilen paralellik (kap 2) ile 60 agir istek 350->125 sn, p90 120->21-33 sn; 10 hesap yeterli
+- [[gemweb-1095-toplu-dinlenme-1119]] — gemweb: 10 hesabin hepsi Google 1095 hatasiyla ayni anda dinlenmeye girebiliyor; istekler 300 sn ReadTimeout, kota bitmis degil
+- [[gemweb-14-hesap-olcum-1119]] — gemweb 14 hesap + 2. kol yamasi: 40 gorsel+high 15 paralel 99 sn (eski 313), medyan 23 sn (eski 70)
+- [[gemweb-200-hata-metni-1119]] — gemweb 200 donup icerikte Gemini hata cumlesi verebiliyor ('I encountered an error... try again', 'Sorry, something went wrong'); JSON bekleyen kod bunu gecici hata sayip beklemeli yeniden denemeli
+- [[gemweb-argon-yok-1119]] — gemweb 10 hesabin Gemini menusunde Argon yok (Google'in sundugu liste: Otomatik/4 Hydrogen/4 Neon/4 Karbon); tarayici panelindeki hesapta 4 Argon var
+- [[gemweb-asker-1116]] — gemweb hydrogen low: mp4 video image_url ile gercekten izleniyor; kontak sayfasi grubunda tek sayfa yuzunden toptan 'Sorry I can't help with that image' reddi
+- [[gemweb-ayrik-baslat-1117]] — gemweb :8790 Claude arka plan görevi (bekci -- komut) altında başlatılınca iz bırakmadan ölüyordu (11-16 exit 4, 11-17 exit 1); artık ayrık başlat
+- [[gemweb-belgesel-hakem-1116]] — Belgesel stage 3 precheck on gemweb hydrogen low: 19/20 matches old Flash; review 12/20 vs GPT, keep it on GPT
+- [[gemweb-bilinmeyen-model-1116]] — gemweb: kayıtsız model adı (argon) 10 hesabı dinlenmeye sokuyordu; artık sunucu hesaba gitmeden 400 dönüyor
+- [[gemweb-cerez-donusu-1116]] — gemweb: 5 hesap aynı anda UNAUTHENTICATED = çerez bitmedi; kota RPC jSf9Qc code 7 kütüphanede hesabı kilitliyor
+- [[gemweb-engineered-flash-1116]] — Engineered sf.py Flash cagrilari hydrogen low: sections/chunk/filigran hepsi gecer, high gerekmez
+- [[gemweb-gecici-hata-soguma-1119]] — gemweb: 1095/1013/zaman asimi gecici hata artik hesabi 60 sn dinlendirir (eski 900 sn); istemci koparsa sunucu denemeyi birakir; gemweb.py zaman 400 sn; istek.jsonl istek kaydi
+- [[gemweb-gecis-unreadable-1118]] — 9router bitti: belgesel io.py + SkullStudio flash varsayilani gemweb; gemweb 'unreadable image file' yanitini OK donduruyordu -> io.py yeniden dener
+- [[gemweb-hakem-model-1116]] — Gemini web (:8790) hakem probu: hydrogen low 10/10 geçer, flash-lite görselde düşer; pro takılır
+- [[gemweb-ikinci-kol-1119]] — gemweb ikinci kol (hedge) yalniz 45. sn'de tek bakiyordu, yuk altinda hic acilmiyordu; artik uretim basindan 45 sn sonra 2 sn'de bir bos hesap arar, kol 2 sirada one gecer, ayni hesaba gitmez. Panel eski hatayi gostermez.
+- [[gemweb-kredi-watchdog-1119]] — gemweb: hesap basi 5 saatte 2400 kredi (istek ~11-18) asil tavan; kutuphane watchdog'u takilan akista tum oturumu kapatip ayni hesaptaki ikinci istegi dusuruyordu
+- [[gemweb-landmark-kapi-1116]] — Landmark klip kapisi hydrogen: low tek basina cok sert (temiz 4/10), low->high kapi kotu 8/10 temiz 6/10, kosu arasi oynama yuksek, parse fail retry sayilmali
+- [[gemweb-logo-video-1116]] — gemweb hydrogen low: kare logo/lisans tespiti 14/14, kisa video kesim+logo 2/2; kutu golgeyi kapsamaz
+- [[gemweb-mecaz-hakemi-1116]] — hydrogen low mecaz hakemi: ekli karisik mecazi 3/3 yakalar, temiz metinde 3-6 yanlis alarm (high da ayni); son karar astra
+- [[gemweb-pro-olmayan-hesap-1119]] — gemweb'e PRO olmayan (ucretsiz) hesap eklenince isteklerin ~yarisi 400 'bilinmeyen model' aliyordu; sunucu artik modeli tasimayan hesaba gitmiyor. Ucretsiz hesap ekleme (600 kredi, yalniz 'otomatik').
+- [[gemweb-ses-hakem-oynak-1119]] — gemweb ses hakemi (dinle3 tts_olasiligi) ayni dosyada tek kosuda 5 ile 94 arasi oynuyor; tek kosuya karar verme
+- [[gemweb-ses-okumuyor-api-yedek-1118]] — gemweb :8790 ses dosyasini hic okumuyor (CANNOT/missing); sfx_qa artik OKUNMADI kalibinda kendi Gemini API anahtarlarina (gemini_keys, gemini-3.6-flash input_audio) geciyor
+- [[gemweb-ses-takilma-1118]] — gemweb :8790 ses (input_audio mp3/wav) istegi 11-18'de 200 sn takilip 400 dondu, metin istegi aninda; SFX secimini Gemini'ye baglama
+- [[gemweb-ses-video-yukleme-1118]] — gemweb :8790 ses dosyasini dinliyor (18 Kas aksam): push ?authuser=N + ProcessFile RPC + 8 sn bekleme
+- [[gemweb-zaman-asimi-aralik-1119]] — gemweb: zaman aşımını 1095 gibi sayıp aralığı ikiye katlamak tüm hesapları kap 1/aralık 21-68 sn'ye kilitliyordu; düzeltme sonrası 40/40
+- [[gemweb-zeropulse-flash-1116]] — ZERO PULSE Flash cagrilari hydrogen low: metin/eslesme tam, gen2 gorsel kapi dogru gorseli 4/6 gecirir (sert), plan_v4 %25-35 az panel
+- [[geri-donusum-buyuk-klasor-1117]] — VisualBasic DeleteDirectory SendToRecycleBin buyuk agacta 'Win32 modunda gecerli' / 'cagri seviyesi hatali' verir; dosya dosya DeleteFile calisir
+- [[git-bash-link-bozma-1111]] — Git Bash'te post_update.py --link "/stil/" yolu C:/Program Files/Git/stil/ olur: MSYS_NO_PATHCONV=1 ile calistir
+- [[glabs-gorsel-2k-ayar-1116]] — G-Labs gorsel 2K: API isteginde alan yok (resolution/image_size/upscale denendi, 1376x768); settings.json image.upscale_2k ile, uygulama yeniden baslayinca
+- [[glabs-hesap-proxy-10-paralel-1106]] — G-Labs: hesap basina proxy atanınca 10 paralel nano_banana_pro 10/10 basarili, 128 sn duvar, istekler 10 proxy'ye dagildi
+- [[glabs-kapak-upscale-i2i-1118]] — Kapak icin G-Labs: yerel upscale (kota yok) + nano_banana_pro i2i gercek kare + rakip hit referansi
+- [[glabs-rampa-15-1118]] — G-Labs 15 paralel prod'da (11-18): SkullStudio common.glabs + belgesel anim.py tek havuz glabs_slot.py; rampa 4,8x
+- [[glabs-upscale-toplu-1106]] — G-Labs upscale her gorsel icin realesrgan exe'yi ayri baslatir (~10.7 sn/gorsel); ayni exe toplu (8 gorsel/cagri, -j 1:2:2) ~5.7 sn/gorsel
+- [[gomme-kapisi-split-half-sert-1120]] — Kanal-çifti gömme kapısında U eşiği aynı-kanal split-half P10 olursa farklı kanal neredeyse hiç U alamaz (5/5 aday Z)
+- [[gpt-dolu-flash-kabul-1107]] — GPT 4 şerit doluyken VIDEO incelemesi Flash low+high çiftine: ikisi de geçer derse kabul, yoksa GPT sırası (prod 452d117)
+- [[gpt-flash-yaris-plan]] — Plan istemi GPT'de 502/takilmada film 25 dk durdu; GPT + Flash-high paralel, ilk gecerli JSON kazanir; yavas Flash klip kontrolu kotu sayilmaz, yeniden sorulur
+- [[gpt-gateway-rota-1108]] — GPT gateway: sadece /v1/responses kuyruk+yeniden deneme alir; chat/completions ham gecis -> rastgele 502/503/504; '120 ,000' istegi her seferinde gecersiz yapar
+- [[gpt-isci-gorunmez-limit-1111]] — gpt_isci.py iscileri Codex uygulamasinda gorunmez (headless codex exec); GPT limiti dolunca sessizce Flash'a gecer
+- [[gpt-isci-luna-vds-400-1118]] — gpt_isci: VDS OceanAPI'de gpt-6-luna yok (400 Model not found), isci sessizce ChatGPT aboneligine dusuyordu; luna artik VDS'te sol kosar, varsayilan effort low
+- [[gpt-isci-ocean-sinirsiz-1111]] — gpt_isci.py artik once VDS OceanAPI :8765 (gpt-6.1-sol/luna sinirsiz) kullanir; ChatGPT limiti ve 9router cx 429 olsa da GPT isci calisir
+- [[gpt-isci-sahte-gorsel-1113]] — GPT isci gorsel top-up'ta PASS dedi ama sahte Commons URL + mevcut 6 gorselin kirpma kopyalari; ayrica ilk top-up ayni Commons dosyalarini yeniden indirdi
+- [[gpt-isci-sirasi-1110]] — Alt ajan sirasi GPT -> Flash -> Claude: Kanallar/gpt_isci.py; codex exec Windows'ta tam erisim gerekir, isci PASS'i kanitla kontrol edilir
+- [[gpt-isci-toplu-bekci-1111]] — gpt_isci.py toplu yalniz en sonda yazar: bekciyi isci loglarina bagla; gh CLI girissiz, isciler curl api.github.com kullanir
+- [[gpt-prerender-replay-1107]] — GPT incelemesi render oncesi kaynak tablosunda: tur 2'de kaynak %88 vs render ortalamasi %90 (GPT kendiyle %96); tur 1'in %86,7'si hakem gurultusuydu; 20/20 render sonrasi ret kaynakta gorunur
+- [[gpt-renk-olcum-orneklem-1113]] — GPT renk olcum iscisi refteki 'canli cekim' grubunu karanlik grafik karelerden kurdu, brightness 0.25 onerdi; orneklemde gercek cekim var mi once gozle bak
+- [[gpt62-sol-9router-ajan-1120]] — VDS 9router cx/gpt-6.2-sol codex: 12/16 kalite; 8 paralel 16 is 16/16 9r, 429 yok, ~124k token/is; gpt_isci ilk yol
+- [[grenzakten-benzerlik-onlem-1118]] — Ortak Atolye benzerlik denetimi -> Grenzakten: bolum basina farkli muzik yatagi (ton/ilerleyis/akor suresi) + foto bolme orani degisken (.3-.7)
+- [[gsap-svg-g-transform-1113]] — HyperFrames/GSAP: transform attr'li SVG <g>'ye GSAP x/scale verince g kaybolur/kayar; dis <g> sarmalayicisina tween et, scale oncesi svgOrigin'i t=0'da set et
+- [[gsap-textcontent-sayi-1113]] — GSAP textContent'e '11.0' verince 11 yaziyor; sonuna \u200b ekle. Sablon gorunumu araci degil aliskanliklardan gelir
+- [[haiku-isci-denemesi-1116]] — Haiku low ile GPT/Sonnet RAM gorevleri (R9,R11,R12) kor tekrar: sayilar ham kanitla birebir, uydurma yok; ama derinlik Sonnet'in gerisinde
+- [[heredoc-kacis-newline-1119]] — Bash heredoc icinde python s.replace ile kod yamarken '\n' gercek satir sonuna donup SyntaxError uretiyor; kod yamasini Edit araciyla yap
+- [[hf-asset-ad-kaymasi-1118]] — HyperFrames kurucuda sira-numarali asset adi (iNNN) + 'varsa kopyalama' = ret/yeniden kurulumda etiket-foto kaymasi; kaynak haritasi + bayat parca silme
+- [[hf-bekci-npx-cmd-1118]] — bekci.py altinda npx degil npx.cmd yaz (WinError 2); faster_whisper'a dosya yolu degil ffmpeg->numpy ver (PyAV hatasi)
+- [[hf-browser-gpu-hiz-1118]] — HyperFrames render: --no-browser-gpu kaldirinca %35 hizli (20 sn test 59.8->38.9 sn), -w 3/5 ve fast-capture farksiz
+- [[hf-lint-letterspacing-1113]] — HyperFrames lint letterSpacing tweenini hata sayar (piksel kayar); yerine scaleX tween; ayni kaynak+baslangicli iki video icin dosyayi kopyala
+- [[hf-nvidia-zorla-1118]] — HyperFrames Windows'ta Chrome probe Intel iGPU seciyor; --force_high_performance_gpu ile RTX 3050 Ti; mini %27 hizli + RAM ferah, tam bolumde temiz olcum yok
+- [[hf-paralel-render-1118]] — HyperFrames: 3 render paralel (-w 2, tarayici GPU) seri'den ~1.8x hizli; 5 bolum (~55 dk video) 72 dk'da bitti; bos RAM 1.2 GB'a iner
+- [[hf-parallel-stream-1111]] — HF_CAPTURE_PARALLEL_STREAM=true: LIMIT CLOCK tam bolum render 791->647 sn (-%18), SSIM 0.998; prod finish.py'de acik
+- [[hf-render-ayar-1106]] — HyperFrames Case File chunk render ayari: --gpu --no-browser-gpu, workers etkisiz
+- [[hf-render-parent-kill-1111]] — HyperFrames render'i sarmalayan bash kuyrugu oldurulurse render 'render_cancelled_parent_exited' ile iptal olur
+- [[hf-tag-clippath-cocuk-1113]] — HyperFrames: clip-path verilen kutu icindeki ip SVG'sini ve tasan yaziyi da keser; dis sarmalayici + ic kirpilan kagit kullan
+- [[hf-yazi-kesik-transform-1118]] — HyperFrames: CSS transform ile ortalanan yaziya GSAP scale/y verince transform ezilir, yazi kenardan tasar (02:08 yarim baslik); ortalamayi left:0;right:0;text-align:center ile yap, render oncesi hf_metin_qa.py kapisi zorunlu
+- [[hiz-dongu-surekli-1111]] — Surekli GPT arastirma dongusu: 8 slot codex ajani (VDS sinirsiz), agir.py kilidi agir testleri siraya koyar, planlayici da codex ajani, PASS'e otomatik denetim gorevi
+- [[hls-copy-pps-1114]] — YouTube kaynaklı mp4'ü -c copy ile HLS'e bölünce bazı videolarda (2/10) segmentlerde PPS eksik; NVENC ile yeniden kodla
+- [[hyperframes-harita-svg-1113]] — HyperFrames'te karanlık harita: Natural Earth 10m -> tek global <defs> path + sahne başına <use>; ok marker'ları da global defs'te olmalı
+- [[hyperframes-motion-blur-48fps-1113]] — HyperFrames 0.8.181'de motion blur bayragi yok; 48 fps render + ffmpeg tmix=frames=2,fps=24 ile gercek bulaniklik ve 24p
+- [[imgqa-sessiz-gecis-1116]] — LimitClock imgqa: Flash 503 doneninde tum gorseller 'error' alip '0 bad' basiyordu (sessiz gecis); artik gemweb once, hata sayisi UNCHECKED diye basiliyor
+- [[indirme-hat-dolu-gemweb-ag-1119]] — Büyük indirme (torch pip, HF snapshot) hattı doldurunca gemweb'de makine çapı DNS/proxy hatası; tek tek hesap yakılıyor, istek düşüyordu
+- [[is-akisi-scrollytelling-1118]] — Buyuk is akisini anlatma: metin/kutu yigini begenilmedi; tek gercek ornegi (bir cumle) sticky SVG sahnede adim adim takip eden scrollytelling begenildi
+- [[isaac-stil-gercek-kesit-1113]] — Isaac tarzı 60 sn edit: gerçek kesit + PD film tepki kesiti (Charade 1963) + neon yalnız anlatıcıda; yol haritası 3D tüp
+- [[isci-pass-denetimi-1109]] — Codex isci PASS'leri cogu sahte/siskin: kendi ham cikti ve gozle denetle
+- [[isci-prod-yazdi-1109]] — Codex isci (F6) 'prod'a yazma' kuralina ragmen documentary_materials sources.py/bbc_library.py'yi prod'da degistirdi; A/B kopyasi kirlendi
+- [[isci-regex-sayimi-denetle-1111]] — Isci 'X sikayeti N yorumda' derse regex'in neyi saydigina bak: Flash, em dash KARAKTERI gecen yorumu sikayet saydi
+- [[judge-flash-replay-1106]] — Hakem replay: precheck Flash-low %97 uyum (GPT 37 sn -> 6 sn), review Flash %70 uyum + %21-29 yanlis gecis -> review GPT'de kalir
+- [[kaggle-blender-1108]] — Kaggle T4 Blender: Eevee GPU 10 sn 1080p30 = 218 sn (Cycles 608 sn), kalite Cycles'a yakin; EGL icin /usr/local/nvidia/lib64/libEGL_nvidia.so.0 vendor json'u yaz
+- [[kaggle-blender-cycles-1113]] — Kaggle T4x2'de Blender 5.3 Cycles: 1080p 48spp ~5,5 sn/kare, kurulum ~40 sn, shot basi ~60 sn acilis
+- [[kaggle-chatterbox-ses-1116]] — Duygulu anlatim: Chatterbox 0.1.7 Kaggle T4x2'de 4 isci (kaggle_vo/); yerel GPU bossa worker_local.py ~20 sn/satir (2 seed) ile sondan basa yaris
+- [[kaggle-clean-overlay-1115]] — Kaggle T4'te clean_overlay: iş süresi yerelle aynı (125,7 vs 135,3 sn), ama tam kernel GPU kuyruğunda 55 dk bekledi; yalnız toplu/gece işine uygun
+- [[kaggle-vo-envcache-1119]] — Kaggle ses kernel: wheel+agirlik onbellek dataseti kurulum 217->100 sn, kernel 453->298 sn, kalite ayni; agirligi /kaggle/input'tan dogrudan okuma yavaslatir, yerel diske kopyala; cikti kernel bitmeden inmez
+- [[kalite-bilgi-fikir-suzgec-1119]] — Kalite ve bilgi döngüsü fikirleri karşı-tez süzgeci (11-19): ucuz regex kapıları ve kaynak doğrulama geçer; ritim CV hedefi, humanizer, zorla sessizlik reddedildi
+- [[kalite-kapisi-meta-1119]] — Kalite kapısı: metin_denetle KANCA + yeni meta_denetle.py (başlık etiketi, linksiz açıklama, sabit 3 hashtag); 53 videoda biz/insan ayırıyor
+- [[kanal-aday-haber-siyaset-kids-1120]] — Kanal Bulucu aday kuralları 11-20: haber/siyaset nişi aday olamaz; nişteki yerli kanalların >=%30'u madeForKids ise aday elenir (nis_kids_orani)
+- [[kanal-adi-hakem-dogrulama-1119]] — Kanal adı 'KI kokuyor mu' hakemi: doğru cevaplı setle ölç, adayı listeye TEK koy (kardeş adlar puanı 15->90 şişirir)
+- [[kanal-kapak-v4-1118]] — 6 kanal x 18 video kapak v4: kanal kimligi + video basina rakip referans; Kingmakers net kazanc, guclu kanallarda ±1 gurultu; G-Labs 'right third' bolunmus panel tuzagi
+- [[kanal-tarama-paralel-1119]] — Kanal yüzsüz taraması sıralıyken 1,5 dk/kanal; 6 paralel + biten kanalı atla ile 54 kanal ~15 dk; düşük RAM'de MemoryError, yeniden ile düzelir
+- [[kanit-kapisi-pozitif-kontrol-1120]] — Kanıt kapısı pozitif kontrolsüz kurulmaz: yöntem bilinen vakayı bulamıyorsa 'bulunamadı' eleme sebebi değildir
+- [[kapak-begeni-analizi-1119]] — Kapak begenileri 11-19 tam (v4/v6 dahil): 83/223; v8 %66, v7 %44, v4 %19, v6 %16, Yayindaki %3; v8 YZ sahnesi %84, kendi karemiz %71; 2-3 kelime en iyi
+- [[kapak-captcha-akis-1119]] — Captcha mantigi kapaklar + akis ayrismasi; v7 kalip 0.93 (rakiplere benzer), v8 1.23; ikinci tur bos renk 6'nin 4'unu one gecirdi
+- [[kapak-fikir-fuzyon-yontemi-1119]] — Kapak yeniligi: imza x konunun en bilinen ikonu fuzyonu + feed kontrasti; kor geriye testte yontem istemi FREMDFORM OpenAI-goz fikrini 3/3 buldu, duz istem 0/3
+- [[kapak-gercek-vs-ai-1119]] — AI/KI nisi top48 kapak: yuzsuz ureticilerde AI resim 8/15 ama en cok izlenen 3 kapak AI degil (illustrasyon, gercek kare, beyaz grafik); HTML ile gercek UI kapak yolu
+- [[kapak-gorsel-ozellik-gate-1118]] — Ayni kanal icinde hit/flop kapaklari yerel gorsel olculer (renk, kontrast, yazi var/kelime/alan, odak, kucuk boy kontrast) AYIRMIYOR: AUC 0.46-0.54 (564 kapak, 72 kanal)
+- [[kapak-hakem-gecersiz-1118]] — LLM tiklama hakemi (12'li akis izgarasi) gercek basariyi ayiramiyor: cok-tutan rakibi %38 secti (sans %50); bizim YZ kapaklari 250/252 rakibi gecti
+- [[kapak-ham-kare-hud-1119]] — Kendi videomuzun ham karesi kapakta zayif: HUD/etiket, letterbox, logo, ucuz 3D; G-Labs i2i ile ayni kareden yeniden ciz
+- [[kapak-insan-davranisi-test-1119]] — Kapak insan davranisi: 1390 gercek olculmus kapakta 70+ ozellik; kanal ici hit/flop'u Holm sonrasi hicbiri ayirmiyor; konu rakiplerinde yuz/yazi/sok azligi outlier ile iliskili (yas degil)
+- [[kapak-kor-tiklama-testi-1118]] — Kapak kor tiklama testi: bizimkini rakiplerle 3x4 akista karistir, model ilk 3'u secsin; puan tablosu 'iyi' derken akista kaybolabilir
+- [[kapak-model-gpt-vs-nbp-1108]] — Gercekci kapak gorseli icin G-Labs nano_banana_pro, GPT image'dan daha fotografik; OceanAPI'de sadece GPT var
+- [[kapak-mutlak-hakem-1118]] — Kapak tek basina puanlansa da (merak/tik/tik+baslik) LLM ayni kanalin cok/az tutanini ayiramadi: AUC 0.50/0.39/0.41
+- [[kapak-nbp-gercek-foto-1117]] — Gercek foto + G-Labs NBP kapak: referansi once 16:9 kirp (yoksa siyah serit), fark-maskesiyle gercek pikselleri geri koy (%64 korundu), yaziyi kendimiz bas
+- [[kapak-nis-patlayan-1118]] — Landmark nis: 27 kanal/29 patlayan vs ayni kanal 128 video kor kodlama; tek odak + unlu yer kazandiriyor, ok/kutu/soru isareti fark etmiyor
+- [[kapak-olcu-curutme-1119]] — Kapak olculeri (kalabalik KB, kenar, puruzsuzluk, 168px okunurluk, akista saliency payi) 144 rakipte tutma carpanini ayirmiyor (hepsi p>0.19); puruz gercek/AI ayirmiyor (p=0.52): yalniz koruma bandi
+- [[kapak-rakip-deseni-1118]] — Kapak: sabit sablon (hep sol-ust dev yazi) yerine video basina konunun ilk 4 rakibini okut -> desen + tipografi spec (20 font, 6 stil, 6 ton); nislerin cogunda kazanan rakip YAZISIZ
+- [[kapak-rakip-once-1108]] — Kapak: once rakip kapaklarini incele; GPT'ye yazi yazdirma, Impact ile kendin bas
+- [[kapak-referans-secim-1118]] — Kapak referansı: performans kapısı seçer (yaş-bandı ≥3x + kanal içi üst %10 + ≥10 karşılaştırma + 30g-2y, kanal başı 1); eşli kontrolde (65 çift) yalnız merak gücü ayırdı
+- [[kapak-tek-sablon-iki-kanal-1118]] — Wrath ve Landmark kapakları aynı şablonda (Impact, sarı/beyaz, siyah kontur, sol üst): kaynak kapak.py + havuz analizi
+- [[kapak-teshis-1117]] — DUZELTME: 230 kapaklik rakip seti Helix'in benzerleriydi (antik tarih), Landmark Report'un jeoloji/yer nisi degil; sonuclar bu nise tasinmaz
+- [[kapak-v3-konu-rakip-kimlik-1118]] — Kapak v3: video başına konu rakip sayfası (topla.py) + kanal kimliği (Wrath kırmızı blok/bant Bahnschrift, Landmark Georgia+işaret çizgisi), NBP yazısız sahne + yerel yazı
+- [[kapak-v4-merak-1118]] — Kapak v4: merak odakli tek ozne + celiski sorusu, 5 videonun 4'unde merak referans medyanina ulasti; site_ekle2.py index.html'i bastan yazar
+- [[kapak-wrath-gemini-nbp-1118]] — Wrath of Earth kapak akisi: 30 rakip sayfasi + eski kapaklar -> gemweb hydrogen fikir/istem -> NBP (rakip kapak referans) -> kapak.py yazi; 8 kapak ~10 dk
+- [[kapak-wrath-gemini-sohbet-1118]] — Wrath kapaklari Gemini web sohbetine (yerlesik tarayici) brif+rakip sayfasi verilip urettirildi; 4/4 ilk denemede kullanilir
+- [[kapak-yazi-kalibi-tekduze-1118]] — Wrath 4 kapakta ayni 'sayi+unlem, 2 satir, sol ust' kalibi bizim brif+hydrogen fikrinden geldi; rakipte yok
+- [[kapaklar-sayfa-duzen-1118]] — Kapaklar sayfası: kanal çip seçici + kanal paneli + tam genişlik detay; deploy ENOENT'te yeniden dene
+- [[kaynak-plani-suzgec-1119]] — Kaynak/kapasite fikirleri karşı-tez süzgeci (11-19): gemweb çöküşü yük değil Google takılması + aralık şişmesi + ağ doygunluğu; otomatik kalıcı silme reddedildi
+- [[kelime-senkron-hizalama-1113]] — Kelime zamanini karakter oranindan tahmin etme: ort 0,18 sn, en kotu 1 sn kayma; faster-whisper + sessizlik baslangicina oturt + 1 kare erken
+- [[kingmakers-ornek-1106]] — KINGMAKERS tarzı (çizgi roman görsel + serif kart + HUD sayaç + harita) 1 dk örnek ~10 dk'da: G-Labs 8 görsel 50 sn, Pocket 19 sn, HyperFrames render 2:45 (2 işçi)
+- [[kirp-zoom-logo-1109]] — Kose/kenar logosu: GPU inpaint yerine en-boy korunan kirp+zoom (<=1.2) aninda ve izsiz; EP04 133 isin 129'u
+- [[kisa-ses-loudnorm-sapmasi]] — Kısa/tepeli Chatterbox sesinde tek geçiş loudnorm -17.7 LUFS bırakıyor (denetim -16±1.5 FAIL); voice_engine._settle_loudness ikinci geçişle -16.0'a çekiyor
+- [[km6-hat-dersleri-1117]] — KINGMAKERS 6-10 (km6): import lines lines.json'u yeniden yazar; taslak plandan erken baslat; GPT sablon plan; gemweb dusunce Haiku
+- [[km6-siyah-upscale-stat-n-1117]] — KINGMAKERS km6: GPU dolunca ncnn upscale tamamen siyah jpg verdi (10 gorsel); stat kartinda sahne no 'n' degeri ezdi
+- [[konu-sirasi-taze-dalga-1119]] — Yeni kanal konu sırası: 14 gün kesimi taze YouTube dalgasını gizler; sıkıştırma sonrası özetteki sayılar 5 yerde kaydı, rapordan önce veriden yeniden hesapla
+- [[kopru-bellek-sismesi-1108]] — 5 film asama 3 tek koprude 3,5 saatte 12 GB private'a sisti; RAM kapisi bir filmi (EP03) 20+ dk aclikta birakti; kopru yeniden baslatma cozdu
+- [[kor-yargic-cogunluk-1120]] — Kör yargıç çoğunluk kalibrasyonu: 9 oylu panel (Haiku+Sonnet+gemweb ×3) 6 çiftin 4'üne altın verdi, Sonnet 4 yeni koşuda 3'ünü geçti (eşik 4) → kaldı; 'U' (aynı niş) çiftlerinin ikisi de altınsız
+- [[kor-yargic-gomme-1120]] — Kanal 'aynı niş' yargıcı için başlık gömme (MiniLM, e5-base): deterministik, ayırt etme AUC 0,997; ama 4 çiftlik panel-altın sırası (G2) iki modelde de kaldı: başlık kalıbı ('The Real Reason/Why') konuyu bastırıyor
+- [[kor-yargic-gomme-z-kurali-1120]] — Kör test gömme kapısında U eşiği aynı-kanal yarılarından kurulunca başka kanal U alamaz; kullanıcı 11-20 'Z geçsin' onayladı
+- [[kor-yargic-kalibrasyon-sonnet-1120]] — Kör kanal-çifti yargıcı: Sonnet low ön-kayıtlı kalibrasyonda 1/6 (eşik 4), Haiku 3/6; etiketler gürültülü tek-koşu Haiku olduğundan kalibrasyonun kendisi zayıf
+- [[kor-yz-hakem-1119]] — Kor YZ hakemi (gemweb hydrogen high, kanal paketi): bizim 8 kanal ort YZ %53 vs insan 9 kanal %14; karisik ciftte 19 secimin 18'i bizimki; ama 8'in 7'sine yine ONAY
+- [[kulak-gemini-ses-1115]] — Claude'un kulagi kulak.py: kart adi ('ispanyolca 11 [orj]') alir; KONUSMA_VAR kapisi (whisper kelime/sn>=0.8, farkli kelime>=0.25); Gemini once konusma mi muzik mi der
+- [[lama-vs-hibrit-temizlik-1108]] — clean_overlay --jobs: LaMa-zorla 3,6x hizli (6 kesit 191 vs 679 sn, yuk altinda) ama duz/doku zeminde leke ve dikey cizgi birakiyor; hibrit (auto) kalsin
+- [[landmark-render-dagitim-1106]] — Landmark 5 film: yerel parca render a1'den ~5-6x hizli; a1 darbogazi ARM x264, veryfast sart; RAM<2.5GB'de parcalar uzaga birakilir
+- [[lang-score-gemweb-1120]] — ytmarket_run/bin/lang_score.py başlık alaka süzgeci 9router'dan gemweb'e taşındı; LANG_NICHES env ile niş eklenir; nişi 6 dilde ölçmek ~5400 YT Data birimi
+- [[layout-qa-kapali-details-1120]] — layout_qa kapalı <details> içeriğini yanlış çakışma sayıyor; QA'dan önce tüm details'i aç, sıfır genişlikli gizli panede değil 1280'de koş
+- [[limit-clock-gercek-kesit-1110]] — Animasyon kanalina gercek YouTube b-roll: proxy indir, Flash hakem stil kelimelerini yok saysin ve cömert eslesme; logolu klibi reddetme, kirp-zoom/LaMa ile temizle
+- [[limit-clock-geri-bildirim-1110]] — LIMIT CLOCK EP03 geri bildirimi: maskot dudak senkronu kaymasi (LC.life T ofseti), SFX cok kisik, gercek kesit = gercek YouTube b-roll (AI foto degil)
+- [[limit-clock-ornek-1110]] — LIMIT CLOCK 1 dk ornek: HyperFrames sahneler + Pocket klon ses + G-Labs 2 cizim; uzun heredoc bu kabukta kesilir, Write kullan
+- [[limit-clock-uretim-hatti-1110]] — LIMIT CLOCK 5 bolum hatti: plan.py(GPT 504->Flash) -> vo.py -> assets.py(G-Labs -w=9 proxy) -> imgqa.py(Flash vision) -> build.py -> mix.py -> finish.py
+- [[limit-clock-v2-1110]] — LIMIT CLOCK v2 ornek: referansi kontak sayfa + kare seridiyle incele; konusan maskot = ses RMS'inden agiz, gercek kesit = G-Labs foto + Omni Flash klip, gecis = sert kesim
+- [[link-denetle-arac-1117]] — Kanallar/link_denetle.py: arastirma raporundaki linkleri yoklar (Wayback, soft-404), alintilari ve sayilari sayfa metninde arar; Reddit pullpush, HN Algolia, 403'te curl yedegi
+- [[llm-hiz-1106]] — Flash gateway latency is tail-dominated (8-212 s per request); batching clip checks helps, streaming/shorter prompt/low vs high do not; keep GPT in plan race
+- [[llm-mecaz-tutarsizlik-1114]] — En guclu LLM isareti kavramsal tutarsiz mecaz (languagejones); 'Honestly?' parcasi ve honestly/actually/toolkit/bucket/amid evcil kelime; olc5.py sayar
+- [[logo-cleanup-flag-1108]] — DOCUMENTARY_LOGO_CLEANUP=1: wildlife'da BBC disi kliplerde kenar/kose logo kabul (sonra clean_overlay temizler); orta yazi, abone grafigi, URL, satici/lisans yazisi yine FAIL
+- [[logo-tespit-flash-kutu-1108]] — Logo tespiti: clean_overlay --auto (zamansal std) yari saydam logoyu kaciriyor + gokte yanlis leke -> dev kutu, ProPainter 6+ dk; Flash 6 kare kutu (4-20 sn) dogru, clean_overlay --boxes ile temizle
+- [[losslesscut-kopya-kesim-1105]] — LosslessCut hizi -c copy (kodlamasiz) sayesinde; bizim kare-tam 1080p/25 kesimde hat zaten -ss+NVENC+concat copy, kazanc cekim basina ~1 sn
+- [[lumit-aep-yolu-olmaz-1111]] — Lumit ile .aep açma işe yaramaz: içe aktarma yalnız arayüzden, yazı animasyonu/font/renk taşınmıyor, 30 sn comp 295 sn; paket önizlemesi için paketin kendi gif'lerini kullan
+- [[made-for-kids-kapi-1120]] — Kanal önerisinde madeForKids sert kapı: kanal ya da örnek videoların >=%50'si true ise ele (düşük RPM, yorum kapalı); ytapi.made_for_kids
+- [[magenta-key-acik-studyo-1113]] — Acik (gri) studyoda kullanilacak urun PNG'leri G-Labs'ta duz magenta zeminde uretilip anahtarlanmali; siyah zeminden kesim golgede delik/benek birakir
+- [[market-report-flash-yavas-1106]] — market_report.py: Flash-low 25 başlıklık liste sınıflaması 159 sn; regex filtresi kirli; nişte eleme elle (Claude) yapılır
+- [[maskot-cizim-tarzi-1118]] — Maskot: duz/flat cizgi film maskotu 'anime gibi, anlatimi yok' diye reddedildi; rakipler (limon, goz) taramali murekkep cizimi + sahneyi oynayan karakter
+- [[merge-rounds-footage-refresh-1108]] — Asama 3 kuyruk bitince merge_rounds -> _produce_shots -> footage.refresh tum kaynaklari yeniden parmak izler; 5 filmde EP04 icin ~44 dk; parti sirasinda kod degisikligi _production_code_signature'i canli degistirir
+- [[metin-adil-taban-1119]] — YZ-metin eslesme testi icin insan tabani AYNI KONU + ana dil + 2022 oncesi olmali; Kurzgesagt ceviri tabanina gore yakalanma %95 -> adil tabanda %85 (KO %50)
+- [[metin-denetim-8dil-1118]] — Metin yazimi 8 dil: istemdeki kural tablo disi iddia (10/10) ve ozet kapanisi (9/10) onlemiyor; yazim sonrasi ortak/metin_denetle.py + TTS dinleme sart
+- [[metin-dolgu-silme-kotu-1119]] — Olgusuz konusma eklerini/kapanislari mekanik silmek (D kolu) YZ puanini dusurmedi, 4/10 metinde 20-30 puan artirdi: konusma ekleri insan sinyali
+- [[metin-duzelt-olc-1118]] — Arac uyarisiyla yeniden yazim olculeni duzeltiyor, YZ kokusunu degil: kor hakem 85.6->86.2, insan ~10
+- [[metin-hakem-gpt-ters-1118]] — GPT (gpt-6.1-sol) metin hakemi insan metinlerine YZ %84 verdi, bizim metinlere %62-65: tek LLM hakemi metinde hedef olamaz, iki hakem + insan kalibrasyonu sart
+- [[metin-hakem-olcu-artefakt-1119]] — Metin turnuvasi: insan korpusunda gemweb ret cevabi + dublaj; W2 dolgu temizligi Gemini'yi oynatmadi (gerekce yeni ize kayar); esit sunum + negatif kontrol + yazar x hakem gerekli
+- [[metin-sil-kolu-1118]] — YZ hakemi isaretli kopru/ozet/vecize cumleyi YENIDEN YAZMA, SIL: JA 78->25, KO 72->28, FR 78->42; yeniden yazma yeni kalip uretir
+- [[metin-yeniden-yazim-bozar-1118]] — Gecmis (hakemden ~22 alan) metni kuralsiz istemle yeniden duzenlemek her dilde 75-95'e cikariyor; akis kolu da tersi liste kolu da ayni
+- [[mimari-konsey-1110]] — Mimari kararda konsey: ana oturum + Fable alt ajani (effort high) + fikir.py --sadece astra; VDS :8765 astra kredisiz (402), sol calisiyor
+- [[ming-tts-almanca-duygu-1120]] — Almanca duygulu TTS: Ming-3.0-tts-0.5B satir ici etiket ([Laughter] [Sigh] [Uhm]...) kulakta en iyi; Qwen3 etiket yapmaz, duygulu ref uzun metinde tasiyor
+- [[mix-nvenc-olcum-1106]] — scenefile mix NVENC p6 VBR 5M: x264'ten 17 kat hizli, yarim boyut, ayni SSIM/PSNR
+- [[mls-segments-metainfo-1120]] — MLS konusmaci/cinsiyet/kesit listesi icin rows API yerine HF repo dosyalari
+- [[monet-probe-yt-ad-1114]] — Para kazanma kontrolu: is_monetization_enabled alani kalkti; watch sayfasinda "key":"yt_ad","value":"1" + playabilityStatus OK bak; shorts sayfasinda yt_ad yok, uzun video sec
+- [[narration-plan-edit-needs-master-move]] — narration_plan.json cumle degisikligi sese girmez: master varsa eski ses yeniden kullanilir; master_voiceover.wav'i kenara tasi, sonra drive.py 1 4
+- [[nbp-poz-kesim-1117]] — NBP duz gri zeminli karakter pozunu seffaf PNG'ye cevirme: kenardan baglanti + ic buyuk zemin adacigi
+- [[neon-iz-fotograftan-1113]] — Fotograftan neon cizgi (Isaac tarzi): kamuflajda XDoG gurultu; mean-shift x2 + Canny + uzun cizgi + GrabCut maske temiz
+- [[nesne-maskot-anlam-1118]] — Avenox maskotu: kullanici insansi degil basit nesne + ince anlam istedi; borsa mumu secildi (mint=guvenli, turuncu=sok/dusus)
+- [[nh-tur6-1test-1119]] — Noch harmlos 1_test V1 hakemde %35 YZ (12/34); ham YZ pozitif kontrol %100 (34/34) -> hakem ayirt ediyor, V1 insandan ayirt edilemiyor
+- [[no-asking-keep-going]] — "Speed/bottleneck work: don't ask the user for go-aheads; use GPT + Flash-high (fikir.py) as workers, cross-test, apply when no batch runs, come back with measured results"
+- [[no-blocking-hooks]] — Never install a hook that blocks or delays the user's prompts; cachewarn was removed on user demand
+- [[no-license-watermark-clips]] — Footage with a "license this footage" overlay must not be used; reviewer-passed license text is rejected by runner._deliverable_review (22084c7); crop/replace rule for delivered shots
+- [[no-parallel-model-loads]] — Two agents installing/loading big TTS models at once froze the 16 GB PC (2026-10-31); run heavy model jobs one at a time
+- [[omnivoice-de-kisa-satir-1118]] — OmniVoice Almanca: kisa satira basa fazladan hece ekler; kisa satiri komsusuyla birlestir, ASR >=0.96 ile sec
+- [[omnivoice-turkce-klon-1111]] — OmniVoice Turkce klon: cumle basi buyuk harfli kisa cumle (Once Amerika. / Ayni is.) yutuluyor, kucuk harfle baslat; 2 kelimelik tek klip bozulur; kurulum tarifi
+- [[opensect-3d-benzetme-1112]] — 3D explainer benzetme: gercek 3D (Three.js) + hazir varliklar
+- [[oracle-free-only]] — Oracle Cloud account (Frankfurt, opened 2026-11-06) must stay strictly free — never upgrade to pay-as-you-go or create anything billable
+- [[organik-3d-cap-1107]] — 3D organik konuda %15 geçiyor (katı konuda %54): organik-tek sahnelerde 3D puanı ≤3, prod 5caf8e1
+- [[orkestrasyon-fikir-suzgec-1119]] — Alt ajan orkestrasyonu süzgeci (11-19): 20 ajan varsayılan/A-B-C deneyi/dürtme hook'u reddedildi; tarama/operator tarifi sertleşti, 1 hafta sonra seçilme say
+- [[ors-maskot-buyuk-sunucu-1118]] — Avenox maskotu: kullanici seslendiren arkadasi yansitan ORS'u secti (borsaci, prop kasa, celik irade, scalp yapamaz); ara sahnede kadraji kaplayan buyuk sunucu, kucuk maskot yok
+- [[ortak-araclar-1118]] — Ortak araclar: Kanallar/ortak/asr.py (ASR, GPU 4-6 sn), commons.py (Commons indirici), venv_haritasi.json (modul hangi python'da); kendi kodunu yazma
+- [[ortak-site-audio-range-1113]] — Ortak Atölye _middleware ranged() sadece video/ için 206 veriyordu; audio sarılamıyordu
+- [[ortak-site-css-cakisma-1118]] — Ortak Atolye hesaplar sayfasi ara sira bozuluyordu: .pw sinifi kanallar-yeni/pencere.css'teki pencere .pw ile cakisti
+- [[oyun-plani-kancasi-1119]] — Alt ajan paralelliği: kanca sonrası ajan payı %2,6→%15, ajan açan mesajın 7/11'i çoklu (ölçüm message.id ile gruplanmalı); oyun_plani.py kancası istemde plan + 8 ardışık okumada dürtü
+- [[pano-kayma-dikissiz-1118]] — Noktali zeminde kamera kaymasi: kayma mesafesi nokta periyodunun kati olursa iki tam kare yan yana dikissiz birlesir
+- [[pc-kasma-iobit-ssd-1110]] — PC kasmasi: IObit UninstallMonitor takili (1 cekirdek %99, ~30 MB/s G/C) + C: %94 dolu Crucial P3 (QLC, DRAM'siz) yazma gecikmesi ~190 ms; virus degil
+- [[pinpoint-youtube-9router-1106]] — Flash pinpoint: 9router YouTube URL'sini izletemiyor; sources.py'de artik varsayilan kapali (DOCUMENTARY_PINPOINT=0), storyboard yedegi calisir
+- [[pkg-1106-hiz-paketi-test]] — Hiz paketi (precheck Flash-low, codex 4 lane, review oncelik, glabs 3-slot kilit, searxng bos-sonuc retry, early3d retry) testbench'te 23/23 unit + mini film 4/4 PASS; prod'a gecis APPLY.md
+- [[pocket-2isci-olcum-1118]] — Ikinci Pocket iscisi degmez: 40 cumle 1 isci 92/129 sn, 2 isci 88/119 sn (~%6), RAM 0,04 GB'a dusuyor; kalite ayni
+- [[pocket-hiz-1106]] — Pocket TTS hizlandirma olcumu: sunucu LOCK'lu, tek sunucuda eszamanlilik fayda vermez; 2 worker +%30
+- [[pocket-rand-iran-1113]] — Pocket TTS 'A RAND'/'RAND study' kısaltmasını Iran/Brand okuyor; 'The RAND Corporation' + say='Rand' yaz, whisper ile doğrula
+- [[precommit-yanlis-pozitif]] — Parti kancası komut satırında 'drive.py' geçince (grep bile) commit'i engelliyor; commit'i ayrı komutta çalıştır
+- [[production-language]] — All production (voice, scripts, templates) is English; Turkish only for the Ortak Atölye site video
+- [[propainter-cok-kutu-takilma-1109]] — clean_overlay --jobs: cok kutulu (tam genislik serit) ProPainter isi 4 GB kartta 55+ dk takildi ve GPU kilidini tum filmlere kapatti; cozum: kilidi kap, jobs json'da o isi force=lama yap
+- [[pullpush-rate-limit-1120]] — api.pullpush.io 11-20'de ajan isteklerine 'Rate limit exceeded... does not provide free scraping resources for agents' dönüyor; Reddit araması fiilen kapalı
+- [[python-modul-adi-golgeleme]] — Script'e stdlib adını (_queue.py, queue.py) verme: alt süreçler onu import edip kendini tekrar başlattı, 349 süreç, RAM 0
+- [[qwen-ses-parca-farki-1119]] — Qwen3-TTS: 0. parca iyi/1. parca kotu = icerik (tireli kisaltma hecelemesi) ya da 0,6 sn dijital sifir durak; loudnorm+mp3 zinciri dedektor skorunu her dilde kotulestirdi; voice-clone non_streaming_mode varsayilan False
+- [[qwen3tts-cuda-graph-1119]] — Qwen3-TTS 0.6B Windows'ta faster-qwen3-tts 0.3.2 (CUDA graph, bf16) ile 8,2x hizli: RTF 6,27->0,76; fp16 coker
+- [[ram-denetim-1115]] — RAM denetimi 15 Kas (3. tur R7-R13 eklendi)
+- [[ram-tuketiciler-1105]] — Parti sirasinda RAM tuketicileri (medyanlar), hyperframes ffmpeg -threads 4 (840->463 MB), MemoryGate hyperframes'i saymaz, SigLIP bellek vermez; fastrender 239a954 prod'da
+- [[ranked-backup-ab-1112]] — Onarımda Flash yerine sıralı yedek aday (DOCUMENTARY_RANKED_BACKUP) mini film A/B: fiziksel istek -%5, token -%4, 4 yedekten 2'si geçti; DIFF_MINI çok küçük, karar için büyük film gerek
+- [[ranked-backup-orca-ab-1115]] — ORCA_RB 60 cekimlik buyuk A/B: B1 %12 istek/%19 token az ama B2 Flash 503/timeout ile gecersiz; yeni film klasorune referans ses+voicefix gerekir
+- [[realcut-a1-olcum-1118]] — realcut A1'e tasinmaz: PC 100-109 sn vs A1 154-184 sn (10 klip, 159 MB); indirme esit, ARM kesim 4-5x yavas
+- [[realcut-takilma-1111]] — LIMIT CLOCK realcut: tek takilan indirme/proxy tum bolum taramasini kilitler; toplam sure siniri sart
+- [[realesrgan-ncnn-siyah-cikti-1119]] — realesrgan-ncnn-vulkan klasor modunda uzun partide 'vkQueueSubmit failed -4' (surucu dustu) sonrasi tum ciktilar SIYAH ama rc 0
+- [[rearm-watchers]] — During film production always keep a supervisor/watcher running; re-arm it on every wake
+- [[reddit-erisim-arctic-shift-1111]] — Reddit verisi: reddit.com JSON giris sayfasi/403, PullPush 526; Arctic Shift calisir ama aralikli 422 'Timeout' verir, isciler pes eder
+- [[remote-chatterbox-1106]] — Chatterbox Turbo uzak sunucuda (Oracle A1 ARM CPU) RTF 4,6-4,9: ikinci anlatim seridi olarak degmez
+- [[remote-render-lane-1107]] — fullrun ikinci render seridi (Engineered ac0fb3b): yerel slot doluyken film sunucularda tek basina render eder, slot bosalinca >=%30 kaldiysa yerele gecer
+- [[remote-render-overdue-1107]] — sf render: asiri yuklu uzak sunucudaki parca hic geri alinmiyordu (kalan sure negatif). 8389c28: beklenenin 1.5 katini gecen parcayi bos yerel yuva yeniden render eder. Test ile prod render ayni anda a1/vds'e binmesin
+- [[render-darbogaz-1111]] — LIMIT CLOCK render: capture %62, NVENC encode %13; w3->w5 yalniz %9; Oracle A1 ~2,4x yavas (58 dk/bolum), ek serit olarak yararli
+- [[render-hiz-turlari-1111]] — HF_CAPTURE_PARALLEL_STREAM=true 20sn ornekte -19..-31% sure, +20% RAM, SSIM .99999 (ön, tek-basina dogrulama bekliyor); V2/V3 env RED; ağır test yasağı metni işçileri FAIL ettirdi
+- [[render-offload-1106]] — render_with_qc sunuculara (a1/VDS) tasimak kaybettirir; sure cogu Flash precheck + gate bekleyisi, israf reddedilen 3D Chrome renderlari
+- [[resim-bul-searxng-gemini-1118]] — Gercek arsiv fotosu: Kanallar/resim_bul.py (SearXNG gorsel + stok/filigran ele + Gemini kontak sayfa hakemi) 14 beat ~2 dk, 13 OK
+- [[ritim-esigi-tur-bagimli-1118]] — Ritim alarmi CV<0,6 cilali insan anlatimini da yakaliyor (Kurzgesagt 0,55-0,62); istemdeki sayi kurali modeli duzeltmiyor
+- [[runner-kill-orphans-1106]] — Windows'ta runner'i taskkill /F (agacsiz) olduren cocuk render'i ve mkdir kilidini oksuz birakir
+- [[searxng-vds-1115]] — SearXNG VDS'te (100.104.78.117:8888, yalniz Tailscale IP'ye bagli, docker --memory 400m, ~163 MB): yerelden daha cok sonuc, ayni hiz
+- [[seek-refuting-evidence]] — When researching an idea or finding, look first for the evidence that would disprove it; that decides whether it holds
+- [[selector-cap-ab-1109]] — Selector compact+cap: EP02 240 sn pilot gercek A/B (router): cap 30 -39% prompt token, -29% istek, 53/53 PASS; hiz farki varyans icinde
+- [[selector-cap-nomatch-1109]] — Selector aday listesi kirpilinca (cap 40) birlesik uzun cekimde 3x NO_MATCH -> SELECTOR_NO_MATCH_FALLBACK_FAILED; onarimda onceki cevap NO_MATCH ise listeyi kirpma
+- [[selector-prompt-katalog-1109]] — Asama 3 secici istemi tum VIDEO katalogunu her cekimde gonderir: EP02'de cekim basi ~22-42k token, film Flash tokeninin ~%58'i
+- [[ses-klon-kaynak-gemini-dinle-1118]] — Klon sesi tur'e gore sec: felaket kanali klonu tarih anlatiminda Gemini'den dogallik 6 duygu 5 'insan degil' aldi; gemweb ses dinlemesi (6 mp3 x25 sn) calisti
+- [[sfplan-flash-dusunme-1107]] — sf plan yavasligi = Flash-low gizli dusunme (12-24k token, 154-210 sn/parca); reasoning_effort=minimal ile 5-12 sn, EP03 1118->85 sn
+- [[sfx-eslesme-hp150-1118]] — sfx_qa dalga eslesmesi: 500 Hz HP gercek whoosh'lari dusurdu, 150 Hz HP (impact ham) gercekleri >=.61, sahteleri <=.39 ayiriyor; konusma altinda pop icin bosluk arama + mikser oz-denetimi
+- [[sfx-qa-dalga-eslesme-1118]] — SFX denetimi: Gemini'ye olayi soyleyince sahte pop'a bile 'duydum' diyor; var/yok+kayma yerel matched filter (Kanallar/sfx_qa.py), Gemini kor dinleme yalniz seviye/uyum/glitch
+- [[sfx-senkron-montaj-1111]] — SFX montajı: cue listesini komutan yazar; silah sesi kareden ölçülen namlu alevine tek atış; Flash'a video giderken temperature:0 INVALID_MEDIA verir
+- [[siglip-malzeme-etiket-1114]] — SigLIP sifir-atis malzeme etiketi: koyu zemin cizgi grafik 'siyah', cerceveli illustrasyon 'arsiv_film' cikti; etiketleri kare izgarasiyla gozle dogrula, siyah icin parlaklik<12 ve yazi yok sarti
+- [[sistem-denetimi-1110]] — 5 sistem denetimi (asama3, teslim, LLM, makine, hiz): prod'a alinmamis kabul yamalari, donma kapisi 3 sn kor noktasi, klip sesi bed'i, acik oncelik listesi
+- [[site-ses-librivox-1120]] — Ses kütüphanesi: LibriVox/MLS insan sesleri lv_ kartı (build_lv.py), kötü tur_ (vokal DF>=0.01) dil 15 temiz sesi geçince yedek_ses/'e taşınır
+- [[site-ses-tarama-1115]] — Site 80 ses taramasi: 4 bozuk kart (podcast intro muzigi/canli yayin); UTMOS Ingilizce disinda ve sessiz temiz dosyada yaniltici
+- [[site-yavas-wifi-kaybi-1119]] — Site/sekme yavaşlığı ölçümü: sunucu 0,1 sn, takılma Wi-Fi paket kaybında (modeme %20, 1.1.1.1'e %67 kayıp)
+- [[sonniss-indirme-yolu-1111]] — Sonniss GDC paketi: uygulama ici tarayicida zip adresine navigate (hata doner ama indirme baslar), Downloads'ta uuid.tmp olusur; en fazla 2 paralel, 3+ hepsini kilitler; curl 403
+- [[speechbrain-ecapa-cpu-1114]] — speechbrain EncoderClassifier GPU varsa cuda'ya gecer ve .numpy() patlar; run_opts={'device':'cpu'} ver
+- [[stage1-reaudit-fail-needs-repair-run]] — drive.py audit-only rerun FAIL bulursa onarmaz; filmi 1. asamadan yeniden baslatmak (master yeniden kullanilir) sadece hatali parcayi onarir
+- [[stage3-baslik-kacti-1108]] — Asama 3 QA (precheck+GPT) 10. cekimin ilk 2 sn'sindeki dev 'ANIMAL ASMR' basligini PASS gecirdi; son kurguda 6 kare Flash baslik taramasi + pencere icinde kaydirma sart
+- [[stage3-cpu-geometri-1107]] — Asama 3 CPU'ya bagli (%100, GPU %7): tek kare ffmpeg yigini + ayni dikey/bantli pencerenin film boyunca tekrar reddi; merged3 paketi
+- [[stage3-darbogaz-gpt-kuyrugu-1106]] — Stage 3 suresinin ~%70'i LLM bekleme: GPT/review kanali (limit 4, tavan 12) ort. 72 sn kuyruk + 120-430 sn gpt-6-sol; yerel CPU sadece ~%7, a1'e kesim tasimak kazandirmaz
+- [[stage3-flash-to-gpt-kuyruk-1106]] — Aşama 3: FLASH_TO_GPT=1 + GPT_SLOTS=8 Flash işini (grid_prefilter, precheck) 4 eşzamanlı GPT kuyruğuna itiyordu; io/governor/profil sıcak /reload ile kod imzasına dokunmadan değişir
+- [[stage3-hook-rule-short-shot-no-category]] — Stage 3 'Plan violated opening hook rule': kisa non-hook cekimde bos kategori (aecc84a) ve kisa filmde hook > VIDEO tavani (507cf71) — ikisi de kodda duzeltildi
+- [[stage3-kuyruk-kilitleri-1107]] — Asama 3 cekim fazinin kuyrugu: G-Labs 3 yuva (kodda min(3)) + 15 cekim iscisi; ANIM 200-1000 sn yuva tutuyor, ucuz motion cekimleri sona kaliyor
+- [[stage3-no-feasible-allocation-photos]] — Stage 3 'No feasible narrative/category allocation' = foto havuzu bos (SearXNG 8 sn timeout); once fotograf ekle
+- [[stage3-result-artifact-1108]] — Asama 3 shots/*/result.json yapisi: row/asset yok, her sey artifact altinda (audio_start_sec, frame_count, source_path, source_start_sec); pencere kapsami sources/*ranges.json
+- [[stage3-ret-dongusu-1106]] — EP02-05 1106 partisi: asama 3 ret dongusu (cekim basi 3-6 render) ana yavaslik; parti kullanici istegiyle 17:10'da durduruldu, cekimler onbellekte
+- [[stage3-shot-done-pass-degil-1109]] — events.jsonl shot_done PASS demek degil (review alani REVIEW_REQUIRED olabilir); ilerlemeyi son shot_done.review==PASS ile say. Gaia 5 filmde %12-25 cekim cozulmedi, drive.py set_aside sonra cikar, 3 3 ile yeniden baslat
+- [[stage3-unresolved-reset]] — Stage 3 'N unresolved shots': attempt>=2 eski sonucu dondurur; result.json + repair_1/2 klasorlerinin ucunu kenara al (rejected.json kalsin) -> taze deneme; empty_sentences.json notu
+- [[stage3-zaman-dagilimi-1108]] — 1 dk film asama 3 569 sn: ~436 sn kuyruk oncesi (library_windows archive.org kesimleri 114 sn bekletir, hook_prescan 84 + plan_review 62, ilk 120 sn olaysiz arama), cekim kuyrugu sadece 132 sn; GPT/render yuvalari darbogaz degil
+- [[stay-in-one-chat]] — User stays in one long chat; never propose new sessions or /clear as a token-saving measure
+- [[stil-tarama-1111]] — Milyonluk video stil taramasi 229 videoda durduruldu (kullanici: simdilik yeter, Flash limiti kalsin); 677 klip sitede; devam testbench/stilscan_1111/scan.py
+- [[stilscan-mini-test-1111]] — Edit taramasi: kare panosu (6x8, 2 fps, saniye etiketli) flash-low ile video parcasiyla ayni teknikleri ayni saniyelerde buldu; 9router 5 aktif hesap, flash-high 43 sn
+- [[storyboard-ab-1109]] — Storyboard sayfalarini 2'li ust uste birlestirmek (V2) -%26 token, Jaccard 0.872 (gurultu tabani 0.903); film geneline etkisi ~%2
+- [[styk-aktor-koreografi-1118]] — Styk cop adamlari 'anlamsiz hareket' bulundu: poz listesi yerine fizikli Aktor (hazirlik+parabol+takla+inis, kart/baslik ustu zemin, olaya bagli an)
+- [[styk-api-export-1117]] — StykAnimate: window.styk API ile poz/animasyon yazma; uygulama ici tarayicida export dosyasi disari cikmiyor
+- [[styk-headless-export-1118]] — StykAnimate export diske: Playwright + kurulu Chrome (channel=chrome, WebGPU) + showSaveFilePicker taklidi -> 1080p transparan PNG zip
+- [[styk-koreografi-aci-tut-1119]] — Styk cop adam: aci araya-girmesi en kisa yoldan (wrap), poz gecisi once tut sonra 0.2 sn hizli; dusuk renkte zemine gore figur rengi
+- [[styk-seffaf-ve-kutuphane-1118]] — Styk PNG export 'Transparent' acik olsa da beyaz zemin verir: styk.editor.setSceneColor(0) (ARGB alfa 0) sart; topluluk varligi headless: library.setSource('public')+loadPublic, importFile(...).document
+- [[sunucu-proxy-indirme-1106]] — Oracle'dan YouTube: dogrudan bot engeli; 9router'daki 10 socks5 proxy ile cerezsiz calisiyor ~1.5 MB/s/proxy
+- [[survival-poonlim-1dk-1108]] — La Ultima Orilla Poon Lim 1 dk ornek: Pocket ES :7873 klon, G-Labs still, Commons Blue Marble harita, edit_2dk kopyasi; runbook testbench/survival_1108/RUNBOOK.md
+- [[survival-siyah-kart-1116]] — survival edit_topic: black shot uzerindeki kartlar sessizce dusuyor; fix_plan.py sonraki gorunur kareye tasir
+- [[survival-tam-video-1108]] — La Ultima Orilla 5 tam video
+- [[survival-uretim-dersleri-1116]] — La Ultima Orilla T6-T10 uretiminde cozulen 8 sorun: disk dolmasi, set -e+grep, mix yavasligi, Whisper yanlis alarmlari, takilan TTS, bekci tuzaklari
+- [[tailscale-vds-hat-1106]] — VDS Tailscale hatti bozulunca GPT (:8765) cevapsiz, Flash yavas; acik IP 26 ms iken TS 300-580 ms + 1000 bayt paket kaybi
+- [[talep-suzgeci-pozitif-kontrol-1119]] — Talep süzgeci pozitif kontrolde 0/3 (ham 3/3): seçim adımı (breakoutScore sırası, 3 kanalda dur) alakasız viralleri alıyor; N=0 tek başına eleme sebebi değil
+- [[taze-cokus-medyan-1120]] — Kanal önerisinde medyan yalnız 14-400 günlük videolardan hesaplanınca son 2 haftada çöken kanal görünmez (Ricos Sin Suelo: rapor 99k, gerçek son10 1,4k)
+- [[tazelik-orani-14g-1120]] — Kanal tazelik kuralında son5/önceki5 oranı ≥14 günlük videolardan hesaplanmalı; 3-10 günlükler izlenme toplamadığı için Helix'i yanlışlıkla eledi
+- [[tekrar-onleme-1116]] — Cozulen hata baska oturumda tekrar ediyordu (ders pull; kimse bakmiyor): araca gom, olmuyorsa beyin/tuzak.json + tuzak.py hook'u notu kendisi basar
+- [[terrain-flythrough-usgs-threejs]] — Gercek 3D arazi ucusu kendi makinemizde: USGS 3DEP DEM + ortofoto -> three.js -> Playwright kare kare -> ffmpeg; 1080p ~5-8 fps
+- [[terrain-hang-1106]] — terrain lane render.py Playwright takılması
+- [[teslim-py-drive-hiz-1118]] — Kanallar/ortak/teslim.py (sfx_qa kapisi + tek Drive isci kuyrugu) ve Drive hizi: musteri ayari degil ag degiskenligi
+- [[test-time-budget]] — Size tests to the question; give every test subagent a time budget; no full-film runs when a mini film or planning-level diff answers it
+- [[tile-cache-race-windows-1106]] — Paralel karo indirmede os.replace Windows'ta PermissionError verir; hedef varsa tmp sil
+- [[token-denetimi-1106]] — Token denetimi 11-06: harcamanin ~%67'si ana Opus baglam okumasi; ajan 1h onbellegi verimize gore zararli; oneri sohbeti/ozet kapali, bash cikti 15k
+- [[token-denetimi-1110]] — Token denetimi 11-10: bekci.py + operator ajani kuruldu; saf gozetim uyanmalari %17; tek sohbette kalan kaldirac = sikistirma sonrasi taban (~88k)
+- [[token-efficiency-not-austerity]] — Token management means cutting waste while keeping speed and quality; never trade speed for savings with blanket strict rules
+- [[token-kaldirac-1119]] — Token 11-19 (3 gün): ana Opus %79 (okuma %50); ana Opus çağrılarının %45'i üst üste tek okuma/kabuk adımı, her biri ~127k bağlamı yeniden okutuyor; araç çıktısı okumanın yalnız ~%9'u
+- [[trend-kota-1114]] — trend_push kota: web araması kotasız, API yalnız eşleşen/>=20K konuda (tavan 5k/gün), genç konu her saat; ölçüm ~25 birim/koşu
+- [[tts-asr-sayi-yanlis-alarm-1116]] — TTS satir kontrolu Whisper ile: sayi/rakam farki yanlis alarm (117->14); sayilari iki taraftan atinca gercek hata kalir; alternatif seed dosyalari once denenir
+- [[tts-cumle-yama-1110]] — Teslim edilmis videoda hatali TTS cumlesini yamalama: demucs pencere + mix-voc*maske+yeni, video copy
+- [[tts-virgullu-sayi-yil-1117]] — TTS metin cevirici: '1,000' virgulu silinip yil kuralina girdi -> 'ten hundred', '1,845' -> 'eighteen forty-five'; virgullu sayiyi once cardinal cevir
+- [[tur-ses-duygu-1115]] — Tek ses + olaya göre duygu: duygu başına aynı konuşmacının o ruh halindeki referansı + exaggeration; Rick hikâyesi Gemini anlatma 10 duygu 9; tür sesleri testbench/tur_1115
+- [[tur-ses-gemini-ban-1115]] — 11-15 13:41-13:52: 9router antigravity hesapları toplu TOS 403; sabah 15 sağlam -> 2 (ejderha0758, johnsrob459) + 3 kota
+- [[tur-ses-toplama-hiz-1115]] — Tür×dil ses toplama: demucs'u sadece seçilenlere uygula (ISLE_FAST), dakikada ~2→~10 klip
+- [[turnuva5-adil-sonuc-1119]] — Adil turnuva (orta parca, iki sira, hydrogen high): ES ve KO Z kolu insan ortalamasinda (%50), PT 68, FR 86, JA 100; insan ornekli F kolu secimde iyi ama turnuvada %85-100
+- [[upscale-lite-model-1117]] — 4 GB GPU'da G-Labs digital-art-4x upscale 20-50 sn/gorsel; upscayl-lite-4x ~6 sn, gozle ayni kalite (km6 1117)
+- [[usta-secim-sahne-testi-1120]] — Edit ustası seçimi: kör 'uygulanabilir mi' testi ve hit/flop format karşıtlığı zayıf; asıl hakem sahne testi (ustanın 1 videosunun sahnelerini nişin 1 konusuna giydir, kırık ≤%20)
+- [[uyku-yoklama-kanca-1118]] — Sabit uyku yoklamasi (sleep>=60, time.sleep, Start-Sleep) 21 gunde ~24 sa yedi; uzun_komut.py kancasi artik reddedip bekci.py'ye yonlendiriyor
+- [[vds-gpt-402-1119]] — VDS GPT (gpt-6.2-sol) 19 Kas aksami HTTP 402 Payment Required veriyor; 24 Kas beklenmeden kredi bitti
+- [[vds-gpt-esz-2-ve-62-1119]] — VDS OceanAPI 19 Kas: fiilen 2 eszamanli (upstream 429 scope=user), gpt-6.2-sol geldi (hiz 6.1 ile ayni), 6.2-astra kredisiz
+- [[vds-offload-pilot-1105]] — VDS'e is tasima: Tailscale ~0,5-0,6 MB/s (relay, 119 ms); sadece ses ASR'si (base.en int8, 4x hizli, opus 24k yukleme) degerli; ffmpeg probe ve SigLIP tasinmaz
+- [[videolab-delogo-leke-1108]] — Desenli arka planda delogo leke birakir; periyodik dokuyu kaydirip zaman medyani temiz plaka + Poisson sinir duzeltmesi tertemiz siler
+- [[videolab-hibrit-lama-1108]] — Opak yazi silme: duragan/yavas cekimde ProPainter gri kafes birakir; LaMa anahtar kare + ECC homografi ile giydirme temiz (VideoLab/clean_overlay.py)
+- [[videolab-logo-temizlik-1108]] — Yari saydam logo: alfa olcup unblend + Poisson + gren BBC'de iz birakmadi; opak yazida akis doldurma sabit/dokulu cekimde yetmiyor, uretken model sart
+- [[videolab-propainter-1108]] — Logo/yazi silmede ProPainter (fp16, kirpik bolge, sahne sahne) acik ara en iyi; 4 GB GPU'da 57 kare 33 sn
+- [[vidiq-kredi-bitti-1110]] — vidIQ 6000 aylik kredi 5 gunde bitti: hepsi Claude oturumu ca24718b, cogu market_report.py
+- [[vidiq-kredi-tasarrufu-1110]] — vidIQ kredi tasarrufu: channel_videos YouTube API'ye, akilli onbellek suresi, surec butcesi, defter, bakiye kapisi
+- [[vidiq-similar-nis-tutma-1119]] — vidIQ similar büyük edit kanallarında nişi tutmuyor: 14/94 (%15); 100 edit kanalı için similar işe yaramaz
+- [[vidiq-tavan-scriptte-1120]] — vidIQ/gemweb kredi tavanı ajana sonradan mesajla verilirse geç kalır; tavan betiğe başlangıçta sert sayaç olarak gömülmeli
+- [[voice-audit-asr-timeout-1106]] — 4 film paralelken stage 1 ses denetimi UNVERIFIED (TimeoutExpired): yerel CPU ASR 300 sn sinirini asiyor; tek basina 224 sn
+- [[voice-audit-segment-cache-retry]] — Ses denetimi: geçen segmentler voice_gemini_cache'te saklanıyor, 5xx/timeout'ta 4 deneme+geri çekilme; drive transport-only hatada exit 13 ile kendisi yeniden kuyruğa alıyor
+- [[voice-offvoice-seed-fix-1106]] — Ses denetimi reference_voice_match FAIL (kind=voice): otomatik tamir sadece text sorunlarini onarir; testbench\speed_1106\voicefix.py ayni metin + yeni seed ile o parcayi yeniden urettirir
+- [[wikimedia-transcoded-429-1118]] — Commons orijinal video 429 verirse /transcoded/.../X.webm.720p.vp9.webm yolu iner
+- [[wrangler-temiz-kopya-1120]] — ortak-site deploy'u calisan agactan degil commit'li temiz kopyadan gonder
+- [[yanyana-hakem-dogaclama-olcer-1119]] — Yan yana 'hangisi YZ' hakemi (hydrogen high) dogaclama vs senaryolu farkini olcuyor: 4 gercek 2022-oncesi senaryolu PT kanalina 16/16 YZ dedi (karsi: dogaclama vlog)
+- [[yeni-yontem-eskiden-kotu-olamaz-1120]] — Yeni yöntem eski yöntemin hiçbir adımını atlayamaz; siteye girmeden önce aynı kör testte eskiyle yan yana ölçülür, eskiye ≥ değilse girmez
+- [[yenilik-hook-1116]] — Calisan oturumlar SISTEM.md/beyin degisikligini gormuyordu; UserPromptSubmit hook yenilik_bildir.py her mesajda farki 2-12 satir basar
+- [[yerel-metin-dedektor-1119]] — Yerel YZ metin dedektorleri (Binoculars/FastDetectGPT/xlm-r) cok dilde insan-YZ ayirmiyor: noktalama esitlenince AUROC ~0.5 ya da ters
+- [[yerel-ses-dedektor-1119]] — Yerel ses dedektoru eliya/forensics_0.3B_xlsr_wild insan-TTS'i AUROC 0.97 ayiriyor (CPU ~1 sn/klip); gemweb ses hakemi yerine siralama olcusu; MOS modelleri dogallik olcmez
+- [[yt-cache-temizlik-1116]] — Belgesel yt_cache: film klasoru hard link tutar; yer acmak icin yalniz st_nlink==1 klipleri sil
+- [[ytapi-arac-gercek-test-1120]] — chan_score.py ve niche_hunt.py ytapi.api'ye taşındı ama gerçek çağrıyla denenmedi; bir sonraki gerçek kullanımda who kaydı ve hata kontrol edilecek
+- [[ytapi-defter-fark-1120]] — ytapi defteri Google kotasından ~3.400 birim düşük çıktı: 12 dosya KEY.txt ile YouTube Data API.yi doğrudan çağırıyordu (2 dosya editscan scan/probe_yturl Gemini anahtarı, dokunulmadı); artık tek yol ytapi.py
+- [[ytapi-sayac-kilitsiz-1120]] — ytapi.py kota defteri kilitsiz oku-yaz + yutulan OSError: eşzamanlı süreçte 200 kaydın 5'i sayıldı; 11-20 kilit eklendi
+- [[zamanlama-10-film-tavanlari-1106]] — 10 film/2 oturum kapasite tavanlari (G-Labs 1930 sn, GPT review 920 sn, HF render 770 sn/film); VOICE kilidi sentez disini da kapatiyor; early ANIM havuzu skorlama fallback'inde atlaniyor; precheck Flash-low'a (replay %97), review GPT'de kalir (%70, %21-29 yanlis gecis); SearXNG ilk sorgu 0 sonuc -> bos foto havuzu -> 'No feasible allocation'
+- [[zamanlanmis-gorev-gorunur-pencere]] — Görev Zamanlayıcı cmd işi görünür pencere açıyor; kapatılınca 0xC000013A (^C) ile ölüyor, iş yarım kalıyor
+- [[zp-503-kaynak-1116]] — Zero Pulse 16 Kas 503: plan.py VDS :8765 chat/completions (ham gecis) + 9router Flash kota dolu; cozum /v1/responses ya da gpt_isci, Flash yerine gemweb
+- [[zp-paralel-render-1118]] — ZP render 1 vs 3 NVENC paralel: ortalama 2360 vs 2276 sn (fark gurultu icinde), bos RAM 1-361 MB; kalite esit. Paralel render kazanc kanitlanmadi
+
+## Konular (sistem bilgisi)
+
+- [[9router]] — 9router Flash gecidi (VDS :20128): 15 hesap / 10 proxy siraya dizildi 11-14
+- [[abd-trend-sayfasi]] — Ortak Atölye /trend/: ABD Google Trends + YouTube 48 sa izlenme/outlier, kanal eşleşen satır renkli; saatlik OrtakTrend görevi
+- [[ai-metin-humanizer-ritim-1111]] — Humanizer (blader/humanizer v4) kelime/noktalama izini siler ama ritmi tekduzelestirir; tekrar sorununu cozmez (olcum + issue #229)
+- [[ai-metin-tekrar-kanit-1111]] — AI metni neden anlasilir: kanitli katalog (tekrar/sablon odakli) + senaryoda kodla olculecekler; yasak listesi kalibi siler, ritmi bozar
+- [[antigravity-tos-ban]] — 2026-11-01 Google banned 23/30 9router Antigravity accounts (403 TOS_VIOLATION) after heavy video scanning; how to detect, what not to do
+- [[beyin-sistemi]] — Ortak beyin nasil calisir: neden kuruldu, parcalar (ekle/tara/lint/baslat/ara), SessionStart ozeti, birlesik.json, sinirlar
+- [[case-file-sample-kit]] — WRATH OF EARTH Case File stili 1 dk ornek: HyperFrames + Flow + gercek klip araclari (ornek/tools)
+- [[dil-pazari]] — Tarih nisi + 10 Kas felaket nisi dil olcumu
+- [[dil-secim-yontemi]] — Niş bazlı dil seçimi sonuçları
+- [[documentary-20min-budget]] — Belgesel faz suresi butcesi (10-21 olcumu: indirme 405 sn, shot uretimi 427 sn, darbogaz gateway); guncel hedef <=15 dk; range indirme uygulandi
+- [[documentary-3d-render-ceiling]] — 3D render tavanı 5'tir ve yükseltilemez: 4'te 2/4, 5'te 4/5, 6'da 3/6 render bozuk çıkıyor.
+- [[documentary-bridge-bypass-and-hot-reload]] — Kopru: kod imzasina bakmadan yeniden kullanim, hot-reload bayat listesi (kesfedilebilir liste, self-reload) ve reload'un kilidi sifirlayip cift kosu yaratmasi (run_registry.py)
+- [[documentary-codex-concurrency-and-model-name]] — Codex eş zamanlılığı 4→12 (ölçülmüş matris) ve üretimdeki model adı ile kalibrasyon model adının farkı.
+- [[documentary-memory-gate-architecture]] — Hız ve çökme arasındaki denge: işçi eşzamanlılığı API'de, bellek eşzamanlılığı medya kapısında; ölçülen bellek rakamları.
+- [[documentary-pipeline-project]] — The AI video documentary pipeline project (YouTube→materyal→ses→FFmpeg) built in .gemini/scripts/documentary_materials; where the code, backups and outputs live.
+- [[documentary-plan-phase-gateway-stall]] — 3c plan fazındaki 361 sn'nin kök nedeni gateway'in kendi yavaşlığı; deadline+hedge düzeltmesi ve ölçümü.
+- [[documentary-plan-review-deadlock]] — Plan inceleme kilidi: onarım prompt'u kategoriyi sabit tutuyordu, reviewer '3D/diagram' isteyince istek karşılanamıyor ve üretim tümden duruyordu.
+- [[documentary-range-download-architecture]] — YouTube indirme mimarisi: tek geniş pencere (26 sn span / 32 sn dosya) ölçülmüş 189.7 sn / 75 kaynak / 311 MB.
+- [[documentary-sentence-end-initial]] — Cümle sonu kuralı baş harfi cümle sonu sayıyordu: 'Jack D. | Gillum' diye adı böldü, Codex incelemesi FAIL verdi.
+- [[documentary-shot-phase-batch-race]] — 3d shot fazinda 121 sn bekleme: _ShotSelectionBatch yarisi (gec gelen shot'un future'i cozulmuyordu), timeout kapsami, adaylarin dusurulmesi
+- [[documentary-source-cap-double-count]] — Kaynak kotası çift sayım hatası: bitmiş shot hem sonuçtan hem uçuş rezervasyonundan sayılıyordu; 6 shot öldü, film teslim edilemedi.
+- [[documentary-stage3-status-acceptance]] — Aşama 3'ün 500 vermesinin kök nedeni: kabul listesinde status ile review verdict karıştırılmıştı.
+- [[documentary-stale-source-duplicates]] — Önceki koşunun tam YouTube kopyaları yerel taramaya giriyordu; 14,2 saatlik video medya kapısını blok ediyordu.
+- [[documentary-three-editorial-rules]] — Belgeselin editoryal kurallari ve kapilari: kaynak kotasi 2, konusan kafa yasagi (YuNet, hook 0.08 / film 0.02), hook ses senkronu kapisi, yanik altyazi temizligi
+- [[dub-sync-method]] — Video dublaj sync: satir basi hiz degisikligi yasak; 6-15 sn ada yontemi (6 hece/sn, refit 0.85-1.03), OmniVoice empty_cache, respelling haritasi, Whisper P(tr)
+- [[gemini-key-pool-block]] — Fanning one prompt over ~20 free Gemini keys got that exact prompt text 429-blocked on every key (2026-10-31); use 9router inline video instead
+- [[gpt-model-secimi]] — GPT model/effort bench: gpt-6.1-sol medium en dengeli (%100, 14,5 sn) vs prod gpt-6-sol low %85; film denemesi nasil kosulur
+- [[gpt-replacement-model]] — When GPT (gpt-6-sol on VDS :8765) access ends, switch review roles to 9router ag/gemini-3.8-flash-low
+- [[hikaye-mizah-karisik-ton-1111]] — Metne hikaye/mizah referansi (Umutcan Deniz Ilyasoglu ogretmen skecleri) karistirma: hamleler + olcum; CV 0.65->0.70
+- [[hiz-durumu]] — Film hizlandirma guncel durum tablosu (olculen/suren deneyler); her hiz deneyi bitince guncelle
+- [[jjw-ton-insan-olcusu-1111]] — Jesse James West tonunda yazim: insan olcusu (ort 9-10 kelime, CV 0.79-0.84, <=4 kelime %25-31, The acilis %2) ve referans taklidinin yeni kalip uretmesi
+- [[nis-product-findings]] — Niş = urun calismasi 11-03 (Helix Report sablonu): basligi degil konu evrenini kopyala; Trends talep sinyali degil; model kanal secimi; St. Helens / Rainier / Ice Age Floods
+- [[opencode-go-backup-lane]] — Parked plan (2026-10-29) to add OpenCode Go $10 and AMD Radeon Cloud to 9router as a text-only backup lane next to GPT/Flash
+- [[ortak-atolye-site]] — Ortak Atolye sitesi: yigin, deploy komutu, ISP SNI engeli + Vercel proxy, tasarim kurallari/layout_qa, gunun videosu adimlari, 25 MiB -> HLS
+- [[ortak-kalip-analizi-1111]] — 7 kanalin 11 videosunda ortak AI sablon izleri: kose HUD, etiket+buyuk sayi karti, koyu zemin+tek vurgu, metronom kesim
+- [[pipeline-v2-deploy-regression]] — Documentary pipeline planning.py MILP duzeltmeleri *_v2.py kopyasiyla ezildi, bazi patch'ler hic uygulanmadi; deploy oncesi diff/hash zorunlu
+- [[post-delivery-test-plan]] — Teslim sonrasi test plani sonuclari: ses referansa uymali (benzerlik+ASR+kulak), Pocket SO_REUSEADDR/3.5 GB, NVENC 4 slot, 4 film paralel sonucu
+- [[ses-zinciri]] — TTS dil haritasi: Ingilizce=Pocket/Jeff Chatterbox, Turkce dublaj=OmniVoice; Sopro GPU yasagi, Seed-VC dersleri
+- [[site-teknik-indeksi-1113]] — Ortak Atolye /edit/ verisinden 795 teknik tek indekste (hf/teknik/index.json); asker7 27 teknigi kodladi
+- [[speed-target]] — Speed target and where it stands (2026-10-24); next lever is the per-shot GPT review
+- [[token-saver-tools]] — Verdict on rtk / headroom / caveman / ponytail token savers for this setup (2026-10-29); only rtk is worth a measured trial
+- [[voice-stage1-audit-findings]] — Part 1 (ses) incelemesi: elle yazilmis sahte PASS (error_type varsa PASS degil), segmentli denetim 62-74 sn, ACCEPTANCE_POLICY segment yolunda, _asr_contradicts, tablo ayraclari TTS'e sizdi
+- [[yeni-kanallar-sayfasi]] — 18 Kas: 20 yeni nis kanal eklendi (59 ornek)
+- [[youtube-gate]] — YouTube bot-block fix in production (2026-10-27) - global gate, shared caches, Firefox cookies via user env var; remaining risks
+- [[zp-pipeline-runbook]] — ZERO PULSE new-episode steps, pre-delivery checks and code-level gotchas in SkullStudio (learned 2026-10-29)
+
+## Kanallar
+
+- [[avenox-ekran-kafa]] — Avenox kanali maskotu Ekran Kafa: turuncu monitor kafali stickman, agiz = anlatici sesinin dalgasi
+- [[cities-uncovered-1111]] — Model kanal adayi 11-11: CITIES UNCOVERED (incil arkeolojisi, yuzsuz, reklamli, 21 gunluk, son10 medyan 85k); dil kazanani en
+- [[engineered]] — ENGINEERED belgesel kanali: hat, ses, teslim; ayrinti Kanallar/Engineered/CLAUDE.md
+- [[firsat-kanallari-1111]] — Genc firsat kanallari 11-11: INGENIUM (EN askeri havacilik), Ethos (EN ENTIRE History), DDR Geheimnisse (DE); her secime hedef dilde 2 ornek kanal kurali
+- [[kanal-avi-1105]] — Archive in Minutes secimi + benzer ornekler
+- [[kanal-avi-1108]] — Model kanal 11-08: Statewide USA (askeri envanter/karşılaştırma, gerçek görüntü) EN; yedek Mr Space Explainer
+- [[kanal-avi-1110]] — 10 Kas model kanal: Reconstructed (reklamli, yuzsuz, son10 medyan ~140k vs onceki ~48k); dil karari EN
+- [[kanal-avi-1111]] — 11-11 iki model kanal: Thin Line Interrogations (sorgu true crime, en/ABD) ve Secrets of Everyday Things (nasil yapilir, de/Almanya)
+- [[metin-model-kanallar-1108]] — Metin/hikaye anlatimi icin model yuzsuz kanallar: Dark Docs (1 numara), Fascinating Horror, Scary Interesting; transkript analizi
+- [[nis-dil-olcumu-1111]] — 4 yeni nisin 8 dilde olcumu: binalar ja/de, silah muhendisligi de, cokmeler en, tarihoncesi en/es (pt ve pl zayif)
+- [[noch-harmlos-kapak-begeni-1119]] — Noch harmlos covers: user's picks and likes 11-19 (bright background + mask x familiar object liked)
+- [[tohumsuz-tarama-1111]] — Tohumsuz genc kanal taramasi (YouTube search API, 0 vidIQ kredi): 10 ulke, 1335 genc kanal, 127 filtre gecen; 4 taze nis + format defteri
+- [[zeropulse]] — ZERO PULSE iskelet anlatici kanali: SkullStudio hatti, G-Labs siniri; ayrinti Kanallar/ZeroPulse/CLAUDE.md
+
+## Kaynaklar (veri, link, arac)
+
+- [[abonelik-fiyat-karsilastirma-1120]] — Ajan isi icin abonelik karsilastirmasi 11-20: Ultra 5x 4.749,99 TL (2000 TL eski), Qwen Coding Pro $50 6000 istek/5s, ChatGPT Plus ~25 is/5s
+- [[api-keys-desktop]] — Desktop KEY.txt: 26 Gemini keys (23 live) now a Flash fallback lane in io.py (gdirect), plus 5 YouTube Data API keys; never print values
+- [[arastirma-araclari-1119]] — Arastirma araclari: 22 aday tarandi, 3 soruda olculdu; kalan: Kanallar/ortak/arastir.py (6 sn, 9 kaynak paralel) + arastir_derin.py (GPT-Researcher+gemweb)
+- [[argor-tarama]] — Ar.Gör. ilan taraması: tara.py RG+OCR+Flash, her gün 09:00, WhatsApp özeti CallMeBot
+- [[dfarena-ses-dedektor-1119]] — DF Arena 500M V1 ses deepfake dedektörü yerelde çalışıyor: DE insan/TTS AUROC 0,999 (ham csv'den doğrulandı), bizim Chatterbox/Qwen sesimizi yakalıyor; ses kapısı olarak kullanılabilir
+- [[documentary-searxng-setup]] — SearXNG'nin JSON uç noktası ve konteynerin ayar klasörü; foto havuzunun kilidi burada.
+- [[edit-teknik-kutuphanesi]] — YouTube edit teknigi taramasi: 1019 video akis + 49 kanal/86 alt teknik kutuphanesi; yollar, yontem, ban uyarisi
+- [[freellmapi-ilk-olcum-1120]] — freellmapi anahtarli olcum 11-20
+- [[insan-tespit-yontem-1119]] — YZ metin tespitinde kanitli tek guvenilir yol: LLM'i sik kullanan 5 uzmanin cogunluk oyu (Russell 2025: TPR 92.7/FPR 4.0 tek, cogunluk 99.3, humanize'da 100); dedektor/LLM hakem kaymada coker
+- [[kanca-retention-kanit-1119]] — YouTube kanca/retention/CTA kanit taramasi: Intro metrigi ilk 30 sn = beklenti karsilama; sure izlenme %'sinin %58'ini aciklar; Zeigarnik curuk; CTA icin olcumlu kanit yok
+- [[kaynak-acigi-1118]] — LLM/RAM kaynak acigi arastirmasi 2026-11-18
+- [[oceanapi-gorsel]] — OceanAPI gpt-image-2.5-flare kapak üretimi: ytmarket_run/bin/ocean_img.py, ~30 sn, 5 kredi; User-Agent şart (yoksa Cloudflare 1010)
+- [[oracle-a1-sunucu]] — Oracle Always Free A1 (Frankfurt, ARM 4 OCPU/24 GB/100 GB): ssh a1 = ubuntu@<IP-gizli>; hyperframes ARM'da Playwright headless shell ile çalışır
+- [[paddy-galloway]] — Paddy Galloway (MrBeast danışmanı, Outlier Strategy) paketleme/intro/fikir kuralları; referans kaynak
+- [[r9-ypp-vakalar-1119]] — R9 vaka arastirmasi: YZ kullanimi ret/kabul ayirmiyor (YZ acik: 3/11 ret, 5/7 kabul); zayif ayirici ucuncu taraf goruntu ve sablon tekrari; surec videosu itirazda 2/3 kazandi
+- [[rpm-tarih-belgesel-1117]] — Tarih/belgesel RPM 17 Kas yeniden arastirma: dogrulanmis yaratici beyani yok (Reddit erisilemedi); arac tablolari 5 kat celisiyor; EN>DE>ES sirasi tutuyor, Almanca 2x desteksiz; gercek sayi yalniz kendi Studio'muz
+- [[ucretsiz-ses-kutuphaneleri-1117]] — Ucretsiz monetize-guvenli ses: Sonniss GDC 2026 (7.47 GB, 347 WAV, atifsiz, monetize YouTube serbest; 2025 paketi yok), Freesound yalniz CC0, muzikte YouTube Audio Library (claim yok); BBC SFX monetize icin ucretli
+- [[vidiq-api]] — vidIQ MCP (mcp.vidiq.com/mcp, anahtar ytmarket_run/secrets/vidiq.key, istemci bin/vidiq.py): neyi gerçekten veriyor, neyi vermiyor
+- [[wrath-of-earth-ep01-v2]] — Kasirga/tornado belgeselleri icin ornek edit: EP01 Mayfield V2 'Case File' (9:57); dosyalar Kanallar/Engineered/referans
+- [[youtube-test-compare-kurallar-1119]] — YouTube Test & Compare 2026-11-19 kurallari (Inconclusive = ilk yuklenen kalir, olcut izlenme suresi payi) + az trafikte gurultu kurali: tepe pay > %33,3 + 150/kok(izlenme); tek hipotez 5 videoda birlesik oku
+- [[yt-inauthentic-politika-1117]] — YouTube inauthentic (YPP) 17 Kas 2026 durumu: 3 kategori (jenerik/tekrarli, duygusal manipulatif/rahatsiz edici, hassas konuda AI uzman persona); ceza kanal duzeyi; 1 Sub 2027 YPP yeni sartlar
+- [[yt-study-flow]] — How we study YouTube videos together with Flash; 9router can't take YouTube URLs, frames+transcript works
+

@@ -1,0 +1,102 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|compact|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/durum.py"
+          },
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/beyin/araclar/baslat.py",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/tuzak.py --sifirla",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/tuzak.py",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep|Glob|Bash|PowerShell|WebFetch|WebSearch|Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/oyun_plani.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/yenilik_bildir.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/oyun_plani.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/tuzak.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/tuzak.py",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:/Users/meteh/.claude/hooks/uzun_komut.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

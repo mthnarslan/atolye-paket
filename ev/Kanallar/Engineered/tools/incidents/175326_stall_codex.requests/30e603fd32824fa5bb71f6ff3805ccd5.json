@@ -1,0 +1,65 @@
+{
+  "identity": "4f8702796a49a9504073847b59dcdf6be1bf4383ff464fc201d1c4d0fdcc9154",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "30e603fd32824fa5bb71f6ff3805ccd5",
+    "role": "codex",
+    "thread_id": 32648,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T14:53:26.107279+00:00",
+    "cooldown_seconds": 2.3e-05,
+    "queue_seconds": 0.000991,
+    "started_at_utc": "2026-10-30T14:53:26.109503+00:00",
+    "active_channels": 1,
+    "channel_limit": 12,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T14:53:51.240105+00:00",
+    "seconds": 25.128644,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gpt-6-sol",
+  "response_id": "gen-1793372010-3kCHdyWrRTlwCniweia0",
+  "usage": {
+    "prompt_tokens": 2233,
+    "completion_tokens": 484,
+    "total_tokens": 2717,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 2230
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 283
+    }
+  },
+  "raw_response": "{\"cause\":\"EP05 is most likely stalled on in-flight stage-3 workers, not the MILP plan: it has 94 worker_started versus 84 worker_finished, while several other films were launched manually from stage 3 on the same constrained PC. The logs point to worker/resource contention, but do not prove whether a worker is deadlocked or out of GPU/RAM.\",\"fix_now\":\"Check EP05’s process and per-worker logs for the 10 unfinished workers. Stop duplicate or unresponsive stage-3 workers, then resume EP05 from its existing stage-3 state rather than rerunning earlier stages. Temporarily run only one GPU-heavy render/animation job at a time.\",\"prevent\":\"Add a machine-wide semaphore for render/animation work across both films, cap stage-3 concurrency to the PC’s measured capacity, and add worker timeouts/heartbeats that log the stuck shot and allow safe retry. Avoid launching overlapping manual stage-3 runs.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "EP05 is most likely stalled on in-flight stage-3 workers, not the MILP plan: it has 94 worker_started versus 84 worker_finished, while several other films were launched manually from stage 3 on the same constrained PC. The logs point to worker/resource contention, but do not prove whether a worker is deadlocked or out of GPU/RAM.",
+    "fix_now": "Check EP05’s process and per-worker logs for the 10 unfinished workers. Stop duplicate or unresponsive stage-3 workers, then resume EP05 from its existing stage-3 state rather than rerunning earlier stages. Temporarily run only one GPU-heavy render/animation job at a time.",
+    "prevent": "Add a machine-wide semaphore for render/animation work across both films, cap stage-3 concurrency to the PC’s measured capacity, and add worker timeouts/heartbeats that log the stuck shot and allow safe retry. Avoid launching overlapping manual stage-3 runs."
+  },
+  "seconds": 25.13293,
+  "governor_after": {
+    "limit": 12,
+    "min_limit": 4,
+    "ceiling": 12,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 540,
+      "quality": 75
+    },
+    "hedge_after_seconds": 8.0,
+    "hedge_enabled": false
+  }
+}

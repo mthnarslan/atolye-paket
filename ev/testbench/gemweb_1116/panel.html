@@ -1,0 +1,146 @@
+<!doctype html><html lang="tr" class="dark"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gemini Web Gateway</title>
+<style>
+:root{--bg:#0b0f17;--card-bg:#131923;--card-border:#1e2633;--card-hover:#18202d;--text-main:#f0f6fc;--text-muted:#8b949e;--text-sub:#6e7681;
+ --emerald:#10b981;--blue:#3b82f6;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--cyan:#06b6d4}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{background:var(--bg);color:var(--text-main);padding:24px;min-height:100vh;font-variant-numeric:tabular-nums}
+button{font:inherit;cursor:pointer}
+.container{max-width:1420px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:14px}
+.brand-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand-title h2{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center;gap:6px}
+.p-blue{background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+.p-green{background:rgba(16,185,129,.12);color:var(--emerald);border:1px solid rgba(16,185,129,.3)}
+.p-purple{background:rgba(139,92,246,.15);color:var(--purple);border:1px solid rgba(139,92,246,.3)}
+.update-time{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:8px;background:#161c27;border:1px solid var(--card-border);padding:6px 12px;border-radius:8px}
+.update-time b{color:#fff}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.4}}
+.status-banner{border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:14px;margin-bottom:24px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25)}
+.status-banner.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3)}
+.status-banner.bad{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3)}
+.status-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(16,185,129,.2);color:var(--emerald)}
+.warn .status-icon{background:rgba(245,158,11,.2);color:var(--amber)}.bad .status-icon{background:rgba(239,68,68,.2);color:var(--red)}
+.status-content h4{font-size:14px;font-weight:600;color:#fff}
+.status-content p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+@media (max-width:1080px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:680px){.kpi-grid{grid-template-columns:1fr}body{padding:14px}}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:18px 20px;transition:border-color .2s}
+.card:hover{border-color:#2e3846}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.card-label{font-size:13px;color:var(--text-muted);font-weight:500}
+.card-icon{color:var(--text-sub);width:18px;height:18px;flex-shrink:0}
+.card-value{font-size:28px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:8px;letter-spacing:-.5px}
+.card-subtext{font-size:12px;color:var(--text-sub);line-height:1.4}
+.card-subtext strong{color:var(--text-muted)}
+.c-cyan{color:var(--cyan)}.c-green{color:var(--emerald)}.c-amber{color:var(--amber)}.c-red{color:var(--red)}.c-purple{color:var(--purple)}.c-blue{color:var(--blue)}
+.panel-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-bottom:24px}
+.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
+.panel-title h3{font-size:15px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px}
+.panel-title p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px}
+.b-green{background:rgba(16,185,129,.15);color:var(--emerald);border:1px solid rgba(16,185,129,.3)}
+.b-blue{background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+.b-amber{background:rgba(245,158,11,.15);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.b-red{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+.acc{background:#0f141d;border:1px solid var(--card-border);border-radius:10px;padding:16px;display:grid;gap:12px}
+.acc:hover{border-color:#2e3846}
+.acc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.acc-name{font-size:14px;font-weight:600;color:#fff;overflow-wrap:anywhere}
+.acc-mail{font-size:12px;color:var(--text-sub);overflow-wrap:anywhere;margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600;background:rgba(110,118,129,.15);color:var(--text-muted);border:1px solid rgba(110,118,129,.3)}
+.tag.tier{background:rgba(139,92,246,.15);color:var(--purple);border-color:rgba(139,92,246,.3)}
+.btn{background:#161c27;border:1px solid var(--card-border);color:var(--text-muted);border-radius:6px;padding:5px 10px;font-size:12px;flex:none}
+.btn:hover{color:#fff;border-color:var(--blue)}
+.st{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--text-sub)}
+.hazir .st{color:var(--emerald)}.hazir .dot{background:var(--emerald);box-shadow:0 0 6px var(--emerald)}
+.calisiyor .st{color:var(--blue)}.calisiyor .dot{background:var(--blue);animation:pulse 1s infinite}
+.aralik .st{color:var(--amber)}.aralik .dot{background:var(--amber)}
+.dinleniyor .st,.baglanamadi .st{color:var(--red)}.dinleniyor .dot,.baglanamadi .dot{background:var(--red)}
+.lim{display:grid;gap:5px}
+.lu{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--text-sub)}
+.lu b{color:var(--text-muted);font-weight:600}
+.bar{height:6px;border-radius:999px;background:#1e2633;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;transform-origin:left;transition:transform .6s ease}
+.foot{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text-sub);padding-top:10px;border-top:1px solid rgba(255,255,255,.05)}
+.foot strong{color:var(--text-muted)}
+.err{font-size:12px;color:#f87171;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:6px;padding:6px 10px;overflow-wrap:anywhere}
+.table-wrap{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:640px}
+th{text-align:left;padding:10px 12px;color:var(--text-sub);font-weight:600;border-bottom:1px solid var(--card-border)}
+td{padding:9px 12px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,.03);white-space:nowrap}
+tr:hover td{background:rgba(255,255,255,.02);color:#fff}
+td.res{white-space:normal;max-width:420px}
+.ok{color:var(--emerald);font-weight:600}.no{color:var(--red);font-weight:600}
+.mono{font-family:ui-monospace,Consolas,monospace;background:#161c27;border:1px solid var(--card-border);border-radius:4px;padding:1px 6px;color:var(--text-muted)}
+.empty-row{text-align:center;color:var(--text-sub);padding:24px;font-style:italic}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div class="container">
+<div class="topbar">
+ <div class="brand-title"><h2>Gemini Web Gateway</h2><span class="pill p-blue">Yerel · :8790</span><span class="pill p-green" id="pm"></span><span class="pill p-purple" id="pa"></span></div>
+ <div class="update-time"><span class="pulse-dot"></span>Canlı İzleme · Son Kontrol <b id="saat">–</b></div>
+</div>
+<div class="status-banner" id="ban"><div class="status-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+ <div class="status-content"><h4 id="bt">Yükleniyor…</h4><p id="bp"></p></div></div>
+<div class="kpi-grid" id="kpi"></div>
+<div class="panel-card"><div class="panel-header"><div class="panel-title"><h3>Hesaplar <span class="badge b-green" id="hb"></span></h3><p>Firefox oturumları · hesap başına aynı anda 1 istek, hata alan hesap dinlenir</p></div></div>
+ <div class="acc-grid" id="hs"></div></div>
+<div class="panel-card"><div class="panel-header"><div class="panel-title"><h3>Son İstekler Akışı <span class="badge b-blue">Canlı Akış</span></h3><p>Son 40 istek: hesap, model, dosya sayısı, süre ve harcanan kredi</p></div></div>
+ <div class="table-wrap"><table><thead><tr><th>Saat</th><th>Hesap</th><th>Model</th><th>Dosya</th><th>Süre</th><th>Kredi</th><th>Durum</th></tr></thead><tbody id="lg"></tbody></table></div></div>
+</div>
+<script>
+const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cls=d=>d.startsWith('dinleniyor')?'dinleniyor':d.startsWith('aralık')?'aralik':d==='çalışıyor'?'calisiyor':d==='hazır'?'hazir':d==='bağlanamadı'?'baglanamadi':'';
+const kalan=iso=>{if(!iso)return'';const k=(new Date(iso)-Date.now())/60000;if(k<=0)return'şimdi';
+ return(k>=1440?Math.floor(k/1440)+' g ':'')+Math.floor(k%1440/60)+' sa '+Math.floor(k%60)+' dk'};
+const n=x=>Number(x).toLocaleString('tr-TR');
+const kisa=a=>a.replace(/^[up]\d+-/,'');
+const IC={users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+ ok:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/>',err:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',coin:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+ gauge:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'};
+const card=(lab,ic,val,c,sub)=>`<div class="card"><div class="card-header"><span class="card-label">${lab}</span><svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${IC[ic]}</svg></div><div class="card-value ${c}">${val}</div><div class="card-subtext">${sub}</div></div>`;
+function lim(ad,w){if(!w||w.usage_percentage==null)return`<div class="lim"><div class="lu"><b>${ad}</b><span>bilgi yok</span></div><div class="bar"></div></div>`;
+ const p=w.usage_percentage,renk=p>=90?'var(--red)':p>=70?'var(--amber)':'var(--emerald)';
+ return`<div class="lim"><div class="lu"><b>${ad} · %${p}</b><span>${n(w.remaining_credits)} kredi${w.reset_at?' · sıfırlanma '+e(kalan(w.reset_at)):''}</span></div>
+ <div class="bar"><i style="transform:scaleX(${Math.max(p,1)/100});background:${renk}"></i></div></div>`}
+async function yenidenBaglan(ad){await fetch('/yenile/'+encodeURIComponent(ad),{method:'POST'});yenile()}
+async function yenile(){try{const r=await (await fetch('/durum')).json();const h=r.hesaplar,L=r.log;
+ pm.textContent='● Model: '+r.varsayilan;pa.textContent='Aralık '+r.aralik+' sn · Dinlenme '+Math.round(r.soguma/60)+' dk';
+ saat.textContent=new Date().toLocaleTimeString('tr-TR');
+ const hz=h.filter(x=>x.durum==='hazır'||x.durum==='çalışıyor'||x.durum.startsWith('aralık')).length,ok=h.reduce((a,x)=>a+x.ok,0),er=h.reduce((a,x)=>a+x.hata,0);
+ const bozuk=h.filter(x=>x.durum.startsWith('dinleniyor')||x.durum==='bağlanamadı').length,calis=h.filter(x=>x.durum==='çalışıyor').length;
+ ban.className='status-banner'+(bozuk===h.length&&h.length?' bad':bozuk?' warn':'');
+ bt.textContent=!h.length?'Hesap yok':bozuk===h.length?'Tüm hesaplar devre dışı':bozuk?bozuk+' hesap dinleniyor / bağlanamadı':'Gemini Web çalışma durumu normal';
+ bp.textContent=`${h.length} hesap · ${hz} kullanılabilir · ${calis} çalışıyor · ${er} toplam hata`;
+ const okL=L.filter(l=>l.sonuc==='ok'),ort=okL.length?(okL.reduce((a,l)=>a+l.sn,0)/okL.length).toFixed(1):'–';
+ const kr=L.filter(l=>typeof l.kredi==='number').reduce((a,l)=>a+l.kredi,0);
+ const w=h.map(x=>x.limit&&x.limit.weekly).filter(x=>x&&x.remaining_credits!=null),wmin=w.length?Math.min(...w.map(x=>x.remaining_credits)):null;
+ const f=h.map(x=>x.limit&&x.limit.current_5h).filter(x=>x&&x.remaining_credits!=null),fsum=f.reduce((a,x)=>a+x.remaining_credits,0);
+ kpi.innerHTML=card('Kullanılabilir Hesap','users',`${hz} / ${h.length}`,'c-cyan',`Çalışıyor: <strong>${calis}</strong> · Dinlenen: <strong>${bozuk}</strong>`)
+  +card('Başarılı İstek','ok',n(ok),'c-green',`Sunucu açılışından beri · son 40'ta <strong>${okL.length}</strong> başarılı`)
+  +card('Hata','err',n(er),er?'c-red':'c-green',`Model hata metni ve bağlantı hataları · dinlenme <strong>${Math.round(r.soguma/60)} dk</strong>`)
+  +card('Ort. Yanıt Süresi','clock',ort==='–'?'–':ort+'s','c-purple',`Son 40 istekteki başarılı yanıtlar`)
+  +card('Harcanan Kredi','coin',n(kr),'c-amber',`Son 40 istek · hydrogen ~4, flash-lite ~0`)
+  +card('5 Saatlik Kalan Kredi','gauge',f.length?n(fsum):'–','c-blue',wmin!=null?`Tüm hesaplar toplamı · en düşük haftalık <strong>${n(wmin)}</strong>`:'Limit bilgisi henüz yok');
+ hb.textContent=`${hz} / ${h.length} hazır`;
+ hs.innerHTML=h.length?h.map(x=>`<div class="acc ${cls(x.durum)}">
+  <div class="acc-top"><div><div class="acc-name">${e(kisa(x.ad))}</div><div class="acc-mail">${e(x.eposta)}</div></div><button class="btn" data-ad="${e(x.ad)}">Yeniden bağlan</button></div>
+  <div class="tags">${x.limit&&x.limit.tier?`<span class="tag tier">${e(x.limit.tier)}</span>`:''}<span class="tag">${e(x.kaynak)}</span></div>
+  <div class="st"><span class="dot"></span>${e(x.durum)}</div>
+  ${lim('5 saatlik',x.limit&&x.limit.current_5h)}${lim('Haftalık',x.limit&&x.limit.weekly)}
+  ${x.son_hata?`<div class="err">${e(x.son_hata)}</div>`:''}
+  <div class="foot"><span><strong>${x.ok}</strong> başarılı</span><span><strong>${x.hata}</strong> hata</span><span>son <strong>${e(x.son)}</strong></span>${x.modeller&&x.modeller.length?`<span>${x.modeller.map(m=>e(m.replace('gemini-',''))).join(' · ')}</span>`:''}</div>
+ </div>`).join(''):'<div class="empty-row">Henüz hesap yok — hesaplar/ klasörüne &lt;ad&gt;.json ekle.</div>';
+ lg.innerHTML=L.length?L.map(l=>`<tr><td>${e(l.t)}</td><td>${e(kisa(l.hesap))}</td><td><span class="mono">${e(l.model)}</span></td><td>${l.dosya}</td><td>${l.sn}s</td><td>${l.kredi??'–'}</td><td class="res ${l.sonuc==='ok'?'ok':'no'}">${l.sonuc==='ok'?'● 200 OK':e(l.sonuc)}</td></tr>`).join(''):'<tr><td colspan="7" class="empty-row">Henüz istek yok</td></tr>';
+}catch(_){}}
+hs.addEventListener('click',ev=>{const b=ev.target.closest('.btn');if(b)yenidenBaglan(b.dataset.ad)});
+yenile();setInterval(yenile,3000);
+</script></html>

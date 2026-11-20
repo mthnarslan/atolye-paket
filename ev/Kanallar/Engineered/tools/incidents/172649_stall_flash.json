@@ -1,0 +1,125 @@
+{
+  "identity": "b856c523cfceb1842edd450165d0cf04ecb192956ace02fead87795a5f2b8d0a",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "0512bb76c2e0427a95f76e39404a0215",
+    "role": "flash",
+    "thread_id": 28144,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T14:26:49.564885+00:00",
+    "cooldown_seconds": 8.7e-05,
+    "queue_seconds": 0.014389,
+    "started_at_utc": "2026-10-30T14:26:49.581347+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T14:27:01.244392+00:00",
+    "seconds": 11.661712,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-L6nkap3RJ7uzkdUPh_OC0A4",
+  "usage": {
+    "prompt_tokens": 6310,
+    "completion_tokens": 238,
+    "total_tokens": 6548
+  },
+  "raw_response": "{\n  \"cause\": \"Concurrency violation on local hardware: at 17:26:30, three episodes (EP09, EP06, EP08) were manually launched concurrently alongside active runs (EP02, EP05, EP07, EP10), exhausting system resources and causing EP09 to stall or block waiting on local worker services (port 8765) and GPU/RAM availability.\",\n  \"fix_now\": \"Identify and terminate extraneous documentary pipeline processes via PowerShell/Task Manager (`Get-Process python | Stop-Process`), ensure the local animation bridge server on port 8765 is running and responsive, then resume only EP09 (`python run_pipeline.py --episode EP09_Plainfield_Illinois_1990 --stage 3`) keeping total concurrent runs strictly to at most two.\",\n  \"prevent\": \"Implement an explicit global mutex lock or job queue manager (such as a named Windows mutex or file lock checking active jobs) enforcing the maximum limit of 2 concurrent episode runs, and abort manual invocations that exceed this limit.\"\n}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "Concurrency violation on local hardware: at 17:26:30, three episodes (EP09, EP06, EP08) were manually launched concurrently alongside active runs (EP02, EP05, EP07, EP10), exhausting system resources and causing EP09 to stall or block waiting on local worker services (port 8765) and GPU/RAM availability.",
+    "fix_now": "Identify and terminate extraneous documentary pipeline processes via PowerShell/Task Manager (`Get-Process python | Stop-Process`), ensure the local animation bridge server on port 8765 is running and responsive, then resume only EP09 (`python run_pipeline.py --episode EP09_Plainfield_Illinois_1990 --stage 3`) keeping total concurrent runs strictly to at most two.",
+    "prevent": "Implement an explicit global mutex lock or job queue manager (such as a named Windows mutex or file lock checking active jobs) enforcing the maximum limit of 2 concurrent episode runs, and abort manual invocations that exceed this limit."
+  },
+  "seconds": 11.68004,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 1,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  },
+  "attempts": [
+    {
+      "identity": "b856c523cfceb1842edd450165d0cf04ecb192956ace02fead87795a5f2b8d0a",
+      "requested_model": "ag/gemini-3.8-flash-low",
+      "requested_effort": "low",
+      "verification_scope": "gateway-reported model; upstream effort not independently observable",
+      "image_sha256": [],
+      "image_payloads": [],
+      "http_timing": {
+        "request_id": "0512bb76c2e0427a95f76e39404a0215",
+        "role": "flash",
+        "thread_id": 28144,
+        "attempt": 1,
+        "hedged": false,
+        "queued_at_utc": "2026-10-30T14:26:49.564885+00:00",
+        "cooldown_seconds": 8.7e-05,
+        "queue_seconds": 0.014389,
+        "started_at_utc": "2026-10-30T14:26:49.581347+00:00",
+        "active_channels": 1,
+        "channel_limit": 15,
+        "http_status": 200,
+        "finished_at_utc": "2026-10-30T14:27:01.244392+00:00",
+        "seconds": 11.661712,
+        "status": "OK",
+        "race_outcome": "winner"
+      },
+      "http_status": 200,
+      "returned_model": "gemini-3.8-flash-n",
+      "response_id": "chatcmpl-L6nkap3RJ7uzkdUPh_OC0A4",
+      "usage": {
+        "prompt_tokens": 6310,
+        "completion_tokens": 238,
+        "total_tokens": 6548
+      },
+      "raw_response": "{\n  \"cause\": \"Concurrency violation on local hardware: at 17:26:30, three episodes (EP09, EP06, EP08) were manually launched concurrently alongside active runs (EP02, EP05, EP07, EP10), exhausting system resources and causing EP09 to stall or block waiting on local worker services (port 8765) and GPU/RAM availability.\",\n  \"fix_now\": \"Identify and terminate extraneous documentary pipeline processes via PowerShell/Task Manager (`Get-Process python | Stop-Process`), ensure the local animation bridge server on port 8765 is running and responsive, then resume only EP09 (`python run_pipeline.py --episode EP09_Plainfield_Illinois_1990 --stage 3`) keeping total concurrent runs strictly to at most two.\",\n  \"prevent\": \"Implement an explicit global mutex lock or job queue manager (such as a named Windows mutex or file lock checking active jobs) enforcing the maximum limit of 2 concurrent episode runs, and abort manual invocations that exceed this limit.\"\n}",
+      "finish_reason": "stop",
+      "status": "OK",
+      "data": {
+        "cause": "Concurrency violation on local hardware: at 17:26:30, three episodes (EP09, EP06, EP08) were manually launched concurrently alongside active runs (EP02, EP05, EP07, EP10), exhausting system resources and causing EP09 to stall or block waiting on local worker services (port 8765) and GPU/RAM availability.",
+        "fix_now": "Identify and terminate extraneous documentary pipeline processes via PowerShell/Task Manager (`Get-Process python | Stop-Process`), ensure the local animation bridge server on port 8765 is running and responsive, then resume only EP09 (`python run_pipeline.py --episode EP09_Plainfield_Illinois_1990 --stage 3`) keeping total concurrent runs strictly to at most two.",
+        "prevent": "Implement an explicit global mutex lock or job queue manager (such as a named Windows mutex or file lock checking active jobs) enforcing the maximum limit of 2 concurrent episode runs, and abort manual invocations that exceed this limit."
+      },
+      "seconds": 11.68004,
+      "governor_after": {
+        "limit": 15,
+        "min_limit": 10,
+        "ceiling": 15,
+        "active": 0,
+        "peak": 1,
+        "good": 1,
+        "adjustments": 0,
+        "payload": {
+          "height": 1080,
+          "quality": 90
+        },
+        "hedge_after_seconds": 45.0,
+        "hedge_enabled": true
+      }
+    }
+  ],
+  "race": {
+    "winner_request_id": "0512bb76c2e0427a95f76e39404a0215",
+    "launched": 1,
+    "outstanding": 0,
+    "physical_receipts": "C:\\Users\\meteh\\Kanallar\\Engineered\\tools\\incidents\\172649_stall_flash.requests",
+    "loser_cancellation": "none outstanding"
+  }
+}

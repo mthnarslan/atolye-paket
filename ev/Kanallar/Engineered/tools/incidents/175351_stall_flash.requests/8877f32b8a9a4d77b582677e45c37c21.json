@@ -1,0 +1,58 @@
+{
+  "identity": "cb1e05638111a403960291e2159d39abf25ffab44a5658375e1787cc1731913d",
+  "requested_model": "ag/gemini-3.8-flash-low",
+  "requested_effort": "low",
+  "verification_scope": "gateway-reported model; upstream effort not independently observable",
+  "image_sha256": [],
+  "image_payloads": [],
+  "http_timing": {
+    "request_id": "8877f32b8a9a4d77b582677e45c37c21",
+    "role": "flash",
+    "thread_id": 39496,
+    "attempt": 1,
+    "hedged": false,
+    "queued_at_utc": "2026-10-30T14:53:51.305754+00:00",
+    "cooldown_seconds": 4.6e-05,
+    "queue_seconds": 0.040045,
+    "started_at_utc": "2026-10-30T14:53:51.369820+00:00",
+    "active_channels": 1,
+    "channel_limit": 15,
+    "http_status": 200,
+    "finished_at_utc": "2026-10-30T14:53:56.208892+00:00",
+    "seconds": 4.838305,
+    "status": "OK",
+    "race_outcome": "winner"
+  },
+  "http_status": 200,
+  "returned_model": "gemini-3.8-flash-n",
+  "response_id": "chatcmpl-fq_kauCINtvrkdUPteSDmAE",
+  "usage": {
+    "prompt_tokens": 4808,
+    "completion_tokens": 175,
+    "total_tokens": 4983
+  },
+  "raw_response": "{\"cause\":\"Over-concurrency and resource starvation: instead of the intended limit of two concurrent films, five to six manual runs (EP02, EP03, EP05, EP06, EP09, EP10) were launched simultaneously on a machine with only 16 GB RAM and 4 GB GPU, resulting in 10 unfinished workers hanging in EP05 without progress.\",\"fix_now\":\"Terminate unneeded concurrent runs (e.g., kill EP02, EP03, EP06, EP09 processes), leaving at most two active productions, or restart EP05 individually once resources are freed.\",\"prevent\":\"Implement a global process semaphore, concurrency lock, or job queue manager that strictly enforces a maximum of two concurrent pipeline runs, blocking or queuing manual CLI launches when capacity is reached.\"}",
+  "finish_reason": "stop",
+  "status": "OK",
+  "data": {
+    "cause": "Over-concurrency and resource starvation: instead of the intended limit of two concurrent films, five to six manual runs (EP02, EP03, EP05, EP06, EP09, EP10) were launched simultaneously on a machine with only 16 GB RAM and 4 GB GPU, resulting in 10 unfinished workers hanging in EP05 without progress.",
+    "fix_now": "Terminate unneeded concurrent runs (e.g., kill EP02, EP03, EP06, EP09 processes), leaving at most two active productions, or restart EP05 individually once resources are freed.",
+    "prevent": "Implement a global process semaphore, concurrency lock, or job queue manager that strictly enforces a maximum of two concurrent pipeline runs, blocking or queuing manual CLI launches when capacity is reached."
+  },
+  "seconds": 4.903586,
+  "governor_after": {
+    "limit": 15,
+    "min_limit": 10,
+    "ceiling": 15,
+    "active": 0,
+    "peak": 1,
+    "good": 2,
+    "adjustments": 0,
+    "payload": {
+      "height": 1080,
+      "quality": 90
+    },
+    "hedge_after_seconds": 45.0,
+    "hedge_enabled": true
+  }
+}

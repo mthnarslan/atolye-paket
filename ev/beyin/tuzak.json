@@ -1,0 +1,124 @@
+{
+  "_aciklama": "Tekrar eden hatalar icin otomatik not. hook: ~/.claude/hooks/tuzak.py. olay=komut (komut calismadan once, komut metnine bakar) | cikti (arac cikti/hata metnine bakar). not <=300 karakter, en fazla 30 kayit. Araca gomulen hata buradan SILINIR (kayit gecici borctur). surum artinca not ayni oturumda yeniden gorunur.",
+  "kurallar": [
+    {
+      "id": "gemweb",
+      "surum": 1,
+      "olay": "komut",
+      "kalip": "127\\.0\\.0\\.1:8790|localhost:8790|gemweb",
+      "not": "gemweb: model gemini-4-hydrogen + reasoning_effort low (gemini- ile baslamayan ad flash-lite'a duser). Coklu kanal testinde kanal basi <=4 paralel, test <=60 istek. Yaniti kendin ayristirma: Kanallar/gemweb.py (cit soyar, gorsel reddi/copu ayirir, yeniden dener, global 30 slot, sunucu FIFO).",
+      "ders": "gemweb-hakem-model-1116"
+    },
+    {
+      "id": "venv-ses",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "No module named '(speechbrain|demucs)",
+      "not": "speechbrain/demucs yalniz C:/Users/meteh/testbench/asker_tr_1111/.venv/Scripts/python.exe icinde kurulu; o python ile calistir.",
+      "ders": "omnivoice-turkce-klon-1111"
+    },
+    {
+      "id": "venv-global",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "No module named '(faster_whisper|rembg)",
+      "not": "faster_whisper ve rembg global C:/Users/meteh/AppData/Local/Programs/Python/Python312/python.exe icinde kurulu (venv'de yok); onunla calistir.",
+      "ders": ""
+    },
+    {
+      "id": "dm-import",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "No module named 'documentary_materials",
+      "not": "documentary_materials paketi C:/Users/meteh/.gemini/scripts altinda: PYTHONPATH=C:/Users/meteh/.gemini/scripts ver ya da o klasorden 'python -m documentary_materials.<modul>' calistir.",
+      "ders": ""
+    },
+    {
+      "id": "charmap",
+      "surum": 2,
+      "olay": "cikti",
+      "kalip": "UnicodeEncodeError: 'charmap'",
+      "not": "cp1254 cokmesi. 11-18'den beri settings env + kullanici env PYTHONUTF8=1 (open() ve alt surec dahil utf-8). Hala goruluyorsa surec eski ortamdan basladi: PYTHONUTF8=1 ile yeniden calistir; open()'a encoding='utf-8' ver.",
+      "ders": ""
+    },
+    {
+      "id": "json-cit",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "JSONDecodeError|Expecting value: line 1 column 1",
+      "not": "LLM yaniti JSON degilse cogu zaman ```json citi ya da bos/cop yanittir. gemweb/Flash yanitini Kanallar/gemweb.py json_al() ile ayristir; bos ya da cop = yeniden dene, hata sayma.",
+      "ders": "gemweb-asker-1116"
+    },
+    {
+      "id": "gitbash-yol",
+      "surum": 1,
+      "olay": "komut",
+      "kalip": "post_update\\.py.*--link\\s+[\"']?/",
+      "not": "Git Bash '/stil/' gibi yolu C:/Program Files/Git/stil/ yapar: komutun basina MSYS_NO_PATHCONV=1 ekle.",
+      "ders": "git-bash-link-bozma-1111"
+    },
+    {
+      "id": "disk-dolu",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "No space left on device|disk full|Error -28",
+      "not": "Disk doldu. Render/teslim zincirinde: ZIP'i cikmis filmin out/_video*.mp4 ve out/*.wav ara dosyalarini sil; Drive'a boyutu dogrulanan ZIP'i sil. Paralel ZIP yuklemesi + render ara dosyalari ~6 GB/film tutar.",
+      "ders": "survival-uretim-dersleri-1116"
+    },
+    {
+      "id": "ffmpeg-vsync",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "Unrecognized option 'vsync'",
+      "not": "Bu ffmpeg -vsync tanimiyor: -fps_mode passthrough (ya da vfr) kullan.",
+      "ders": "survival-uretim-dersleri-1116"
+    },
+    {
+      "id": "vds-gpt-chat",
+      "surum": 1,
+      "olay": "komut",
+      "kalip": "8765/v1[\\s\\S]{0,400}chat/completions|chat/completions[\\s\\S]{0,400}100\\.104\\.78\\.117:8765",
+      "not": "VDS GPT :8765'te yalniz POST /v1/responses kuyruk + yeniden deneme alir; /chat/completions ham gecistir, yukte rastgele 502/503/504 verir. Uzun istek (plan vb.) /v1/responses ile gonder ya da gpt_isci.py kullan.",
+      "ders": "gpt-gateway-rota-1108"
+    },
+    {
+      "id": "flash-kota",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "Individual quota reached",
+      "not": "9router Flash (ag/gemini-3.8-flash-*) kotasi dolu: 503/429 doner, yanit yok. Bekleme; gemweb :8790 kullan (Kanallar/gemweb.py sor/sor_json, gorsel de alir). Hata=0 diyen QA'nin gercekten yanit aldigini kontrol et.",
+      "ders": "gemweb-hakem-model-1116"
+    },
+    {
+      "id": "sete-grepv",
+      "surum": 1,
+      "olay": "komut",
+      "kalip": "set -e[\\s\\S]*\\| *grep -v",
+      "not": "set -e altinda 'cmd | grep -v X' cikti bossa 1 doner ve betigi oldurur (16 Kas: basarili Drive yuklemesi 'hata' sayildi). '| { grep -v X || true; }' yaz.",
+      "ders": "survival-uretim-dersleri-1116"
+    },
+    {
+      "id": "bekci-msys-pid",
+      "surum": 1,
+      "olay": "komut",
+      "kalip": "bekci\\.py.*--pid \\$!|bekci\\.py.*--pid [0-9]{5,}",
+      "not": "Git Bash'te & / nohup ile alinan $! MSYS pid'idir; bekci (Windows Python) onu bulamaz, aninda 'BITTI' der. Windows pid: $(cat /proc/<pid>/winpid). Ya da isi 'bekci.py --ad X -- komut' ile baslat."
+    },
+    {
+      "id": "asr-pyav",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "metadata_errors|cublas64_12\\.dll",
+      "not": "ASR icin kendi faster-whisper kodunu yazma: python C:/Users/meteh/Kanallar/ortak/asr.py ses.mp3 --json out.json [--dil tr] (ffmpeg->numpy 16k, CUDA DLL yolu otomatik, hata olursa CPU int8). Python'dan: sys.path'e Kanallar/ortak ekle, from asr import transcribe.",
+      "ders": "ortak-araclar-1118"
+    },
+    {
+      "id": "commons-429",
+      "surum": 1,
+      "olay": "cikti",
+      "kalip": "upload\\.wikimedia\\.org.*429|429.*wikimedia|Too Many Requests.*wikimedia",
+      "not": "Commons'u kendin indirme: python C:/Users/meteh/Kanallar/ortak/commons.py 'File:Ad.jpg' --cikti DIR [--liste dosya.txt] (API thumburl 960/1280/1920, surecler arasi 1 istek/sn, onbellek, uzun Retry-After'da dosyayi atlar).",
+      "ders": "commons-429-standart-genislik-1118"
+    }
+  ]
+}
