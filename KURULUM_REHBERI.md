@@ -30,7 +30,7 @@ Makine: 16 GB RAM ve 4 GB GPU yeterli. **Disk:** film başına ~5,4 GB ara dosya
 
 ## 2. Paketi yerleştir
 ```
-git clone <repo-adresi> %USERPROFILE%\atolye-paket
+git clone https://github.com/mthnarslan/atolye-paket.git %USERPROFILE%\atolye-paket
 cd %USERPROFILE%\atolye-paket
 python kur.py --kuru      (ne yapacağını gösterir)
 python kur.py             (kurar)
